@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="com.zxxapp.mall.maintenance.utils.TimeUtil" />
+
+        <variable
+            name="resultsBean"
+            type="com.zxxapp.mall.maintenance.bean.article.ArticleBean.ResultsBean" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:id="@+id/ll_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ripple_one_item_bg"
+            android:orientation="vertical"
+            android:paddingTop="12dp">
+
+
+                <ImageView
+                    android:id="@+id/iv_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:lineSpacingMultiplier="1.2"
+                    android:layout_weight="1"
+                    android:lineSpacingExtra="4dp"
+                    android:gravity="left"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@{resultsBean.title}"
+                    android:textColor="@color/colorContent"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tv_zhaiyao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_weight="1"
+                    android:lineSpacingMultiplier="1.2"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:lineSpacingExtra="4dp"
+                    android:maxLines="3"
+                    android:gravity="left"
+                    android:text="@{resultsBean.zhaiyao}"
+                    android:textColor="@color/colorSubtitle"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_goods_seller_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="right"
+                    android:text="@{resultsBean.add_time}"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/colorSubtitle"
+                    android:textSize="13sp" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="6dp"
+                android:background="@color/colorTransparent" />
+
+            <!--若不使用CardView则使用此分割线-->
+            <!--android:background="@color/colorLineItem"-->
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

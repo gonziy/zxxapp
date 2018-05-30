@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:id="@+id/ll_all"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.zxxapp.mall.maintenance.ui.shopping.ShoppingCartFragment">
+
+        <!--<include-->
+            <!--android:id="@+id/shopping_title"-->
+            <!--layout="@layout/header_cart" />-->
+
+
+        <com.zxxapp.xrecyclerview.XRecyclerView
+            android:id="@+id/xrv_cart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+
+            android:layout_alignParentBottom="true"
+            android:scrollbarSize="2dp"
+            android:scrollbarThumbVertical="@color/colorWhite"
+            android:scrollbars="vertical" />
+
+
+        <LinearLayout
+            android:id="@+id/rl_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="合计:"
+                android:textColor="@color/colorTabTextNormal" />
+            <TextView
+                android:id="@+id/tv_total_price"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="left|center_vertical"
+                android:padding="5dp"
+                android:text="0.00"
+                android:textColor="@color/colorTabTextNormal" />
+            <Button
+                android:id="@+id/btn_buy"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@color/colorTheme"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="结算"
+                android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

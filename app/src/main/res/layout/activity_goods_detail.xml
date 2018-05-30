@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+        <import type="com.zxxapp.mall.maintenance.utils.TimeUtil" />
+        <import type="com.zxxapp.mall.maintenance.utils.StringUtils" />
+
+        <variable
+            name="goodsDetailBean"
+            type="com.zxxapp.mall.maintenance.bean.goods.GoodsDetailBean" />
+
+    </data>
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_goods_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.zxxapp.mall.maintenance.ui.gank.child.GoodsDetailActivity">
+
+
+        <WebView
+            android:id="@+id/webview_detail"
+            android:layout_width="match_parent"
+            android:scrollbarSize="3dp"
+            android:layout_height="match_parent">
+
+        </WebView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@color/colorWhite"
+            android:layout_marginTop="-55dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="4"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_goods_seller_price"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{StringUtils.doubleToString(goodsDetailBean.sell_price)}"
+                    android:textColor="@color/colorRateRed"
+                    android:textSize="@dimen/quickbar_norm_text_size" />
+
+                <TextView
+                    android:id="@+id/tv_goods_market_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="1dp"
+                    android:text="@{StringUtils.doubleToString(goodsDetailBean.market_price)}"
+                    android:textColor="@color/colorSubtitle"
+                    android:textSize="@dimen/quickbar_lit_text_size" />
+
+            </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/ll_cart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:paddingTop="0dp"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/iv_cart"
+                    android:layout_width="25dp"
+                    android:layout_marginTop="7dp"
+                    android:src="@mipmap/goods_detail_cart"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:layout_height="25dp" />
+                <TextView
+                    android:layout_below="@+id/iv_cart"
+                    android:layout_width="25dp"
+                    android:layout_height="18dp"
+                    android:paddingTop="4dp"
+                    android:textSize="8sp"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorTheme"
+                    android:text="购物袋"/>
+                <TextView
+
+                    android:id="@+id/tv_cart_num"
+                    android:text="10"
+                    android:background="@drawable/background_radius"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"
+                    android:textSize="10sp"
+                    android:layout_marginTop="4dp"
+                    android:layout_alignParentTop="true"
+                    android:textColor="@color/colorWhite"
+                    android:layout_width="wrap_content"
+                    android:minWidth="13dp"
+                    android:gravity="center"
+                    android:layout_height="13dp" />
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/ll_buy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_buy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/zero"
+                    android:background="@drawable/app_header_background"
+                    android:padding="@dimen/zero"
+                    android:text="加入购物车"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/quickbar_btn_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

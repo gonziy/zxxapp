@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:id="@+id/rl_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#e3e3e3"/>
+
+        <RelativeLayout
+            android:layout_below="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8.0dp">
+        <ImageView
+            android:id="@+id/pay_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="12.0dip"
+            android:layout_centerVertical="true" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/pay_icon"
+            android:layout_centerVertical="true">
+            <TextView
+                android:id="@+id/pay_title"
+                android:textSize="16.0sp"
+                android:text="微信支付"
+                android:maxLines="1"
+                android:textColor="#ff616660"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true" />
+            <TextView
+                android:id="@+id/pay_desc"
+                android:text="支付方式解释支付方式解释"
+                android:maxLines="1"
+                android:textSize="13.0sp"
+                android:textColor="#ffa3a3a3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true" />
+        </LinearLayout>
+        <RadioButton
+            android:id="@+id/pay_check"
+            android:clickable="false"
+            android:layout_width="20dp"
+            android:gravity="center"
+            android:layout_height="20dp"
+            android:checked="false"
+            android:button="@null"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_centerVertical="true" />
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>
+
