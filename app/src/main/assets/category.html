@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <meta name="format-detection" content="telephone=no" />
+        <link rel="stylesheet" href="framework/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="framework/css/sm.min.css" />
+        <link rel="stylesheet" href="framework/css/app.css" />
+        <script type="text/javascript" src="framework/js/jquery-3.3.1.min.js"></script>
+        <style>
+            .category-nav{width:25%; height:100%;position:absolute;left:0;top:0;right:auto;bottom:0;}
+            .category-nav ul{margin:0;padding:0;}
+            .category-nav ul li{ width:100%;list-style:none;margin:0; padding:0; color:#37c7a4;}
+            .category-nav ul li a{ padding-left:.5rem;height:100%;line-height:2rem; font-size:.7rem; display:block; border-left:3px solid #37c7a4; border-bottom:1px solid #e8e8e8; border-right:1px solid #e8e8e8; color:#37c7a4;}
+            .category-nav ul li.selected a{ background:#37c7a4; border-right-color:#37c7a4; border-left-color:#1eaf8c; color:#fff;}
+            .category-list{width:75%; height:100%;position:absolute;left:auto;top:0;right:0;bottom:0; background:#fff}
+            .category-list .category-content{ width:96%; margin:2%;height:96%;display:none; overflow-x:hidden;overflow-y:auto; background:#fff}
+            .category-list .category-content h3{ font-weight:bold; color:#333; font-size:.7rem; margin:0;padding:0; padding-bottom: .5rem; padding-left:.5rem;padding-top:.5rem;display:block; clear:both;float:none;}
+            .category-list .category-content a{ width:25%; height:auto; padding-bottom:.2rem; display:block; float:left; font-size:.5rem;text-align:center;}
+            .category-list .category-content a span{ font-size:.5rem; color:#333; display:block; font-weight:bold;}
+            .category-list .category-content a img{ width:60%;}
+        </style>
+    </head>
+    <body>
+        <div class="page-group">
+            <div class="page page-current">
+                <div class="content">
+                    <div class="swiper-container category-nav" style="background:#fff;">
+                        <ul class="swiper-wrapper">
+
+                            <li class="swiper-slide" category-id="2394" onclick=""><a href="#">卫浴</a></li>
+                            <li class="swiper-slide" category-id="2402" onclick=""><a href="#">衣柜</a></li>
+                            <li class="swiper-slide" category-id="0" onclick=""><a href="#">测试</a></li>
+                            <li class="swiper-slide" category-id="0" onclick=""><a href="#">测试</a></li>
+                            <li class="swiper-slide" category-id="0" onclick=""><a href="#">测试</a></li>
+                            <li class="swiper-slide" category-id="0" onclick=""><a href="#">测试</a></li>
+                            <li class="swiper-slide" category-id="0" onclick=""><a href="#">测试</a></li>
+                            <li class="swiper-slide" category-id="0" onclick=""><a href="#">测试</a></li>
+                            <li class="swiper-slide" category-id="0" onclick=""><a href="#">测试</a></li>
+                            <li class="swiper-slide" category-id="0" onclick=""><a href="#">测试</a></li>
+                            <li class="swiper-slide" category-id="0" onclick=""><a href="#">测试</a></li>
+                            <li class="swiper-slide" category-id="0" onclick=""><a href="#">测试</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="category-list">
+
+                        <div class="category-content content-2394" style="background:none;">
+
+                            <h3>维修</h3>
+                            <div class="childlist">
+
+                                <a href="#">
+                                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNTI0MDIxNjcwNzk5IiBjbGFzcz0iaWNvbiIgc3R5bGU9IiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjExNTA4IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjI1NiIgaGVpZ2h0PSIyNTYiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTMxMC42IDU3MS4yaDI4Ljh2MjguOGgtMjguOHYtMjguOHogbS01Ny41IDBoMjguOHYyOC44aC0yOC44di0yOC44eiBtLTU3LjUgMGgyOC44djI4LjhoLTI4Ljh2LTI4Ljh6IG02NjEuNiAzMDJjMi43IDAgNjIuMyAwLjcgNzAuOSA1Ny41SDE4Mi4yYzguMy01NS40IDY0LjEtNTcuNSA3MC45LTU3LjVoODYuM2M0Ny40IDAgNjUuNy0zMi43IDcwLjUtNTggMi45IDAuMSA1LjcgMC40IDguNiAwLjQgMTU3LjEgMCAyODYuNC0xMjAuNSAzMDAuNy0yNzMuOSAyOS0yLjkgNTEuOC0yNy4yIDUxLjgtNTYuOVYxOTcuMmgxNTguMnYzNTkuNmMwIDEyNy4zLTExMC40IDEyOS40LTExNS4xIDEyOS41aC0xNC40djExNS4xYzAgNTYuOCAzNy42IDcxLjggNTcuNSA3MS44ek0xNDYuOCA1NDIuNGg1NDMuNWMtMTQuNCAxMzcuMi0xMzAuOCAyNDQuNS0yNzEuOCAyNDQuNVMxNjEuMiA2NzkuNiAxNDYuOCA1NDIuNHogbS0yMy4yLTI4LjhjLTE1LjkgMC0yOC44LTEyLjktMjguOC0yOC44czEyLjktMjguOCAyOC44LTI4LjhoNDA4LjdjNS40IDEzLjMgOC41IDI3LjkgOC41IDQzLjJoMjguOGMwLTE1LjMgMy4xLTI5LjggOC41LTQzLjJoMTM1LjRjMTUuOSAwIDI4LjggMTIuOSAyOC44IDI4LjhzLTEyLjkgMjguOC0yOC44IDI4LjhIMTIzLjZ6IG0zNjQuOC0xNDMuOGMyOS4xLTE0LjEgNTIuNy0zNy43IDY2LjgtNjYuOCAxNC4xIDI5LjEgMzcuNyA1Mi43IDY2LjggNjYuOC0yOS4xIDE0LjEtNTIuNyAzNy43LTY2LjggNjYuOC0xNC4xLTI5LjEtMzcuOC01Mi43LTY2LjgtNjYuOHpNNzcwLjkgMTMyLjRjMC0xOS44IDE2LjEtMzYgMzYtMzZoODYuM2MxOS44IDAgMzYgMTYuMSAzNiAzNnYzNkg3NzAuOXYtMzZ6IG0xODcgNDI0LjRWMTI1LjJoLTAuN2MtMy42LTMyLjMtMzAuOC01Ny41LTY0LTU3LjVoLTg2LjNjLTMzLjIgMC02MC40IDI1LjMtNjQgNTcuNWgtMC43djMxMC4xYy04LjUtNC45LTE4LjItOC0yOC44LThINTk0LjljMjEuMS0yNi4zIDUzLjQtNDMuMiA4OS43LTQzLjJ2LTI4LjhjLTYzLjUgMC0xMTUuMS01MS42LTExNS4xLTExNS4xaC0yOC44YzAgNjMuNS01MS42IDExNS4xLTExNS4xIDExNS4xdjI4LjhjMzYuMyAwIDY4LjYgMTYuOSA4OS43IDQzLjJIMTIzLjZjLTMxLjcgMC01Ny41IDI1LjgtNTcuNSA1Ny41IDAgMjkuNyAyMi44IDU0IDUxLjggNTYuOUMxMzEgNjgyLjggMjQxLjMgNzk1LjcgMzgxIDgxMy4xYy0zLjIgMTMuMS0xMi43IDMxLjQtNDEuNiAzMS40aC04Ni4zYy0zNC44IDAtMTAwLjcgMjEtMTAwLjcgMTAwLjd2MTQuNGg4MDUuNXYtMTQuNGMwLTc5LjYtNjUuOS0xMDAuNy0xMDAuNy0xMDAuNy0xLjIgMC0yOC44LTAuNS0yOC44LTQzLjJWNzEzLjdjMzYuNS01LjEgMTI5LjUtMzAuNSAxMjkuNS0xNTYuOXogbS02NzYtNDE5YzEwLjUgMTguOSAyNi4xIDM0LjUgNDUgNDVhMTE1Ljg3IDExNS44NyAwIDAgMC00NSA0NSAxMTUuODcgMTE1Ljg3IDAgMCAwLTQ1LTQ1YzE4LjgtMTAuNSAzNC41LTI2LjIgNDUtNDV6TTI2Ny41IDI4My41aDI4LjhjMC00Ny42IDM4LjctODYuMyA4Ni4zLTg2LjN2LTI4LjhjLTQ3LjYgMC04Ni4zLTM4LjctODYuMy04Ni4zaC0yOC44YzAgNDcuNi0zOC43IDg2LjMtODYuMyA4Ni4zdjI4LjhjNDcuNiAwIDg2LjMgMzguNyA4Ni4zIDg2LjN6IiBmaWxsPSIjM0Q4MDk5IiBwLWlkPSIxMTUwOSI+PC9wYXRoPjwvc3ZnPg==" />
+                                    <span>马桶</span>
+                                </a>
+
+                                <a href="#">
+                                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNTI0MDIxNjkwODg4IiBjbGFzcz0iaWNvbiIgc3R5bGU9IiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjExNzQ0IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjI1NiIgaGVpZ2h0PSIyNTYiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTczNSAxOTV2LTMzLjgwN0M3MzUgMTA3LjA1IDY5MC43NjkgNjMgNjM2LjYyNiA2M0gxNjMuMTkzQzEwOS4wNSA2MyA2NSAxMDcuMDUgNjUgMTYxLjE5M1Y5NjNoNzBWMTYxLjE5M2MwLTE1LjQ3IDEyLjcyNC0yOC4xOTMgMjguMTkzLTI4LjE5M2g0NzMuNDMyYzE1LjQ3IDAgMjguMzc0IDEyLjcyNCAyOC4zNzQgMjguMTkzVjE5NUg0NTF2MTA2aDUwOFYxOTVINzM1eiIgZmlsbD0iIzgwOEM5QiIgcC1pZD0iMTE3NDUiPjwvcGF0aD48cGF0aCBkPSJNNTAwIDM0OWgyMXYxMDloLTIxek01MDAgNTIwaDIxdjExOGgtMjF6TTUwMCA3MDBoMjF2MTI4aC0yMXpNNjI4IDM0OWgyMXYxMDloLTIxek02MjggNTIwaDIxdjExOGgtMjF6TTYyOCA3MDBoMjF2MTI4aC0yMXpNNzU3IDM0OWgyMXYxMDloLTIxek03NTcgNTIwaDIxdjExOGgtMjF6TTc1NyA3MDBoMjF2MTI4aC0yMXpNODg1IDM0OWgyMXYxMDloLTIxek04ODUgNTIwaDIxdjExOGgtMjF6TTg4NSA3MDBoMjF2MTI4aC0yMXoiIGZpbGw9IiNCRENDRDQiIHAtaWQ9IjExNzQ2Ij48L3BhdGg+PC9zdmc+" />
+                                    <span>卫浴五金</span>
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                        <div class="category-content content-2402" style="display:none;background:none;">
+
+                            <h3>安装</h3>
+                            <div class="childlist">
+
+                                <a href="#">
+                                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNTI0MDIxNzI5NTkyIiBjbGFzcz0iaWNvbiIgc3R5bGU9IiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjEyMTU5IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjI1NiIgaGVpZ2h0PSIyNTYiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTk0Mi4xOTk3MDggMTA4LjIzNTc1MyAxMDYuNzM5NDA2IDEwOC4yMzU3NTNsMCA3NzEuMTE3Mzg5IDM1LjkxMjMyMyAwIDAgNjQuODQxNjk1IDk0Ljc2ODYzMSAwIDAtNjQuODQxNjk1IDU2OC42MTE3ODggMCAwIDY0Ljg0MTY5NSA5NC43Njg2MzEgMCAwLTY0Ljg0MTY5NSA0MS4zOTg5MjggMEw5NDIuMTk5NzA4IDEwOC4yMzU3NTN6TTY0My45Mjc5MSAxMzguMTYyNjg5bDAgNzExLjI2MzUxN0w0MDUuNTA5OTg1IDg0OS40MjYyMDYgNDA1LjUwOTk4NSAxMzguMTYyNjg5IDY0My45Mjc5MSAxMzguMTYyNjg5ek0xMzYuNjY2MzQyIDEzOC4xNjI2ODlsMjM4LjQxNzkyNSAwIDAgNzExLjI2MzUxN0wxMzYuNjY2MzQyIDg0OS40MjYyMDYgMTM2LjY2NjM0MiAxMzguMTYyNjg5ek0yMTcuNDY5MDcgOTI0LjI0MzU0NmwtNTQuODY2MDUgMCAwLTQ0Ljg5MDQwNCA1NC44NjYwNSAwTDIxNy40NjkwNyA5MjQuMjQzNTQ2ek04ODAuODQ5NDg5IDkyNC4yNDM1NDZsLTU0Ljg2NjA1IDAgMC00NC44OTA0MDQgNTQuODY2MDUgMEw4ODAuODQ5NDg5IDkyNC4yNDM1NDZ6TTkxMi4yNzI3NzIgODQ5LjQyNjIwNmwtMjM4LjQxNzkyNSAwTDY3My44NTQ4NDcgMTM4LjE2MjY4OWwyMzguNDE3OTI1IDBMOTEyLjI3Mjc3MiA4NDkuNDI2MjA2eiIgcC1pZD0iMTIxNjAiPjwvcGF0aD48cGF0aCBkPSJNMzMxLjE5MTQyNyA0NDAuNDI0NzQ0bC00Ny4zODQzMTYgMCAwIDcyLjMyMzQyOWMwIDUuNDg2NjA1IDQuNDg5MDQgOS45NzU2NDUgOS45NzU2NDUgOS45NzU2NDVzOS45NzU2NDUtNC40ODkwNCA5Ljk3NTY0NS05Ljk3NTY0NUwzMDMuNzU4NDAyIDQ2MC4zNzYwMzVsMjcuNDMzMDI1IDBjNS40ODY2MDUgMCA5Ljk3NTY0NS00LjQ4OTA0IDkuOTc1NjQ1LTkuOTc1NjQ1UzMzNi42NzgwMzIgNDQwLjQyNDc0NCAzMzEuMTkxNDI3IDQ0MC40MjQ3NDR6IiBwLWlkPSIxMjE2MSI+PC9wYXRoPjxwYXRoIGQ9Ik01NzAuMTA4MTM0IDUyMi43MjM4MTljNS40ODY2MDUgMCA5Ljk3NTY0NS00LjQ4OTA0IDkuOTc1NjQ1LTkuOTc1NjQ1TDU4MC4wODM3OCA0NjAuMzc2MDM1bDI3LjQzMzAyNSAwYzUuNDg2NjA1IDAgOS45NzU2NDUtNC40ODkwNCA5Ljk3NTY0NS05Ljk3NTY0NXMtNC40ODkwNC05Ljk3NTY0NS05Ljk3NTY0NS05Ljk3NTY0NWwtNDcuMzg0MzE2IDAgMCA3Mi4zMjM0MjlDNTYwLjEzMjQ4OSA1MTguMjM0Nzc4IDU2NC42MjE1MjkgNTIyLjcyMzgxOSA1NzAuMTA4MTM0IDUyMi43MjM4MTl6IiBwLWlkPSIxMjE2MiI+PC9wYXRoPjxwYXRoIGQ9Ik03MTEuMjYzNTE3IDQ2MC4zNzYwMzVsMjcuNDMzMDI1IDAgMCA1Mi4zNzIxMzhjMCA1LjQ4NjYwNSA0LjQ4OTA0IDkuOTc1NjQ1IDkuOTc1NjQ1IDkuOTc1NjQ1czkuOTc1NjQ1LTQuNDg5MDQgOS45NzU2NDUtOS45NzU2NDVMNzU4LjY0NzgzMiA0NDAuNDI0NzQ0bC00Ny4zODQzMTYgMGMtNS40ODY2MDUgMC05Ljk3NTY0NSA0LjQ4OTA0LTkuOTc1NjQ1IDkuOTc1NjQ1UzcwNS43NzY5MTIgNDYwLjM3NjAzNSA3MTEuMjYzNTE3IDQ2MC4zNzYwMzV6IiBwLWlkPSIxMjE2MyI+PC9wYXRoPjwvc3ZnPg==" />
+                                    <span>柜体</span>
+                                </a>
+
+                                <a href="#">
+                                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNTI0MDIxNzYxNTY3IiBjbGFzcz0iaWNvbiIgc3R5bGU9IiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjEyNTgxIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjI1NiIgaGVpZ2h0PSIyNTYiPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PC9zdHlsZT48L2RlZnM+PHBhdGggZD0iTTcyOC40Mjk3NzMgMjYyLjkwNzgyOCAzMjkuNzE0ODg1IDI2Mi45MDc4MjhjLTE3LjA1MDMyOCAwLTMwLjg1Njc3NSAxMy44MDY0NDctMzAuODU2Nzc1IDMwLjg1NTc1MmwwIDM5OC43MTU5MTFjMCAxNy4wNDcyNTggMTMuODA2NDQ3IDMwLjg1MzcwNSAzMC44NTY3NzUgMzAuODUzNzA1bDM5OC43MTM4NjQgMGMxNy4wNDkzMDUgMCAzMC44NTU3NTItMTMuODA2NDQ3IDMwLjg1NTc1Mi0zMC44NTM3MDVMNzU5LjI4NDUwMSAyOTMuNzYzNThDNzU5LjI4NTUyNCAyNzYuNzE0Mjc2IDc0NS40NzkwNzcgMjYyLjkwNzgyOCA3MjguNDI5NzczIDI2Mi45MDc4Mjh6TTUyOS4wNzAyODIgNjk3LjA4MjMyMmMtMTEyLjY0NzU5MyAwLTIwMy45NTgyMjgtOTEuMzEyNjgyLTIwMy45NTgyMjgtMjAzLjk2MjMyMiAwLTExMi42NDg2MTYgOTEuMzA5NjEyLTIwMy45NTgyMjggMjAzLjk1ODIyOC0yMDMuOTU4MjI4IDExMi41OTY0MjggMCAyMDMuOTU5MjUyIDkxLjMwOTYxMiAyMDMuOTU5MjUyIDIwMy45NTgyMjhDNzMzLjAzMTU4MSA2MDUuNzY5NjQgNjQxLjY2NjcxIDY5Ny4wODIzMjIgNTI5LjA3MDI4MiA2OTcuMDgyMzIyeiIgcC1pZD0iMTI1ODIiPjwvcGF0aD48cGF0aCBkPSJNNTI5LjA3MDI4MiAzMDguMDkyOTM3Yy0xMDIuMjQxNTkyIDAtMTg1LjA4MDI3NiA4Mi44Mzc2Ni0xODUuMDgwMjc2IDE4NS4wMjcwNjQgMCAxMDIuMTkwNDI3IDgyLjgzODY4MyAxODUuMDI4MDg3IDE4NS4wODAyNzYgMTg1LjAyODA4NyAxMDIuMTkwNDI3IDAgMTg1LjAyODA4Ny04Mi44Mzc2NiAxODUuMDI4MDg3LTE4NS4wMjgwODdDNzE0LjEwMDQxNiAzOTAuOTMwNTk3IDYzMS4yNjI3NTYgMzA4LjA5MjkzNyA1MjkuMDcwMjgyIDMwOC4wOTI5Mzd6TTY1Ny43MjM0MDggNDMzLjQ0ODk3YzAgNC45MTU5NjMtMy45NzQ1MjEgOC45NDI2NzMtOC44OTA0ODQgOC45NDI2NzNsLTk2LjU5Mjk0MiAwYy00LjkxODAxIDAtOC45NDQ3MTktNC4wMjc3MzMtOC45NDQ3MTktOC45NDI2NzMgMC00LjkxNTk2MyA0LjAyODc1Ny04Ljk0MzY5NiA4Ljk0NDcxOS04Ljk0MzY5Nmw5Ni41OTI5NDIgMEM2NTMuNzQ4ODg2IDQyNC41MDUyNzMgNjU3LjcyMzQwOCA0MjguNTMzMDA3IDY1Ny43MjM0MDggNDMzLjQ0ODk3ek01NzIuNjg2NjYyIDQ5NC44NDczNDJjMCA0LjkxNDk0LTQuMDI4NzU3IDguOTQyNjczLTguOTM5NjAzIDguOTQyNjczbC02OS40MDE2NSAwYy00LjkxMzkxNiAwLTguOTQxNjUtNC4wMjg3NTctOC45NDE2NS04Ljk0MjY3MyAwLTQuOTE5MDMzIDQuMDI4NzU3LTguOTQyNjczIDguOTQxNjUtOC45NDI2NzNsNjkuNDAxNjUgMEM1NjguNjU5OTUzIDQ4NS45MDM2NDUgNTcyLjY4NjY2MiA0ODkuOTI5MzMyIDU3Mi42ODY2NjIgNDk0Ljg0NzM0MnpNNDc0LjE1OTY3MiAzNjMuMTA5OTcxbDExNi40MTMzNiAwYzQuOTE2OTg2IDAgOC45NDE2NSAzLjk3NDUyMSA4Ljk0MTY1IDguOTQyNjczIDAgNC45MTU5NjMtNC4wMjY3MSA4Ljk0MjY3My04Ljk0MTY1IDguOTQyNjczTDQ3NC4xNTk2NzIgMzgwLjk5NTMxN2MtNC45MTkwMzMgMC04Ljg5MTUwOC00LjAyNjcxLTguODkxNTA4LTguOTQyNjczQzQ2NS4yNjgxNjQgMzY3LjA4NDQ5MyA0NjkuMjQwNjM5IDM2My4xMDk5NzEgNDc0LjE1OTY3MiAzNjMuMTA5OTcxek00MTYuOTQ0NTc2IDQyNC41MDUyNzNsOTYuNTk2MDEyIDBjNC45MTQ5NCAwIDguOTQxNjUgNC4wMjc3MzMgOC45NDE2NSA4Ljk0MzY5NiAwIDQuOTE1OTYzLTQuMDI4NzU3IDguOTQyNjczLTguOTQxNjUgOC45NDI2NzNsLTk2LjU5NjAxMiAwYy00LjkxNDk0IDAtOC44OTA0ODQtNC4wMjc3MzMtOC44OTA0ODQtOC45NDI2NzNDNDA4LjA1NDA5MSA0MjguNTMzMDA3IDQxMi4wMzA2NTkgNDI0LjUwNTI3MyA0MTYuOTQ0NTc2IDQyNC41MDUyNzN6TTM3OS45MTkzMTEgNTAzLjc4ODk5MWMtNC45MTY5ODYgMC04Ljg5MDQ4NC00LjAyODc1Ny04Ljg5MDQ4NC04Ljk0MjY3MyAwLTQuOTE5MDMzIDMuOTc0NTIxLTguOTQyNjczIDguODkwNDg0LTguOTQyNjczbDY5LjQ0ODcyMiAwYzQuOTE5MDMzIDAgOC44OTI1MzEgNC4wMjU2ODcgOC44OTI1MzEgOC45NDI2NzMgMCA0LjkxNDk0LTMuOTc0NTIxIDguOTQyNjczLTguODkyNTMxIDguOTQyNjczTDM3OS45MTkzMTEgNTAzLjc4ODk5MXpNNDA4LjA1NDA5MSA1NTYuMTkyNTAxYzAtNC45MTkwMzMgMy45NzU1NDUtOC44OTE1MDggOC44OTA0ODQtOC44OTE1MDhsOTYuNTk2MDEyIDBjNC45MTQ5NCAwIDguOTQxNjUgMy45NzQ1MjEgOC45NDE2NSA4Ljg5MTUwOCAwIDQuOTE0OTQtNC4wMjg3NTcgOC45NDA2MjYtOC45NDE2NSA4Ljk0MDYyNmwtOTYuNTk2MDEyIDBDNDEyLjAzMDY1OSA1NjUuMTM1MTc0IDQwOC4wNTQwOTEgNTYxLjEwNzQ0MSA0MDguMDU0MDkxIDU1Ni4xOTI1MDF6TTU5MC41NzMwMzEgNjI2LjUzMjUyMyA0NzQuMTU5NjcyIDYyNi41MzI1MjNjLTQuOTE5MDMzIDAtOC44OTE1MDgtNC4wMjc3MzMtOC44OTE1MDgtOC45NDE2NSAwLTQuOTIxMDggMy45NzQ1MjEtOC44OTE1MDggOC44OTE1MDgtOC44OTE1MDhsMTE2LjQxMzM2IDBjNC45MTY5ODYgMCA4Ljk0MTY1IDMuOTcyNDc1IDguOTQxNjUgOC44OTE1MDhDNTk5LjUxNDY4MSA2MjIuNTA0NzkgNTk1LjQ4ODk5NCA2MjYuNTMyNTIzIDU5MC41NzMwMzEgNjI2LjUzMjUyM3pNNjUyLjQ5MzI5IDU2NS4xMzUxNzRsLTEwMC4yNTIyODUgMGMtNC45MTgwMSAwLTguOTQ0NzE5LTQuMDI3NzMzLTguOTQ0NzE5LTguOTQwNjI2IDAtNC45MTkwMzMgNC4wMjg3NTctOC44OTE1MDggOC45NDQ3MTktOC44OTE1MDhsMTAwLjI1MjI4NSAwYzQuOTE5MDMzIDAgOC45NDE2NSAzLjk3NDUyMSA4Ljk0MTY1IDguODkxNTA4QzY2MS40MzQ5MzkgNTYxLjEwNzQ0MSA2NTcuNDA5MjUzIDU2NS4xMzUxNzQgNjUyLjQ5MzI5IDU2NS4xMzUxNzR6TTY4Ny4wNjI2MiA0OTQuODQ3MzQyYzAgNC45MTQ5NC00LjAyODc1NyA4Ljk0MjY3My04Ljk0MjY3MyA4Ljk0MjY3M2wtNjkuNDAwNjI2IDBjLTQuOTEzOTE2IDAtOC45NDA2MjYtNC4wMjg3NTctOC45NDA2MjYtOC45NDI2NzMgMC00LjkxOTAzMyA0LjAyODc1Ny04Ljk0MjY3MyA4Ljk0MDYyNi04Ljk0MjY3M2w2OS40MDA2MjYgMEM2ODMuMDMzODYzIDQ4NS45MDM2NDUgNjg3LjA2MjYyIDQ4OS45MjkzMzIgNjg3LjA2MjYyIDQ5NC44NDczNDJ6IiBwLWlkPSIxMjU4MyI+PC9wYXRoPjwvc3ZnPg==" />
+                                    <span>五金配件</span>
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function(){
+                $(".category-list .category-content:first").show();
+                $(".category-nav ul li:first").addClass("selected");
+                $(".category-nav ul li").click(function(){
+                    var cid= $(this).attr("category-id");
+                    $(".category-nav ul li").removeClass("selected");
+                    $(this).addClass("selected");
+                    $(".category-content").hide();
+                    $(".content-"+cid).show();
+                })
+            })
+        </script>
+    </body>
+</html>

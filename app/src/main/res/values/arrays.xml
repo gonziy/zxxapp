@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="logo_file_source">
+        <item>拍摄照片</item>
+        <!--item>拍摄视频</item-->
+        <item>系统图库</item>
+        <!--item>文件管理器</item-->
+    </string-array>
+</resources>

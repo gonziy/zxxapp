@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" href="framework/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="framework/css/sm.min.css" />
+    <link rel="stylesheet" href="framework/css/app.css" />
+    <script type="text/javascript" src="framework/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="http://www.zhenmeizhixiu.com/test.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.post(apihost + "account/getCouponListByAccountIdAPI",{"token":token},function (data) {
+                alert(data);
+                var json = eval("("+data+")");
+
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current">
+        <div class="content-padded">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-content-inner">这是一个用纯文本的简单卡片。但卡片可以包含自己的页头，页脚，列表视图，图像，和里面的任何元素。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

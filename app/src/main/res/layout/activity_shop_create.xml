@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.shop.CreateActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/titleEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="请输入商铺名称"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toBottomOf="@+id/logoImage" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="商铺名称："
+                app:layout_constraintBaseline_toBaselineOf="@+id/titleEdit"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商铺地址："
+                app:layout_constraintBaseline_toBaselineOf="@+id/addressEdit"
+                app:layout_constraintEnd_toEndOf="@+id/textView2" />
+
+            <EditText
+                android:id="@+id/addressEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="请输入商铺地址"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/titleEdit"
+                app:layout_constraintTop_toBottomOf="@+id/titleEdit" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商铺简介："
+                app:layout_constraintBaseline_toBaselineOf="@+id/introEdit"
+                app:layout_constraintEnd_toEndOf="@+id/textView8" />
+
+            <EditText
+                android:id="@+id/introEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="请输入商铺简介"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/addressEdit"
+                app:layout_constraintTop_toBottomOf="@+id/addressEdit" />
+
+            <EditText
+                android:id="@+id/noticeEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:hint="请输入商铺公告"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/introEdit"
+                app:layout_constraintTop_toBottomOf="@+id/introEdit" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商铺公告："
+                app:layout_constraintBaseline_toBaselineOf="@+id/noticeEdit"
+                app:layout_constraintEnd_toEndOf="@+id/textView9" />
+
+            <ImageView
+                android:id="@+id/locationImage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="@+id/noticeEdit"
+                app:layout_constraintTop_toBottomOf="@+id/noticeEdit"
+                app:srcCompat="@drawable/ic_shop_location" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:text="商铺位置："
+                app:layout_constraintBottom_toBottomOf="@+id/locationImage"
+                app:layout_constraintEnd_toEndOf="@+id/textView10"
+                app:layout_constraintTop_toTopOf="@+id/locationImage" />
+
+            <TextView
+                android:id="@+id/locationText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/locationImage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/locationImage"
+                app:layout_constraintTop_toTopOf="@+id/locationImage" />
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="保存信息"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/locationImage" />
+
+            <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_shop_head_placeholder" />
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+
+</layout>
+

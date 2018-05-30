@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="com.zxxapp.mall.maintenance.utils.TimeUtil" />
+
+        <variable
+            name="resultsBean"
+            type="com.zxxapp.mall.maintenance.bean.article.ArticleBean.ResultsBean" />
+
+    </data>
+    <LinearLayout
+        android:id="@+id/ll_one_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/iv_one_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY" />
+
+    </LinearLayout>
+
+</layout>

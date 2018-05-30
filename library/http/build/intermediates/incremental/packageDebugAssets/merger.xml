@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="G:\A1802Weixiu\zhixiu\library\http\src\main\assets"/><source path="G:\A1802Weixiu\zhixiu\library\http\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="G:\A1802Weixiu\zhixiu\library\http\src\debug\assets"/></dataSet></merger>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorWhite"
+            android:fillViewport="true">
+            <RelativeLayout
+                android:id="@+id/rl_all"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:background="@color/colorWhite"
+                android:layout_height="wrap_content"
+                xmlns:my="http://schemas.android.com/apk/res-auto"
+                tools:context="com.zxxapp.mall.maintenance.ui.shopping.OrderActivity">
+
+                <LinearLayout
+                    android:id="@+id/ll_write_addr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+                    <EditText
+                        android:id="@+id/et_accept_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:maxLength="6"
+                        android:hint="请填写姓名"
+                        android:textColor="@color/colorTabTextNormal"
+                        android:background="@drawable/text_view_border_gray"
+                        />
+                    <EditText
+                        android:id="@+id/et_accept_mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:hint="请填写手机号码"
+                        android:maxLength="20"
+                        android:inputType="phone"
+                        android:textColor="@color/colorTabTextNormal"
+                        android:background="@drawable/text_view_border_gray"
+                        />
+                    <EditText
+                        android:id="@+id/et_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:maxLength="30"
+                        android:hint="您的详细地址"
+                        android:textColor="@color/colorTabTextNormal"
+                        android:background="@drawable/text_view_border_gray"
+                        />
+                    <EditText
+                        android:id="@+id/et_remark"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:textSize="14sp"
+                        android:inputType="textMultiLine"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:maxLength="30"
+                        android:minLines="5"
+                        android:gravity="left|top"
+                        android:hint="现场情况简要描述"
+                        android:textColor="@color/colorTabTextNormal"
+                        android:background="@drawable/text_view_border_gray"
+                        />
+
+                </LinearLayout>
+
+
+
+
+
+            </RelativeLayout>
+        </ScrollView>
+        <LinearLayout
+            android:id="@+id/rl_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorWhite">
+            <TextView
+                android:id="@+id/tv_total_price"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="left|center_vertical"
+                android:padding="5dp"
+                android:textColor="@color/colorTabTextNormal" />
+            <TextView
+                android:id="@+id/btn_submit"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@color/colorTheme"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="提交订单"
+                android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

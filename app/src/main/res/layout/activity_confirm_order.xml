@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_order_amount"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:paddingTop="10dp"
+            android:text=""
+            />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorWhite"
+            android:fillViewport="true">
+            <RelativeLayout
+                android:id="@+id/rl_all"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:background="@color/colorWhite"
+                android:layout_height="wrap_content"
+                xmlns:my="http://schemas.android.com/apk/res-auto"
+                tools:context="com.zxxapp.mall.maintenance.ui.shopping.OrderActivity">
+                <com.zxxapp.mall.maintenance.view.paymentradio.PayRadioGroup
+                    android:layout_below="@id/v_line"
+                    android:id="@+id/paymentGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ffffff"
+                    my:orientation="vertical"
+                    >
+
+                    <com.zxxapp.mall.maintenance.view.paymentradio.PayRadioPurified
+                        android:id="@+id/p_weixin"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        my:radio="@drawable/delete_message"
+                        my:logo1="@mipmap/wx_icon"
+                        my:title1="微信支付"
+                        my:desc="中国领先的第三方支付平台"
+                        />
+
+                    <com.zxxapp.mall.maintenance.view.paymentradio.PayRadioPurified
+                        android:id="@+id/p_alipay"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        my:radio="@drawable/delete_message"
+                        my:logo1="@mipmap/alipay_icon"
+                        my:title1="支付宝"
+                        my:desc="全球领先的独立第三方支付平台"
+                        />
+
+                </com.zxxapp.mall.maintenance.view.paymentradio.PayRadioGroup>
+            </RelativeLayout>
+        </ScrollView>
+        <LinearLayout
+            android:id="@+id/rl_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="合计:"
+                android:textColor="@color/colorTabTextNormal" />
+            <TextView
+                android:id="@+id/tv_total_price"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="left|center_vertical"
+                android:padding="5dp"
+                android:text="0.00"
+                android:textColor="@color/colorTabTextNormal" />
+            <TextView
+                android:id="@+id/tv_settlement"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@color/colorTheme"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="支付"
+                android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

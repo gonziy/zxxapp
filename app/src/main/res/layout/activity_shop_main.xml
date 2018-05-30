@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.shop.ShopMainActivity"
+        android:orientation="vertical">
+
+        <com.zxxapp.mall.maintenance.base.NoScrollHorizontalViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"></com.zxxapp.mall.maintenance.base.NoScrollHorizontalViewPager>
+
+        <com.ashokvarma.bottomnavigation.BottomNavigationBar
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" />
+    </LinearLayout>
+</layout>

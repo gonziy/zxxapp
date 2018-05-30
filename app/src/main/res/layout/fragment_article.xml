@@ -1,0 +1,31 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<com.zxxapp.mall.maintenance.view.sliding.SlidingLayout xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:id="@+id/slidingLayout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--app:background_view="@layout/sliding_view_bg"-->
+    <!--app:sliding_mode="top"-->
+    <!--app:top_max="200dp">-->
+    <!--app:sliding_mode="both" 上下均显示-->
+    <!--app:sliding_pointer_mode="more"-->
+
+    <!--为了出现下拉阴影效果（加了上面的控件后就没有了）-->
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/srl_index"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.zxxapp.mall.maintenance.ui.gank.child.IndexFragment">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/xrv_index"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarFadeDuration="1"
+            android:scrollbarSize="4dp"
+            android:scrollbars="vertical" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <!--</com.zxxapp.mall.maintenance.view.sliding.SlidingLayout>-->
+</layout>
