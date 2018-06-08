@@ -1,5 +1,7 @@
 package com.zxxapp.mall.maintenance.Receiver;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.zxxapp.mall.maintenance.MainActivity;
+import com.zxxapp.mall.maintenance.ui.shop.RobbingActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +28,7 @@ import cn.jpush.android.api.JPushInterface;
  * 2) 接收不到自定义消息
  */
 public class JPushReceiver extends BroadcastReceiver {
-	private static final String TAG = "JIGUANG-Example";
+	private static final String TAG = "JPush";
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -37,20 +40,29 @@ public class JPushReceiver extends BroadcastReceiver {
 				String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
 				Log.d(TAG, "[MyReceiver] 接收Registration Id : " + regId);
 				//send the Registration Id to your server...
-
 			} else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
 				Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
 				processCustomMessage(context, bundle);
-
 			} else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
 				Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
 				int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
 				Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
-
 			} else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
 				Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
 
 
+				//通过notificationId清除通知
+				int notificationId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
+
+				//获取推送过来的数据，一般是JSON格式
+				String message = bundle.getString(JPushInterface.EXTRA_EXTRA);
+				JSONObject jsonObject = new JSONObject(message);
+				String orderNo = jsonObject.optString("orderNo");
+
+				Intent intent1 = new Intent(context, RobbingActivity.class);
+				intent1.putExtra("orderNo", orderNo);
+				intent1.putExtra("notificationId", notificationId);
+				context.startActivity(intent1);
 			} else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
 				Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
 				//在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..

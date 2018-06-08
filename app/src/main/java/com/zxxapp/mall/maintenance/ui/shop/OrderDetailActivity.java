@@ -2,16 +2,17 @@ package com.zxxapp.mall.maintenance.ui.shop;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.zxxapp.mall.maintenance.R;
+import com.zxxapp.mall.maintenance.bean.RequestBaseBean;
 import com.zxxapp.mall.maintenance.bean.RequestDataBean;
-import com.zxxapp.mall.maintenance.bean.RequestPaginationBean;
 import com.zxxapp.mall.maintenance.bean.shop.OrderBean;
 import com.zxxapp.mall.maintenance.databinding.ActivityOrderDetailBinding;
-import com.zxxapp.mall.maintenance.helper.account.AccountHelper;
 import com.zxxapp.mall.maintenance.http.HttpClient;
 import com.zxxapp.mall.maintenance.utils.ToastUtil;
 
@@ -19,13 +20,14 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class OrderDetailActivity extends AppCompatActivity implements View.OnClickListener {
     private ActivityOrderDetailBinding binding;
+    private String orderNo;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +36,11 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
 
         Intent intent = getIntent();
         int orderId = intent.getIntExtra("orderId", -1);
-        String orderNo = intent.getStringExtra("orderNo");
+        orderNo = intent.getStringExtra("orderNo");
 
         binding.backButton.setOnClickListener(this);
         binding.finishButton.setOnClickListener(this);
+        binding.offerButton.setOnClickListener(this);
 
         initData(orderNo);
     }
@@ -66,13 +69,45 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
                             binding.customName.setText(orderBean.getName());
                             binding.customPhone.setText(orderBean.getPhone());
                             binding.customAddressText.setText(orderBean.getAddress());
+                            binding.servceText.setText(orderBean.getContent());
+
+                            //0.提交订单未付款、2.确定金额、1.已付款，已完成、5.退单
+                            if("0".equalsIgnoreCase(orderBean.getStatus())){
+                                binding.quoteLayout.setVisibility(View.VISIBLE);
+                                binding.paymentLayout.setVisibility(View.GONE);
+                                binding.serviceLayout.setVisibility(View.GONE);
+
+                                binding.orderStatusText.setText("客户提交订单");
+                            }else if("2".equalsIgnoreCase(orderBean.getStatus())){
+                                binding.quoteLayout.setVisibility(View.GONE);
+                                binding.paymentLayout.setVisibility(View.VISIBLE);
+                                binding.serviceLayout.setVisibility(View.GONE);
+
+                                binding.orderStatusText.setText("商家完成报价");
+                            }else if("1".equalsIgnoreCase(orderBean.getStatus())){
+                                binding.quoteLayout.setVisibility(View.GONE);
+                                binding.paymentLayout.setVisibility(View.VISIBLE);
+                                binding.serviceLayout.setVisibility(View.VISIBLE);
+
+                                binding.orderStatusText.setText("客户完成支付");
+                            }else if("5".equalsIgnoreCase(orderBean.getStatus())){
+                                binding.quoteLayout.setVisibility(View.GONE);
+                                binding.paymentLayout.setVisibility(View.GONE);
+                                binding.serviceLayout.setVisibility(View.GONE);
+
+                                binding.orderStatusText.setText("商家退单");
+                            }
+
+                            DecimalFormat df = new DecimalFormat(",###,##0.00");
+
+                            binding.offerEdit.setText(df.format(orderBean.getUnitPrice()));
+                            binding.priceText.setText(df.format(orderBean.getUnitPrice()));
 
                             if (orderBean.getPayment()==null){
                                 binding.paymentText.setText("未支付");
                                 binding.paymentTimeText.setText("");
                                 binding.paymentTypeText.setText("");
                             }else{
-                                DecimalFormat df = new DecimalFormat("0.00");
                                 binding.paymentText.setText(df.format(orderBean.getPayment()));
 
                                 if(orderBean.getPaymentTime()!=null) {
@@ -101,6 +136,45 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
             finish();
         } else if (v.getId() == R.id.finishButton) {
             finish();
+        } else if(v.getId()== R.id.offerButton){
+            updateOrderPrice();
         }
+    }
+
+    private void updateOrderPrice() {
+        String memo = binding.memoEdit.getText().toString();
+        float price = Float.parseFloat(binding.offerEdit.getText().toString());
+
+        HttpClient.Builder.getZhiXiuServer().updateOrderPrice(orderNo, price)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<RequestBaseBean>() {
+
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(RequestBaseBean requestBaseBean) {
+                        if("true".equalsIgnoreCase(requestBaseBean.getSuccess())){
+                            ToastUtil.showToast("已更新报价。");
+
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    finish();
+                                }
+                            }, Toast.LENGTH_LONG);
+                        }else {
+                            ToastUtil.showToast("更新报价失败，请重新尝试。");
+                        }
+                    }
+                });
     }
 }

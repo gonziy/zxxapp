@@ -4,33 +4,26 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.zxxapp.mall.maintenance.R;
-import com.zxxapp.mall.maintenance.databinding.ActivityShopCreateBinding;
 import com.zxxapp.mall.maintenance.databinding.ActivityShopMainBinding;
-import com.zxxapp.mall.maintenance.databinding.ActivitySubMainBinding;
+import com.zxxapp.mall.maintenance.helper.account.AccountHelper;
 
-import java.lang.reflect.Field;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShopMainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener,
         KindFragment.OnFragmentInteractionListener,
         MineFragment.OnFragmentInteractionListener,
-        OrderFragment.OnFragmentInteractionListener,
-        MessageFragment.OnFragmentInteractionListener {
+        OrderFragment.OnFragmentInteractionListener{
 
     private ActivityShopMainBinding binding;
 
@@ -43,8 +36,6 @@ public class ShopMainActivity extends AppCompatActivity implements BottomNavigat
                 case R.id.navigation_service:
                     return true;
                 case R.id.navigation_order:
-                    return true;
-                case R.id.navigation_message:
                     return true;
                 case R.id.navigation_mine:
                     return true;
@@ -70,7 +61,6 @@ public class ShopMainActivity extends AppCompatActivity implements BottomNavigat
 
         navigationBar.addItem(new BottomNavigationItem(R.drawable.ic_shop_service_normal, "服务").setActiveColorResource(R.color.colorTabTextCheck))
                 .addItem(new BottomNavigationItem(R.drawable.ic_shop_order_normal, "订单").setActiveColorResource(R.color.colorTabTextCheck))
-                .addItem(new BottomNavigationItem(R.drawable.ic_shop_message_normal, "消息").setActiveColorResource(R.color.colorTabTextCheck))
                 .addItem(new BottomNavigationItem(R.drawable.ic_shop_mine_normal, "我的").setActiveColorResource(R.color.colorTabTextCheck))
                 .setFirstSelectedPosition(0)
                 .initialise(); //所有的设置需在调用该方法前完成
@@ -81,9 +71,8 @@ public class ShopMainActivity extends AppCompatActivity implements BottomNavigat
     private void initViewPager(ViewPager viewPager) {
         final List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(KindFragment.newInstance());
-        fragmentList.add(OrderFragment.newInstance("3", "4"));
-        fragmentList.add(MessageFragment.newInstance("5", "6"));
-        fragmentList.add(MineFragment.newInstance("7", "8"));
+        fragmentList.add(OrderFragment.newInstance());
+        fragmentList.add(MineFragment.newInstance());
 
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
 
@@ -94,7 +83,7 @@ public class ShopMainActivity extends AppCompatActivity implements BottomNavigat
 
             @Override
             public int getCount() {
-                return 4;
+                return 3;
             }
         });
     }

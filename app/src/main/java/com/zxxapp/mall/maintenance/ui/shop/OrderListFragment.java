@@ -163,10 +163,6 @@ public class OrderListFragment extends Fragment {
                             orderBeanArrayResultBean.getTotal();
                             for (OrderBean bean : orderBeanArrayResultBean.getDataRows()) {
                                 orderBeanList.add(bean);
-//                                orderBeanList.add(bean);
-//                                orderBeanList.add(bean);
-//                                orderBeanList.add(bean);
-//                                orderBeanList.add(bean);
                             }
 
                             adapter.notifyDataSetChanged();

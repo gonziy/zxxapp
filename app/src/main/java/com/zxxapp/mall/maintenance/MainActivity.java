@@ -3,6 +3,7 @@ package com.zxxapp.mall.maintenance;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -13,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.http.HttpUtils;
 import com.flyco.dialog.listener.OnBtnClickL;
@@ -39,6 +42,7 @@ import com.zxxapp.mall.maintenance.http.rx.RxBus;
 import com.zxxapp.mall.maintenance.http.rx.RxBusBaseMessage;
 import com.zxxapp.mall.maintenance.http.rx.RxCodeConstants;
 import com.zxxapp.mall.maintenance.ui.book.BookFragment;
+import com.zxxapp.mall.maintenance.ui.chat.FragmentMessage;
 import com.zxxapp.mall.maintenance.ui.gank.GankFragment;
 import com.zxxapp.mall.maintenance.ui.gank.child.GoodsDetailActivity;
 import com.zxxapp.mall.maintenance.ui.menu.NavDownloadActivity;
@@ -61,7 +65,13 @@ import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.zxxapp.mall.maintenance.view.webview.WebViewActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.CSCustomServiceInfo;
+import io.rong.imlib.model.Conversation;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -76,7 +86,8 @@ import rx.schedulers.Schedulers;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
-
+    public static String user1 = "vmVRMp4DIaffvoMmV+2xlbshwQQyWY5jwHV9X5bUWd851kDNHowr/0jPvrF/oswE+7jb/leoZPRgLb+fx9bfiw==";
+    String user2 = "9+Pra2KUor5FactPwci/BsEGX3M0bXI0TC2+QY9D/BJk1rdC32LkhNI49v5v6x75FMCoF6ecHHr9ustRksffRg==";
     private static final int SCAN_QR_REQUEST = 103;
 
     //private FrameLayout llTitleMenu;
@@ -98,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        connect();
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mainActivity = this;
@@ -111,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //initDrawerLayout();
         initListener();
         //initAccount();
+
     }
 
     public static MainActivity getMainActivity(){
@@ -186,11 +199,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        bind.llNavLogin.setOnClickListener(listener);
     }
 
+
     private void initContentFragment() {
+
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
         mFragmentList.add(new GankFragment());
-        mFragmentList.add(new ShoppingCartFragment());
+        mFragmentList.add(new FragmentMessage());
         mFragmentList.add(new MineFragment());
+
 
         // 注意使用的是：getSupportFragmentManager
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragmentList);
@@ -545,5 +561,82 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void toViewPager(int page){
         mBinding.include.vpContent.setCurrentItem(page);
 
+    }
+
+
+
+    public void connect() {
+        RongIM.connect(user1, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                Log.e("rongcloud", "连接通讯服务器成功—————>" + s);
+                Toast.makeText(MainActivity.this, "连接成功" + s, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.e("rongcloud", "连接通讯服务器失败—————>" + errorCode.getMessage());
+                Toast.makeText(MainActivity.this, "连接通讯服务器失败—————>" + errorCode.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void connectyidong() {
+        RongIM.connect(user2, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+
+            }
+            @Override
+            public void onSuccess(String s) {
+                Log.e("","连接成功—————>"+s);
+                Toast.makeText(MainActivity.this,"连接成功"+s,Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        });
+    }
+
+    public void list(View view) {
+//        startActivity(new Intent(this, ConversationListActivity.class));
+        Map<String, Boolean> map = new HashMap<>();
+        map.put(Conversation.ConversationType.PRIVATE.getName(), false); // 会话列表需要显示私聊会话, 第二个参数 true 代表私聊会话需要聚合显示
+        map.put(Conversation.ConversationType.GROUP.getName(), false);  // 会话列表需要显示群组会话, 第二个参数 false 代表群组会话不需要聚合显示
+        RongIM.getInstance().startConversationList(this, map);
+    }
+
+    public void convers(View view) {
+        RongIM.getInstance().startPrivateChat(this, "10086", "移动");
+    }
+
+
+    public void kefu(View view) {
+        //首先需要构造使用客服者的用户信息
+        CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+        CSCustomServiceInfo csInfo = csBuilder.nickName("客服").build();
+
+        /**
+         * 启动客户服聊天界面。
+         *
+         * @param context           应用上下文。
+         * @param customerServiceId 要与之聊天的客服 Id。
+         * @param title             聊天的标题，开发者可以在聊天界面通过 intent.getData().getQueryParameter("title") 获取该值, 再手动设置为标题。
+         * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+         */
+        RongIM.getInstance().startCustomerServiceChat(this, "KEFU149404318864090", "在线客服",csInfo);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RongIM.getInstance().disconnect();//不设置收不到推送
     }
 }

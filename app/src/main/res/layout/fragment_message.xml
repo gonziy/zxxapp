@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.shop.MessageFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+
+    <ScrollView
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="message" />
+        android:fillViewport="true">
+        <com.zxxapp.xrecyclerview.XRecyclerView
+            android:id="@+id/xrv_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="vertical"
+            tools:context="com.zxxapp.mall.maintenance.ui.shopping.ShopListActivity">
+        </com.zxxapp.xrecyclerview.XRecyclerView>
+    </ScrollView>
 
-</FrameLayout>
+
+
+</layout>

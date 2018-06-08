@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.shop.CapitalActivity">
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="总资产（元）"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/totalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorContent"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:text="今日收益"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dayText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="#e8541e"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView31" />
+
+        <TextView
+            android:id="@+id/textView36"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/bg_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dayText" />
+
+        <TextView
+            android:id="@+id/textView38"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="钱包金额"
+            android:textColor="@color/colorContent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView11" />
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/textView41"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView36"
+            app:srcCompat="@drawable/ic_wallet" />
+
+        <TextView
+            android:id="@+id/walletText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView38" />
+
+        <TextView
+            android:id="@+id/textView41"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/bg_color"
+            app:layout_constraintBottom_toTopOf="@+id/textView44"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView36" />
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView41"
+            app:layout_constraintTop_toTopOf="@+id/textView41"
+            app:srcCompat="@drawable/ic_deposit" />
+
+        <TextView
+            android:id="@+id/textView42"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="已提现"
+            android:textColor="@color/colorContent"
+            app:layout_constraintStart_toEndOf="@+id/textView41"
+            app:layout_constraintTop_toBottomOf="@+id/imageView12" />
+
+        <TextView
+            android:id="@+id/depositText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/textView41"
+            app:layout_constraintTop_toBottomOf="@+id/textView42" />
+
+        <TextView
+            android:id="@+id/textView44"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/bg_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/walletText" />
+
+        <LinearLayout
+            android:id="@+id/ll_deposit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/ripple_one_item_bg"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView44">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_money_deposit" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="提现"
+                android:textColor="@color/colorContent"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"></View>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@mipmap/more" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

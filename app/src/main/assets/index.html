@@ -7,6 +7,7 @@
         <meta name="format-detection" content="telephone=no" />
         <link rel="stylesheet" href="framework/css/font-awesome.min.css" />
         <link rel="stylesheet" href="framework/css/sm.min.css" />
+        <link rel="stylesheet" href="framework/css/swiper.css" />
         <link rel="stylesheet" href="framework/css/app.css" />
         <script type="text/javascript" src="framework/js/jquery-3.3.1.min.js"></script>
     </head>
@@ -14,7 +15,16 @@
         <div class="page-group">
             <div class="page page-current">
                 <div class="content">
-                    <img src="framework/img/banner.jpg" style=" width:100%"></img>
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide"><img src="framework/img/banner.jpg" /></div>
+                            <div class="swiper-slide"><img src="framework/img/banner.jpg" /></div>
+                            <div class="swiper-slide"><img src="framework/img/banner.jpg" /></div>
+                            <div class="swiper-slide"><img src="framework/img/banner.jpg" /></div>
+                            <div class="swiper-slide"><img src="framework/img/banner.jpg" /></div>
+                        </div>
+                        <div style="width:100%; border-radius:50% 50% 0 0; height:.5rem; background:#fff; overflow:hidden; position:absolute;left:0; bottom:-.1rem; z-index:99999;"></div>
+                    </div>
                     <div class="content-block-title" style="margin-top:.25rem;margin-bottom:1rem">热门维修</div>
                     <div class="content-padded grid-demo">
                         <div class="row" style=" margin-bottom:1rem;">
@@ -81,5 +91,15 @@
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript" src="framework/js/swiper.jquery.min.js"></script>
+        <script>
+        var swiper = new Swiper('.swiper-container',{
+        loop : true,
+        autoplay : 4000
+        });
+        </script>
+
+
     </body>
 </html>

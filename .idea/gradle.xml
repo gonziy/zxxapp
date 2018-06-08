@@ -10,6 +10,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/library/IMKit" />
+            <option value="$PROJECT_DIR$/library/IMLib" />
             <option value="$PROJECT_DIR$/library/http" />
             <option value="$PROJECT_DIR$/library/xrecyclerview" />
             <option value="$PROJECT_DIR$/library/zoomlibrary" />

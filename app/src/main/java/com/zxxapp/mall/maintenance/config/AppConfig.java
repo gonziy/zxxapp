@@ -110,11 +110,15 @@ public class AppConfig {
      */
     public void setUser(User user) {
         SharedPreferencesHelper.getInstance().saveData(KEY_USER +"_token", user.getToken());
+        SharedPreferencesHelper.getInstance().saveData(KEY_USER +"_user_name", user.getUserName());
+        SharedPreferencesHelper.getInstance().saveData(KEY_USER +"_user_id", user.getUserID());
     }
 
     public User getUser() {
         User user = new User();
         user.setToken((String) SharedPreferencesHelper.getInstance().getData(KEY_USER +"_token", ""));
+        user.setUserName((String) SharedPreferencesHelper.getInstance().getData(KEY_USER +"_user_name", ""));
+        user.setUserID((Integer) SharedPreferencesHelper.getInstance().getData(KEY_USER +"_user_id", 0));
         return user;
     }
 

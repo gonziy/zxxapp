@@ -20,6 +20,9 @@ import com.zxxapp.mall.maintenance.bean.account.LoginResult;
 import com.zxxapp.mall.maintenance.bean.account.User;
 import com.zxxapp.mall.maintenance.bean.goods.GoodsDetailBean;
 import com.zxxapp.mall.maintenance.databinding.ActivityLoginBinding;
+import com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper;
+import static com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper.sequence;
+
 import com.zxxapp.mall.maintenance.http.HttpClient;
 import com.zxxapp.mall.maintenance.ui.mine.MineActivity;
 import com.zxxapp.mall.maintenance.utils.BaseTools;
@@ -34,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import cn.jpush.android.api.JPushInterface;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -132,17 +136,19 @@ public class LoginActivity extends AppCompatActivity {
                             User user = new User();
                             user.setPhone("");
                             user.setAvatarImg("");
-                            user.setUserName("");
+                            user.setUserName(loginResult.getData().getUserName());
                             user.setNickName("");
                             user.setEmail("");
                             user.setGroupName("");
                             user.setInviter("");
                             user.setPassword("");
-                            user.setUserID(0);
+                            user.setUserID(loginResult.getData().getUserId());
                             user.setToken(accessToken);
 
                             BaseApplication.getInstance().setUser(user);
 
+                            sequence++;
+                            TagAliasOperatorHelper.getInstance().handleAction(getApplicationContext(),sequence,user.getUserName());
                             LoginActivity.this.finish();
                         }else {
                             ToastUtil.showToast("账号或密码错误");

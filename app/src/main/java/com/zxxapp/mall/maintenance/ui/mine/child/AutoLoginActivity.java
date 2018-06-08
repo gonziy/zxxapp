@@ -1,21 +1,12 @@
 package com.zxxapp.mall.maintenance.ui.mine.child;
 
-import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.http.HttpUtils;
 import com.zxxapp.mall.maintenance.R;
-import com.zxxapp.mall.maintenance.app.BaseApplication;
 import com.zxxapp.mall.maintenance.bean.account.LoginResult;
-import com.zxxapp.mall.maintenance.bean.account.User;
-import com.zxxapp.mall.maintenance.bean.goods.GoodsDetailBean;
 import com.zxxapp.mall.maintenance.http.HttpClient;
-import com.zxxapp.mall.maintenance.ui.mine.MineActivity;
 import com.zxxapp.mall.maintenance.utils.DebugUtil;
-import com.zxxapp.mall.maintenance.utils.TagAliasOperatorHelper;
-import com.zxxapp.mall.maintenance.utils.ToastUtil;
-import com.zxxapp.mall.maintenance.wxapi.WXEntryActivity;
 
 import rx.Observer;
 import rx.Subscription;

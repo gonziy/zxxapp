@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.alipay.sdk.app.AuthTask;
 import com.alipay.sdk.app.PayTask;
 import com.example.http.HttpUtils;
+import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.widget.NormalDialog;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -35,19 +36,23 @@ import com.zxxapp.mall.maintenance.bean.account.AreaBean;
 import com.zxxapp.mall.maintenance.bean.account.CartResult;
 import com.zxxapp.mall.maintenance.bean.account.User;
 import com.zxxapp.mall.maintenance.bean.payment.PayBean;
+import com.zxxapp.mall.maintenance.bean.shopping.CouponListBean;
 import com.zxxapp.mall.maintenance.config.AppConfig;
 import com.zxxapp.mall.maintenance.databinding.ActivityConfirmOrderBinding;
 import com.zxxapp.mall.maintenance.databinding.ActivityOrderBinding;
+import com.zxxapp.mall.maintenance.helper.TencentIM.StringUtil;
 import com.zxxapp.mall.maintenance.helper.account.AccountHelper;
 import com.zxxapp.mall.maintenance.helper.alipay.AuthResult;
 import com.zxxapp.mall.maintenance.helper.alipay.OrderInfoUtil2_0;
 import com.zxxapp.mall.maintenance.helper.alipay.PayResult;
 import com.zxxapp.mall.maintenance.http.RequestImpl;
 import com.zxxapp.mall.maintenance.model.AreaModel;
+import com.zxxapp.mall.maintenance.model.CouponModel;
 import com.zxxapp.mall.maintenance.model.PaymentModel;
 import com.zxxapp.mall.maintenance.model.ShopListModel;
 import com.zxxapp.mall.maintenance.model.ShoppingCartModel;
 import com.zxxapp.mall.maintenance.ui.gank.child.GoodsDetailActivity;
+import com.zxxapp.mall.maintenance.ui.mine.child.CouponListByAccountIdActivity;
 import com.zxxapp.mall.maintenance.ui.mine.child.LoginActivity;
 import com.zxxapp.mall.maintenance.utils.BaseTools;
 import com.zxxapp.mall.maintenance.utils.SharedPreferencesHelper;
@@ -80,8 +85,12 @@ public class OrderConfirmActivity extends BaseActivity<ActivityConfirmOrderBindi
 
     private IWXAPI iwxapi;
     private Double amount = 0.00;
+    private Double orderAmount = 0.00;
     private String orderNo = "";
-
+    private CouponListBean couponList;
+    private List<CouponListBean.DataBean.ListBean> coupons;
+    private ArrayAdapter couponAdapter;
+    private String selectedCouponId = "";
 
     String selectedPayment = "";
 
@@ -101,65 +110,10 @@ public class OrderConfirmActivity extends BaseActivity<ActivityConfirmOrderBindi
         if (getIntent() != null) {
             orderNo = (String) getIntent().getSerializableExtra("order_no");
             amount = (Double) getIntent().getSerializableExtra("amount");
+            orderAmount = amount;
             bindingView.tvOrderAmount.setText("需支付：" + StringUtils.doubleToString(amount));
+            bindingView.tvTotalPrice.setText(StringUtils.doubleToString(amount));
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode==ADDRESS_REQUEST_CODE) {
-//            switch (resultCode) { //根据状态码，处理返回结果
-//                case RESULT_SELECT:
-//                    Bundle bundle = data.getExtras();   //获取intent里面的bundle对象
-//
-//                    String accept_name = bundle.getString("accept_name");
-//                    String mobile = bundle.getString("mobile");
-//                    String province_name = bundle.getString("province_name");
-//                    String city_name = bundle.getString("city_name");
-//                    String area_name = bundle.getString("area_name");
-//                    String province_id = bundle.getString("province_id");
-//                    String city_id = bundle.getString("city_id");
-//                    String area_id = bundle.getString("area_id");
-//                    String address = bundle.getString("address");
-//
-//                    bindingView.tvAcceptName.setText(accept_name);
-//                    bindingView.tvMobile.setText(mobile);
-//                    bindingView.tvProvince.setText(province_name);
-//                    bindingView.tvCity.setText(city_name);
-//                    bindingView.tvArea.setText(area_name);
-//                    bindingView.tvAddress.setText(address);
-//                    bindingView.tvHidProvince.setText(province_id);
-//                    bindingView.tvHidCity.setText(city_id);
-//                    bindingView.tvHidArea.setText(area_id);
-//                    bindingView.etAddress.setText(address);
-//                    bindingView.etAcceptName.setText(accept_name);
-//                    bindingView.etAcceptMobile.setText(mobile);
-//
-//                    break;
-//                case RESULT_CUSTOM:
-//                    bindingView.tvHidProvince.setText("");
-//                    bindingView.tvHidCity.setText("");
-//                    bindingView.tvHidArea.setText("");
-//                    bindingView.etAddress.setText("");
-//                    bindingView.etAcceptName.setText("");
-//                    bindingView.etAcceptMobile.setText("");
-//                    bindingView.llWriteAddr.setVisibility(View.VISIBLE);
-//                    bindingView.llEditAddr.setVisibility(View.GONE);
-//                    break;
-//                default:
-//                    bindingView.tvHidProvince.setText("");
-//                    bindingView.tvHidCity.setText("");
-//                    bindingView.tvHidArea.setText("");
-//                    bindingView.etAddress.setText("");
-//                    bindingView.etAcceptName.setText("");
-//                    bindingView.etAcceptMobile.setText("");
-//                    bindingView.llWriteAddr.setVisibility(View.VISIBLE);
-//                    bindingView.llEditAddr.setVisibility(View.GONE);
-//                    break;
-//            }
-//            statistics();
-//        }
     }
 
 
@@ -187,13 +141,81 @@ public class OrderConfirmActivity extends BaseActivity<ActivityConfirmOrderBindi
                 submitOrder();
             }
         });
+
+        CouponModel couponModel = new CouponModel();
+        couponModel.setData(BaseApplication.getInstance().getUser().getToken());
+        couponModel.getData(new RequestImpl() {
+            @Override
+            public void loadSuccess(Object object) {
+                couponList = (CouponListBean) object;
+                if(couponList.getSuccess().equals("true") && !couponList.getData().getList().isEmpty()){
+                    coupons = couponList.getData().getList();
+                    if(!coupons.isEmpty()){
+                        final List<String> cs = new ArrayList<String>();
+                        cs.add("===请选择优惠券===");
+                        for (CouponListBean.DataBean.ListBean bean:couponList.getData().getList()
+                                ) {
+                            cs.add(bean.getShopName() +" 优惠"+   StringUtils.doubleToString(bean.getCouponAmount()));
+                        }
+                        couponAdapter = new ArrayAdapter(OrderConfirmActivity.this, R.layout.item_spinner_layout,cs);
+                        bindingView.spCoupon.setAdapter(couponAdapter);
+                        bindingView.spCoupon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                if (position > 0) {
+                                    selectedCouponId = String.valueOf(coupons.get(position - 1).getCouponId());
+                                    amount = amount - coupons.get(position - 1).getCouponAmount();
+                                    bindingView.tvOrderAmount.setText("需支付：" + StringUtils.doubleToString(amount));
+                                    bindingView.tvTotalPrice.setText(StringUtils.doubleToString(amount));
+                                }else {
+                                    amount = orderAmount;
+                                    bindingView.tvOrderAmount.setText("需支付：" + StringUtils.doubleToString(amount));
+                                    bindingView.tvTotalPrice.setText(StringUtils.doubleToString(amount));
+                                }
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+
+
+                    }else {
+                        final List<String> cs = new ArrayList<String>();
+                        cs.add("===无优惠券===");
+                        couponAdapter = new ArrayAdapter(OrderConfirmActivity.this, R.layout.item_spinner_layout,cs);
+                        bindingView.spCoupon.setAdapter(couponAdapter);
+                    }
+
+
+
+                }else{
+
+                }
+            }
+
+            @Override
+            public void loadFailed() {
+
+            }
+
+            @Override
+            public void addSubscription(Subscription subscription) {
+
+            }
+        });
+
+
         showContentView();
     }
 
     public void submitOrder()
     {
+        String couponId = "";
+
         if(selectedPayment.equals("alipay")) {
-            mModel.setData(orderNo,"alipay");
+            mModel.setData(orderNo,"alipay",selectedCouponId);
             mModel.Payment(new RequestImpl() {
                 @Override
                 public void loadSuccess(Object object) {
@@ -233,7 +255,7 @@ public class OrderConfirmActivity extends BaseActivity<ActivityConfirmOrderBindi
 //            alipayV2(StringUtils.doubleToString(0.01,preOrderBean.getData().getId());
             //ToastUtil.showToast(preOrderBean.getMsg() + "|" + preOrderBean.getData().getId());
         }else if(selectedPayment.equals("weixin")){
-            mModel.setData(orderNo,"weixin");
+            mModel.setData(orderNo,"weixin",selectedCouponId);
             mModel.Payment(new RequestImpl() {
                 @Override
                 public void loadSuccess(Object object) {
@@ -353,15 +375,46 @@ public class OrderConfirmActivity extends BaseActivity<ActivityConfirmOrderBindi
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        WebViewActivity.loadUrl(OrderConfirmActivity.this, HttpUtils.API_HOST + "payment.aspx?action=succeed&order_no="+outOrderNo,"支付成功");
-                        OrderConfirmActivity.this.finish();
-                        ToastUtil.showToast("支付成功");
+                        //WebViewActivity.loadUrl(OrderConfirmActivity.this, HttpUtils.API_HOST + "payment.aspx?action=succeed&order_no="+outOrderNo,"支付成功");
+
+                        final NormalDialog dialog=new NormalDialog(OrderConfirmActivity.this);
+                        dialog.content("支付成功")
+                                .btnNum(1)
+                                .titleLineHeight(0)
+                                .cornerRadius(10)
+                                .titleTextColor(Color.parseColor("#fffd625b"))
+                                .btnText("确认")
+                                .show();
+                        dialog.setOnBtnClickL(
+                                new OnBtnClickL() {
+                                    @Override
+                                    public void onBtnClick() {
+                                        dialog.dismiss();
+                                        OrderConfirmActivity.this.finish();
+                                    }
+                                }
+                         );
 
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                        WebViewActivity.loadUrl(OrderConfirmActivity.this,HttpUtils.API_HOST + "payment.aspx?action=succeed&order_no="+outOrderNo,"支付失败");
-                        OrderConfirmActivity.this.finish();
-                        ToastUtil.showToast("支付失败");
+                        //WebViewActivity.loadUrl(OrderConfirmActivity.this,HttpUtils.API_HOST + "payment.aspx?action=succeed&order_no="+outOrderNo,"支付失败");
+                        final NormalDialog dialog=new NormalDialog(OrderConfirmActivity.this);
+                        dialog.content("支付失败")
+                                .btnNum(1)
+                                .titleLineHeight(0)
+                                .cornerRadius(10)
+                                .titleTextColor(Color.parseColor("#fffd625b"))
+                                .btnText("确认")
+                                .show();
+                        dialog.setOnBtnClickL(
+                                new OnBtnClickL() {
+                                    @Override
+                                    public void onBtnClick() {
+                                        dialog.dismiss();
+                                        OrderConfirmActivity.this.finish();
+                                    }
+                                }
+                        );
                     }
                     break;
                 }

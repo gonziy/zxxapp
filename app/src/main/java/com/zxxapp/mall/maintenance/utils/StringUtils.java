@@ -86,6 +86,23 @@ public class StringUtils {
             return obj.toString();
         }
     }
+    public static String objectToStatusString(Object obj){
+        if(obj==null){
+            return "未知状态";
+        }else{
+            if(obj.toString().equals("0")){
+                return "等待商家确认";
+            }else if(obj.toString().equals("1")){
+                return "客户已付款";
+            }else if(obj.toString().equals("2")){
+                return "商家已定价";
+            }else if(obj.toString().equals("5")){
+                return "已退单";
+            }else {
+                return "未知状态";
+            }
+        }
+    }
     /**
      * YYYY-MM-DD HH:mm:ss格式的时间字符串转换为{@link Calendar}类型
      *

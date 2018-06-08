@@ -1,6 +1,8 @@
 package com.zxxapp.mall.maintenance.ui.mine;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -10,21 +12,38 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 import com.example.http.HttpUtils;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.zxxapp.mall.maintenance.MainActivity;
 import com.zxxapp.mall.maintenance.R;
 import com.zxxapp.mall.maintenance.app.BaseApplication;
 import com.zxxapp.mall.maintenance.base.BaseFragment;
+import com.zxxapp.mall.maintenance.bean.UserLoginBean;
 import com.zxxapp.mall.maintenance.bean.account.User;
+import com.zxxapp.mall.maintenance.bean.article.ArticleBean;
 import com.zxxapp.mall.maintenance.databinding.FragmentMineBinding;
 import com.zxxapp.mall.maintenance.helper.account.AccountHelper;
+import com.zxxapp.mall.maintenance.http.HttpClient;
+import com.zxxapp.mall.maintenance.http.RequestImpl;
+import com.zxxapp.mall.maintenance.model.CouponModel;
 import com.zxxapp.mall.maintenance.model.UserModel;
+import com.zxxapp.mall.maintenance.ui.mine.child.CouponListByAccountIdActivity;
 import com.zxxapp.mall.maintenance.ui.mine.child.EditUserInfoActivity;
+import com.zxxapp.mall.maintenance.ui.mine.child.Feedback;
 import com.zxxapp.mall.maintenance.ui.mine.child.LoginActivity;
 import com.zxxapp.mall.maintenance.ui.mine.child.OrderByAccountIdActivity;
+import com.zxxapp.mall.maintenance.ui.mine.child.TempOrderByAccountIdActivity;
 import com.zxxapp.mall.maintenance.ui.shop.ValidateActivity;
 import com.zxxapp.mall.maintenance.ui.shopping.OrderConfirmActivity;
 import com.zxxapp.mall.maintenance.utils.DebugUtil;
 import com.zxxapp.mall.maintenance.utils.ToastUtil;
+
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 public class MineFragment extends BaseFragment<FragmentMineBinding> {
@@ -38,6 +57,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
     //检测是否登录
     private String mCheckLogin;
 
+    private static final int SCAN_QR_REQUEST = 103;
     @Override
     public int setContent() {
         return R.layout.fragment_mine;
@@ -74,7 +94,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
 //            showNeedLogin();
 //        }
         if(AccountHelper.isLogin()) {
-            setUserInfo();
+            getUserInfo();
         }else
         {
             LoginActivity.start(activity);
@@ -86,10 +106,15 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                 OrderByAccountIdActivity.start(v.getContext());
             }
         });
+        bindingView.llTempOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TempOrderByAccountIdActivity.start(v.getContext());
+            }
+        });
         bindingView.llMyinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            EditUserInfoActivity.start(v.getContext());
             EditUserInfoActivity.start(v.getContext());
             }
         });
@@ -99,11 +124,32 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                 ValidateActivity.start(v.getContext());
             }
         });
+
+        bindingView.llCoupon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MineFragment.this.getActivity(), CaptureActivity.class);
+                startActivityForResult(intent, SCAN_QR_REQUEST);
+            }
+        });
+        bindingView.llResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CouponListByAccountIdActivity.start(v.getContext());
+            }
+        });
+        bindingView.llService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Feedback.start(v.getContext());
+            }
+        });
         bindingView.btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 User user = new User();
                 user.setToken("");
+                user.setUserName("");
                 BaseApplication.getInstance().setUser(user);
                 try {
                     Thread.sleep(100);
@@ -118,8 +164,52 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
             }
         });
     }
-    public void setUserInfo(){
-     ToastUtil.showToast("获取用户数据接口");
+    public void getUserInfo(){
+        getUserData(new RequestImpl() {
+            @Override
+            public void loadSuccess(Object object) {
+                UserLoginBean bean = (UserLoginBean)object;
+                bindingView.tvMineNickName.setText(bean.getData().getNickName());
+                bindingView.tvMineAgentAddr.setText(bean.getData().getPhone());
+            }
+
+            @Override
+            public void loadFailed() {
+
+            }
+
+            @Override
+            public void addSubscription(Subscription subscription) {
+
+            }
+        });
+    }
+
+    public static void getUserData(final RequestImpl listener) {
+
+        // 添加新的参数
+        Subscription subscription = HttpClient.Builder.getZhiXiuServer().getMyMessageAPI(BaseApplication.getInstance().getUser().getToken())
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<UserLoginBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        listener.loadFailed();
+
+                    }
+
+                    @Override
+                    public void onNext(UserLoginBean bean) {
+                        listener.loadSuccess(bean);
+
+
+                    }
+                });
+        listener.addSubscription(subscription);
     }
 
     private void initView() {
@@ -134,6 +224,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
         if(!AccountHelper.isLogin()) {
             showNeedLogin();
         }else {
+            getUserInfo();
             showContentView();
         }
         DebugUtil.error("--OneFragment   ----onRefresh");
@@ -163,119 +254,6 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
         DebugUtil.error("--OneFragment   ----onResume");
     }
 
-//    private void initWebView() {
-//        webView = bindingView.webview;
-//        WebSettings ws = webView.getSettings();
-//        // 网页内容的宽度是否可大于WebView控件的宽度
-//        ws.setLoadWithOverviewMode(false);
-//        // 保存表单数据
-//        ws.setSaveFormData(true);
-//        // 是否应该支持使用其屏幕缩放控件和手势缩放
-//        ws.setSupportZoom(true);
-//        ws.setBuiltInZoomControls(true);
-//        ws.setDisplayZoomControls(false);
-//        // 启动应用缓存
-//        ws.setAppCacheEnabled(true);
-//        // 设置缓存模式
-//        ws.setCacheMode(WebSettings.LOAD_DEFAULT);
-//        // setDefaultZoom  api19被弃用
-//        // 设置此属性，可任意比例缩放。
-//        ws.setUseWideViewPort(true);
-//        // 缩放比例 1
-//        webView.setInitialScale(1);
-//        // 告诉WebView启用JavaScript执行。默认的是false。
-//        ws.setJavaScriptEnabled(true);
-//        //  页面加载好以后，再放开图片
-//        ws.setBlockNetworkImage(false);
-//        // 使用localStorage则必须打开
-//        ws.setDomStorageEnabled(true);
-//        // 排版适应屏幕
-//        ws.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-//        // WebView是否支持多个窗口。
-//        ws.setSupportMultipleWindows(true);
-//
-//        // webview从5.0开始默认不允许混合模式,https中不能加载http资源,需要设置开启。
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            ws.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-//        }
-//        /** 设置字体默认缩放大小(改变网页字体大小,setTextSize  api14被弃用)*/
-//        ws.setTextZoom(100);
-//
-//        // 与js交互
-//        webView.addJavascriptInterface(new JavascriptBridgeInterface(MineFragment.this.getActivity()), "JavascriptBridge");
-//
-//        webView.setWebViewClient(new WebViewClient(){
-//            @Override
-//            public void onPageFinished(WebView view, String url) {
-//                super.onPageFinished(view, url);
-//                showContentView();
-//            }
-//
-//            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-//                WebViewActivity.loadUrl(getContext(), request.getUrl().toString(),"");
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                WebViewActivity.loadUrl(getContext(), url,"");
-//                return true;
-//            }
-//        });
-//
-//        webView.setWebChromeClient(new WebChromeClient(){
-//            @Override
-//            public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
-//                final NormalDialog dialog = new NormalDialog(view.getContext());
-//                dialog.content(message).style(NormalDialog.STYLE_TWO)//
-//                        .titleTextSize(23)
-//                        .titleTextColor(Color.parseColor("#fffd625b"))
-//                        .cornerRadius(10)
-//                        .titleLineHeight(0)
-//                        .btnNum(1)
-//                        .btnText("确定")
-//                        .show();
-//                dialog.setOnBtnClickL(new OnBtnClickL() {
-//                    @Override
-//                    public void onBtnClick() {
-//                        result.cancel();
-//                        dialog.dismiss();
-//                    }
-//                });
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean onJsConfirm(WebView view, String url, String message, final JsResult result) {
-//                final NormalDialog dialog = new NormalDialog(view.getContext());
-//                dialog.content(message).style(NormalDialog.STYLE_TWO)//
-//                        .titleTextSize(23)
-//                        .titleTextColor(Color.parseColor("#fffd625b"))
-//                        .cornerRadius(10)
-//                        .titleLineHeight(0)
-//                        .show();
-//                dialog.setOnBtnClickL(
-//                        new OnBtnClickL() {
-//                            @Override
-//                            public void onBtnClick() {
-//                                result.cancel();
-//                                dialog.dismiss();
-//                            }
-//                        },
-//                        new OnBtnClickL() {
-//                            @Override
-//                            public void onBtnClick() {
-//                                result.confirm();
-//                                dialog.dismiss();
-//                            }
-//                        });
-//                return true;
-//            }
-//
-//        });
-//    }
 
     private void loadUrl(String url,boolean checkLogin) {
 
@@ -297,6 +275,183 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                 LoginActivity.start(MainActivity.getMainActivity());
             }
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == SCAN_QR_REQUEST){
+                        //处理扫描结果（在界面上显示）
+            if (null != data) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+
+                    if(!result.isEmpty()){
+
+                        if(result.startsWith(HttpUtils.API_HOST)){
+                            String shopId = result.replace(HttpUtils.API_HOST + "zxxapp/order/getCoupon?shopId=","");
+                            CouponModel model = new CouponModel();
+                            model.setCouponData(BaseApplication.getInstance().getUser().getToken(),shopId);
+                            model.getCoupon(new RequestImpl() {
+                                @Override
+                                public void loadSuccess(Object object) {
+                                    final NormalDialog dialog=new NormalDialog((Context)activity);
+                                    dialog.content("领取优惠券成功")//
+                                            .btnNum(1)
+                                            .titleLineHeight(0)
+                                            .cornerRadius(10)
+                                            .btnText("确认")//
+                                            .show();
+                                }
+
+                                @Override
+                                public void loadFailed() {
+                                    final NormalDialog dialog=new NormalDialog((Context)activity);
+                                    dialog.content("领取优惠券失败")//
+                                            .btnNum(1)
+                                            .titleLineHeight(0)
+                                            .cornerRadius(10)
+                                            .btnText("确认")//
+                                            .show();
+                                }
+
+                                @Override
+                                public void addSubscription(Subscription subscription) {
+
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
+//        if (requestCode == SCAN_QR_REQUEST) {
+//            //处理扫描结果（在界面上显示）
+//            if (null != data) {
+//                Bundle bundle = data.getExtras();
+//                if (bundle == null) {
+//                    return;
+//                }
+//                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+//                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+//
+//                    if(!result.isEmpty()){
+//                        //验证邀请人
+//                        if(result.startsWith(HttpUtils.API_HOST + "inviter.aspx")){
+//
+//                            if(AccountHelper.isLogin())
+//                            {
+//                                final String inviter_id = result.replace(HttpUtils.API_HOST + "inviter.aspx?from=","");
+//                                //ToastUtil.showToast("邀请人:" + inviter_id);
+//
+//                                User user = BaseApplication.getInstance().getUser();
+//                                Subscription get = HttpClient.Builder.getUserServer().inviteUser("invite",user.getUserName(),user.getPassword(),inviter_id)
+//                                        .subscribeOn(Schedulers.io())
+//                                        .observeOn(AndroidSchedulers.mainThread())
+//                                        .subscribe(new Observer<LoginResult>(){
+//
+//                                            @Override
+//                                            public void onCompleted() {
+//                                            }
+//
+//                                            @Override
+//                                            public void onError(Throwable e) {
+//                                                ToastUtil.showToast("系统无法读取您的个人信息,请您稍后再试");
+//                                            }
+//
+//                                            @Override
+//                                            public void onNext(LoginResult loginResult) {
+//                                                if(loginResult.getMsg().equals("邀请成功")){
+//                                                    if(loginResult.getData().getInviter()==0) {
+//                                                        final NormalDialog dialog = new NormalDialog(MainActivity.this);
+//                                                        dialog.content("您的邀请人ID为：" + inviter_id).style(NormalDialog.STYLE_ONE)//
+//                                                                .titleTextSize(23)
+//                                                                .titleTextColor(Color.parseColor("#fffd625b"))
+//                                                                .cornerRadius(10)
+//                                                                .titleLineHeight(0)
+//                                                                .show();
+//                                                        dialog.setOnBtnClickL(
+//                                                                new OnBtnClickL() {
+//                                                                    @Override
+//                                                                    public void onBtnClick() {
+//                                                                        SharedPreferencesHelper.getInstance().saveData("inviter_id", inviter_id);
+//                                                                        SharedPreferencesHelper.getInstance().saveData("inviter_time", TimeUtil.getDateTime().getTime());
+//                                                                        ToastUtil.showToast("您接受了"+SharedPreferencesHelper.getInstance().getData("inviter_id", "").toString()+"邀请,有效期1小时");
+//                                                                        dialog.dismiss();
+//                                                                    }
+//                                                                }
+//
+//                                                        );
+//                                                    }else {
+//                                                        final NormalDialog dialog2 = new NormalDialog(MainActivity.this);
+//                                                        dialog2.content("您已经被" + String.valueOf(loginResult.getData().getInviter()) +"邀请过了，无法再次被邀请")
+//                                                                .btnNum(1)
+//                                                                .btnText("我知道了")
+//                                                                .titleLineHeight(0)
+//                                                                .cornerRadius(10)
+//                                                                .titleTextColor(Color.parseColor("#fffd625b"))
+//                                                                .show();
+//                                                        dialog2.setOnBtnClickL(
+//                                                                new OnBtnClickL() {
+//                                                                    @Override
+//                                                                    public void onBtnClick() {
+//                                                                        dialog2.dismiss();
+//                                                                    }
+//                                                                });
+//                                                    }
+//
+//                                                }else {
+//                                                    ToastUtil.showToast("登录信息错误,请您重新登录");
+//                                                }
+//
+//                                            }
+//                                        });
+//
+//
+//                            }else {
+//                                LoginActivity.start(MainActivity.this);
+//                            }
+//                        }
+//                        else if(result.startsWith(HttpUtils.API_HOST + "goods/show-")){
+//                            final String goods_id = result.replace(HttpUtils.API_HOST + "goods/show-","").replace(".aspx","");
+//                            if(!goods_id.isEmpty()) {
+//                                try {
+//                                    int id = Integer.valueOf(goods_id);
+//                                    if (id > 0) {
+//                                        GoodsDetailActivity.start(MainActivity.this, String.valueOf(id));
+//                                    }
+//                                } catch (Exception e) {
+//
+//                                }
+//                            }
+//
+//                        }
+//                        else if(result.equals("孙冰")||result.equals("Gonziy")){
+//                            WebViewActivity.loadUrl(MainActivity.this,"http://shop.zhenmeizhixiu.com/gonziy.aspx","");
+//
+//                        }
+//                        else{
+//                            final NormalDialog dialog=new NormalDialog(this);
+//                            dialog.content("解析结果:" + result)//
+//                                    .btnNum(1)
+//                                    .titleLineHeight(0)
+//                                    .cornerRadius(10)
+//                                    .titleTextColor(Color.parseColor("#fffd625b"))
+//                                    .btnText("确认")//
+//                                    .show();
+//                        }
+//                    }
+//
+//                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+//                    ToastUtil.showToast("解析二维码失败");
+//                }
+//            }
+//        }
     }
 
 }

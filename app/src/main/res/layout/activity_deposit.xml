@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.constraint.ConstraintLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <EditText
+            android:id="@+id/nameEdit"
+            style="?android:attr/textViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@null"
+            android:ems="10"
+            android:hint="请输入收款人姓名"
+            android:inputType="textPersonName"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView32"
+            app:layout_constraintTop_toBottomOf="@+id/textView46" />
+
+        <TextView
+            android:id="@+id/textView32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="收款姓名"
+            app:layout_constraintBaseline_toBaselineOf="@+id/nameEdit"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView40"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="收款卡号"
+            app:layout_constraintBaseline_toBaselineOf="@+id/cardEdit"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/cardEdit"
+            style="?android:attr/textViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@null"
+            android:ems="10"
+            android:hint="请输入收款卡号"
+            android:inputType="numberSigned"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/nameEdit"
+            app:layout_constraintTop_toBottomOf="@+id/textView49" />
+
+        <TextView
+            android:id="@+id/textView46"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/bg_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView49"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/bg_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameEdit" />
+
+        <TextView
+            android:id="@+id/textView48"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/bg_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardEdit" />
+
+        <TextView
+            android:id="@+id/textView47"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/bg_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bankText" />
+
+        <TextView
+            android:id="@+id/textView53"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/bg_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/moneyEdit" />
+
+        <TextView
+            android:id="@+id/textView52"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/bg_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/balanceText" />
+
+        <TextView
+            android:id="@+id/bankText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="中国工商银行"
+            android:textAlignment="viewEnd"
+            app:layout_constraintEnd_toStartOf="@+id/textView55"
+            app:layout_constraintStart_toEndOf="@+id/textView56"
+            app:layout_constraintTop_toBottomOf="@+id/textView48" />
+
+        <TextView
+            android:id="@+id/textView55"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text=">"
+            android:textColor="@color/c3"
+            app:layout_constraintBaseline_toBaselineOf="@+id/bankText"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/textView56"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="收款银行"
+            app:layout_constraintBaseline_toBaselineOf="@+id/bankText"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView57"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="提现金额"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView47" />
+
+        <TextView
+            android:id="@+id/textView58"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="￥"
+            android:textColor="@color/colorContent"
+            android:textSize="24sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/moneyEdit"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/moneyEdit"
+            style="?android:attr/textViewStyle"
+            android:layout_width="344dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:textSize="30sp"
+            app:layout_constraintStart_toEndOf="@+id/textView58"
+            app:layout_constraintTop_toBottomOf="@+id/textView57" />
+
+        <TextView
+            android:id="@+id/balanceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="可用余额"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView53" />
+
+        <TextView
+            android:id="@+id/totalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="全部提现"
+            android:textColor="@android:color/holo_blue_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/balanceText" />
+
+        <Button
+            android:id="@+id/okButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="确认提现"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView52" />
+
+        <TextView
+            android:id="@+id/beyondText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="金额已超过可提现余额"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintStart_toStartOf="@+id/balanceText"
+            app:layout_constraintTop_toTopOf="@+id/balanceText"
+            android:visibility="invisible"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

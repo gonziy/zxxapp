@@ -2,6 +2,7 @@ package com.zxxapp.mall.maintenance.model;
 
 import com.zxxapp.mall.maintenance.bean.shopping.OrderByAccountIdBean;
 import com.zxxapp.mall.maintenance.bean.shopping.ShopListBean;
+import com.zxxapp.mall.maintenance.bean.shopping.TempOrderListBean;
 import com.zxxapp.mall.maintenance.http.HttpClient;
 import com.zxxapp.mall.maintenance.http.RequestImpl;
 
@@ -50,6 +51,32 @@ public class OrderByAccountModel {
                     @Override
                     public void onNext(OrderByAccountIdBean orderByAccountIdBean) {
                         listener.loadSuccess(orderByAccountIdBean);
+
+                    }
+                });
+        listener.addSubscription(subscription);
+    }
+
+    public void getTempOrderData(final RequestImpl listener) {
+
+        // 添加新的参数
+        Subscription subscription = HttpClient.Builder.getZhiXiuServer().getTempOrderByToken(this.token)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<TempOrderListBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        listener.loadFailed();
+
+                    }
+
+                    @Override
+                    public void onNext(TempOrderListBean tempOrderListBean) {
+                        listener.loadSuccess(tempOrderListBean);
 
                     }
                 });

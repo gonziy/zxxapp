@@ -10,20 +10,12 @@ public class LoginResult {
 
 
     /**
-     * data : {"token":"","msg":""}
      * code : 100
+     * data : {"msg":"验证通过!","userName":"admin","userId":1,"token":"0e4ef13d-c079-49dd-bb01-3213c709626f"}
      */
 
-    private DataBean data;
     private String code;
-
-    public DataBean getData() {
-        return data;
-    }
-
-    public void setData(DataBean data) {
-        this.data = data;
-    }
+    private DataBean data;
 
     public String getCode() {
         return code;
@@ -33,22 +25,26 @@ public class LoginResult {
         this.code = code;
     }
 
+    public DataBean getData() {
+        return data;
+    }
+
+    public void setData(DataBean data) {
+        this.data = data;
+    }
+
     public static class DataBean {
         /**
-         * token :
-         * msg :
+         * msg : 验证通过!
+         * userName : admin
+         * userId : 1
+         * token : 0e4ef13d-c079-49dd-bb01-3213c709626f
          */
 
-        private String token;
         private String msg;
-
-        public String getToken() {
-            return token;
-        }
-
-        public void setToken(String token) {
-            this.token = token;
-        }
+        private String userName;
+        private int userId;
+        private String token;
 
         public String getMsg() {
             return msg;
@@ -56,6 +52,30 @@ public class LoginResult {
 
         public void setMsg(String msg) {
             this.msg = msg;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public int getUserId() {
+            return userId;
+        }
+
+        public void setUserId(int userId) {
+            this.userId = userId;
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
         }
     }
 }

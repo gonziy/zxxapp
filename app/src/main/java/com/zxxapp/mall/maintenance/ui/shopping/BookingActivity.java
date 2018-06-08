@@ -70,8 +70,8 @@ import rx.schedulers.Schedulers;
 public class BookingActivity extends BaseActivity<ActivityBookingBinding> {
 
 
-    private String serviceId;
-    private String shopId;
+    private String serviceId = "";
+    private String shopId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +129,7 @@ public class BookingActivity extends BaseActivity<ActivityBookingBinding> {
             LoginActivity.start(BookingActivity.this);
             return;
         }
-        Subscription get = HttpClient.Builder.getZhiXiuServer().addOrder(uploadImg,phone,this.serviceId,this.shopId
+        Subscription get = HttpClient.Builder.getZhiXiuServer().addOrder(uploadImg,phone,this.serviceId,shopId
         ,address,lng,lat,remark,token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

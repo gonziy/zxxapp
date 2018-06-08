@@ -42,7 +42,7 @@ public class TransitionActivity extends AppCompatActivity {
         int i = new Random().nextInt(ConstantsImageUrl.TRANSITION_URLS.length);
         // 先显示默认图
         mBinding.ivDefultPic.setImageDrawable(CommonUtils.getDrawable(R.drawable.img_transition_default));
-        //getAD();
+        getAD();
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -92,35 +92,41 @@ public class TransitionActivity extends AppCompatActivity {
 
 
     private void getAD(){
-        new ArticleModel().getADData(new RequestImpl() {
-            @Override
-            public void loadSuccess(Object object) {
-                ArticleBean bean = (ArticleBean)object;
-                if(bean!=null) {
-                    if (bean.getResults().size() > 0) {
-                        Glide.with(TransitionActivity.this)
-                                .load(bean.getResults().get(0).getImg_url())
-                                .placeholder(R.drawable.img_transition_default)
-                                .error(R.drawable.img_transition_default)
-                                .into(mBinding.ivPic);
-                    }
-                }
-            }
+        Glide.with(TransitionActivity.this)
+                .load(R.mipmap.init)
+                .placeholder(R.drawable.img_transition_default)
+                .error(R.drawable.img_transition_default)
+                .into(mBinding.ivPic);
 
-            @Override
-            public void loadFailed() {
-                Glide.with(TransitionActivity.this)
-                        .load(R.drawable.img_transition_default)
-                        .placeholder(R.drawable.img_transition_default)
-                        .error(R.drawable.img_transition_default)
-                        .into(mBinding.ivPic);
-            }
-
-            @Override
-            public void addSubscription(Subscription subscription) {
-
-            }
-        });
+//        new ArticleModel().getADData(new RequestImpl() {
+//            @Override
+//            public void loadSuccess(Object object) {
+//                ArticleBean bean = (ArticleBean)object;
+//                if(bean!=null) {
+//                    if (bean.getResults().size() > 0) {
+//                        Glide.with(TransitionActivity.this)
+//                                .load(bean.getResults().get(0).getImg_url())
+//                                .placeholder(R.drawable.img_transition_default)
+//                                .error(R.drawable.img_transition_default)
+//                                .into(mBinding.ivPic);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void loadFailed() {
+//                Glide.with(TransitionActivity.this)
+//                        .load(R.drawable.img_transition_default)
+//                        .placeholder(R.drawable.img_transition_default)
+//                        .error(R.drawable.img_transition_default)
+//                        .into(mBinding.ivPic);
+//            }
+//
+//            @Override
+//            public void addSubscription(Subscription subscription) {
+//
+//            }
+//        });
     }
 
     private void animationEnd() {

@@ -57,14 +57,14 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/quickbar_lit_text_size"
-                        android:text="区域代理"/>
+                        android:text="普通用户"/>
                     <TextView
                         android:id="@+id/tv_mine_agent_addr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/quickbar_lit_text_size"
-                        android:text="山东省济南市"/>
+                        android:text=""/>
                 </LinearLayout>
                 <com.zxxapp.mall.maintenance.view.roundimage.CircleImageView
                     android:visibility="gone"
@@ -123,7 +123,47 @@
                 <View
                     style="@style/horizontalblock"/>
                 <LinearLayout
-                    android:id="@+id/ll_inviter"
+                    android:id="@+id/ll_temp_orders"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/ripple_one_item_bg"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/orders" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:text="@string/mine_all_temp_orders"
+                        android:textColor="@color/colorContent"
+                        android:textSize="15sp" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"></View>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/more" />
+                    </LinearLayout>
+
+                </LinearLayout>
+                <View
+                    style="@style/horizontalblock"/>
+                <LinearLayout
+                    android:id="@+id/ll_coupon"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/ripple_one_item_bg"
@@ -142,7 +182,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
-                        android:text="@string/mine_inviter_friend"
+                        android:text="@string/mine_coupon"
                         android:textColor="@color/colorContent"
                         android:textSize="15sp" />
                     <View

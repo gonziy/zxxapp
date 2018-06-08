@@ -6,7 +6,6 @@ import com.zxxapp.mall.maintenance.bean.GankIoDataBean;
 import com.zxxapp.mall.maintenance.bean.GankIoDayBean;
 import com.zxxapp.mall.maintenance.bean.HotMovieBean;
 import com.zxxapp.mall.maintenance.bean.MovieDetailBean;
-import com.zxxapp.mall.maintenance.bean.PaymentBean;
 import com.zxxapp.mall.maintenance.bean.RequestBaseBean;
 import com.zxxapp.mall.maintenance.bean.RequestDataArrayBean;
 import com.zxxapp.mall.maintenance.bean.RequestDataBean;
@@ -32,19 +31,17 @@ import com.zxxapp.mall.maintenance.bean.shop.CategoryBean;
 import com.zxxapp.mall.maintenance.bean.shop.OrderBean;
 import com.zxxapp.mall.maintenance.bean.shop.ServiceBean;
 import com.zxxapp.mall.maintenance.bean.shop.ShopBean;
+import com.zxxapp.mall.maintenance.bean.shop.UserBean;
+import com.zxxapp.mall.maintenance.bean.shop.WalletBean;
 import com.zxxapp.mall.maintenance.bean.shopping.CartCount;
+import com.zxxapp.mall.maintenance.bean.shopping.CouponBean;
+import com.zxxapp.mall.maintenance.bean.shopping.CouponListBean;
 import com.zxxapp.mall.maintenance.bean.shopping.OrderByAccountIdBean;
 import com.zxxapp.mall.maintenance.bean.shopping.PreOrderBean;
 import com.zxxapp.mall.maintenance.bean.shopping.ShopListBean;
-
-import org.json.JSONObject;
-
-import java.math.BigDecimal;
-
-import javax.xml.transform.Result;
+import com.zxxapp.mall.maintenance.bean.shopping.TempOrderListBean;
 
 import okhttp3.MultipartBody;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -88,6 +85,10 @@ public interface HttpClient {
         }
     }
 
+    /*
+    客户 begin
+     */
+
     @GET("category/getService")
     Observable<ServiceListBean> getServiceList(@Query("categoryId") String categoryId, @Query("categoryType") String categoryType);
 
@@ -97,10 +98,57 @@ public interface HttpClient {
     @GET("order/getOrderByAccountId")
     Observable<OrderByAccountIdBean> getOrderByAccountId(@Query("token") String token, @Query("pageNo") String pageNo, @Query("pageLimit") String pageLimit);
 
+    @GET("account/getCouponListByAccountIdAPI")
+    Observable<CouponListBean> getCouponListByAccountIdAPI(@Query("token") String token);
+
+    @GET("order/getCoupon")
+    Observable<CouponBean> getCoupon(@Query("token") String token, @Query("shopId") String shopId);
+
+    @GET("order/getTempOrderByToken")
+    Observable<TempOrderListBean> getTempOrderByToken(@Query("token") String token);
+
     @GET("order/payment")
-    Observable<PayBean> payment(@Query("orderNo") String orderNo, @Query("payment") String payment);
+    Observable<PayBean> payment(@Query("orderNo") String orderNo, @Query("payment") String payment,@Query("coupon") String coupon);
 
+    @FormUrlEncoded
+    @POST("getmobileLogin")
+    Observable<LoginResult> getMobileLogin(@Field("userName") String userName, @Field("pwd") String password);
 
+    @FormUrlEncoded
+    @POST("account/editAccountAPI")
+    Observable<ResultBean> editAccountAPI(@Field("token") String token,@Field("nickname") String nickname, @Field("phone") String phone);
+
+    @FormUrlEncoded
+    @POST("account/myMessageAPI")
+    Observable<UserLoginBean> getMyMessageAPI(@Field("token") String token);
+
+    @GET("order/addOrder")
+    Observable<ResultBean> addOrder(
+            @Query("uploadImg") String uploadImg,
+            @Query("phone") String phone,
+            @Query("serviceId") String serviceId,
+            @Query("shopId") String shopId,
+            @Query("location") String location,
+            @Query("lng") String lng,
+            @Query("lat") String lat,
+            @Query("content") String content,
+            @Query("token") String token
+    );
+    @GET("order/addOrder")
+    Observable<TempOrderListBean> addTempOrder(
+            @Query("uploadImg") String uploadImg,
+            @Query("phone") String phone,
+            @Query("serviceId") String serviceId,
+            @Query("location") String location,
+            @Query("lng") String lng,
+            @Query("lat") String lat,
+            @Query("content") String content,
+            @Query("token") String token
+    );
+
+    /*
+    客户 end
+     */
 
 
     /**
@@ -168,17 +216,34 @@ public interface HttpClient {
     @GET("order/getOrderByOrderNo2")
     Observable<RequestDataBean<OrderBean>> getOrder(@Query("orderNo") String orderNo);
 
+    @GET("order/updateOrderPrice")
+    Observable<RequestBaseBean> updateOrderPrice(@Query("orderNo") String orderNo,
+                                                 @Query("price") float price);
+
+    @GET("order/getTotalAmountByShop")
+    Observable<WalletBean> getTotalAmountByShop(@Query("token") String token);
+
+    @GET("order/getDeposit")
+    Observable<WalletBean> getDeposit(@Query("token") String token);
+
+    @GET("order/Deposit")
+    Observable<WalletBean> deposit(@Query("token") String token,
+                                   @Query("money") float money,
+                                   @Query("realName") String name,
+                                   @Query("cardNo") String cardNo,
+                                   @Query("bankCode") String bankCode,
+                                   @Query("type") int type);
+
+    @GET("account/getUserInfoByToken")
+    Observable<RequestDataBean<UserBean>> getUserInfoByToken(@Query("token") String token);
+
+    @GET("order/grabOrder")
+    Observable<RequestBaseBean> grabOrder(@Query("orderNo") String orderNo,
+                                          @Query("shopId") int shopId);
+
     /**
      * 商户接口结束
      **/
-
-
-
-
-
-
-
-
 
 
 
@@ -210,30 +275,6 @@ public interface HttpClient {
     @POST("v1/user/index.ashx")
     Observable<AreaBean> getArea(@Query("action") String action, @Field("city") String province);
 
-    @FormUrlEncoded
-    @POST("getmobileLogin")
-    Observable<LoginResult> getMobileLogin(@Field("userName") String userName, @Field("pwd") String password);
-
-    @FormUrlEncoded
-    @POST("account/editAccountAPI")
-    Observable<ResultBean> editAccountAPI(@Field("token") String token,@Field("nickname") String nickname, @Field("phone") String phone);
-
-    @FormUrlEncoded
-    @POST("account/myMessageAPI")
-    Observable<UserLoginBean> getMyMessageAPI(@Field("token") String token);
-
-    @GET("order/addOrder")
-    Observable<ResultBean> addOrder(
-            @Query("uploadImg") String uploadImg,
-            @Query("phone") String phone,
-            @Query("serviceId") String serviceId,
-            @Query("shopId") String shopId,
-            @Query("location") String location,
-            @Query("lng") String lng,
-            @Query("lat") String lat,
-            @Query("content") String content,
-            @Query("token") String token
-    );
 
 
 

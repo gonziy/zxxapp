@@ -1,7 +1,6 @@
 package com.zxxapp.mall.maintenance.ui.shop;
 
 import android.content.Context;
-import android.database.DatabaseUtils;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,7 +23,7 @@ public class OrderFragment extends Fragment {
     public OrderFragment() {
     }
 
-    public static OrderFragment newInstance(String param1, String param2) {
+    public static OrderFragment newInstance() {
         OrderFragment fragment = new OrderFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -84,7 +83,7 @@ public class OrderFragment extends Fragment {
         binding.tab.setupWithViewPager(binding.viewPager);
     }
 
-    class MyAdapter extends FragmentPagerAdapter{
+    class MyAdapter extends FragmentPagerAdapter {
 
         public MyAdapter(FragmentManager fm) {
             super(fm);
@@ -94,9 +93,9 @@ public class OrderFragment extends Fragment {
         @Override
         public CharSequence getPageTitle(int position) {
             if(position==0){
-                return "已提交";
+                return "全部";
             }else if(position==1){
-                return "已付款";
+                return "待定价";
             }else if(position==2){
                 return "已完成";
             }else if(position==3) {
@@ -110,12 +109,13 @@ public class OrderFragment extends Fragment {
         public Fragment getItem(int position) {
             OrderListFragment fragment = null;
 
+            //0.提交订单未付款、2.确定金额、1.已付款，已完成、5.退单
             if(position==0){
                 fragment = OrderListFragment.newInstance(-1);
             }else if(position==1){
-                fragment = OrderListFragment.newInstance(1);
+                fragment = OrderListFragment.newInstance(0);
             }else if(position==2){
-                fragment = OrderListFragment.newInstance(4);
+                fragment = OrderListFragment.newInstance(1);
             }else if(position==3){
                 fragment = OrderListFragment.newInstance(5);
             }

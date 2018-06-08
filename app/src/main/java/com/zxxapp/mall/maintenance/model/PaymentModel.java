@@ -14,20 +14,23 @@ public class PaymentModel {
 
     private String orderNo = "";
     private String payment = "";
+    private String coupon = "";
 
 
 
     public void setData(String orderNo,
-                        String payment
+                        String payment,
+                        String coupon
     ) {
         this.orderNo = orderNo;
         this.payment = payment;
+        this.coupon = coupon;
     }
 
     public void Payment(final RequestImpl listener) {
 
         // 添加新的参数
-        Subscription subscription = HttpClient.Builder.getZhiXiuServer().payment(orderNo,payment)
+        Subscription subscription = HttpClient.Builder.getZhiXiuServer().payment(orderNo,payment,coupon)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<PayBean>() {
                     @Override

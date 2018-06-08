@@ -1,9 +1,11 @@
 package com.zxxapp.mall.maintenance.app;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Environment;
 import android.text.TextUtils;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -18,9 +20,11 @@ import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.zxxapp.mall.maintenance.R;
 import com.zxxapp.mall.maintenance.bean.account.User;
 import com.zxxapp.mall.maintenance.config.AppConfig;
 import com.zxxapp.mall.maintenance.helper.account.AccountHelper;
+import com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper;
 import com.zxxapp.mall.maintenance.utils.DebugUtil;
 import com.zxxapp.mall.maintenance.utils.SharedPreferencesHelper;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
@@ -30,19 +34,28 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
 import okhttp3.OkHttpClient;
 
-/**
- * Created by jingbin on 2016/11/22.
- */
+
+
+import static com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper.ACTION_ADD;
+import static com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper.ACTION_CHECK;
+import static com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper.ACTION_CLEAN;
+import static com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper.ACTION_DELETE;
+import static com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper.ACTION_GET;
+import static com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper.ACTION_SET;
+import static com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper.TagAliasBean;
+import static com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper.sequence;
 
 public class BaseApplication extends Application {
 
     private static BaseApplication baseApplication;
+    private static Context context;
     private AppConfig appConfig;
     public IWXAPI WXApi;
+    public boolean isSetAlias = false;
 
 
     public static BaseApplication getInstance() {
@@ -54,6 +67,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         baseApplication = this;
+        context = getApplicationContext();
         HttpUtils.getInstance().init(this, DebugUtil.DEBUG);
         SharedPreferencesHelper.init(getApplicationContext());
         appConfig = new AppConfig(getApplicationContext());
@@ -64,9 +78,18 @@ public class BaseApplication extends Application {
         WXInit();
         JPushInit();
         BuglyInit();
+        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext())) ||
+                "com.zxxapp.mall.maintenance".equals(getCurProcessName(getApplicationContext()))) {
 
-        SDKInitializer.initialize(getApplicationContext());
+            /**
+             * IMKit SDK调用第一步 初始化
+             */
+            RongIM.init(this);
+        }
+
+        //SDKInitializer.initialize(getApplicationContext());
     }
+
 
     private void JPushInit() {
         JPushInterface.setDebugMode(true);
@@ -83,8 +106,31 @@ public class BaseApplication extends Application {
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
 
-        Bugly.init(getApplicationContext(), "7b7b49a896", false);
+        Bugly.init(getApplicationContext(), "7b7b49a896", true);
 
+    }
+    /**
+     * 获得当前进程的名字
+     *
+     * @param context
+     * @return
+     */
+    public static String getCurProcessName(Context context) {
+
+        int pid = android.os.Process.myPid();
+
+        ActivityManager activityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager
+                .getRunningAppProcesses()) {
+
+            if (appProcess.pid == pid) {
+
+                return appProcess.processName;
+            }
+        }
+        return null;
     }
     /**
      * 获取进程号对应的进程名
@@ -92,7 +138,7 @@ public class BaseApplication extends Application {
      * @param pid 进程号
      * @return 进程名
      */
-    private static String getProcessName(int pid) {
+    public static String getProcessName(int pid) {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
@@ -131,6 +177,18 @@ public class BaseApplication extends Application {
      */
     public User getUser() {
 //        return  new User();
+        if(!isSetAlias) {
+            if (appConfig.getUser().getUserID() > 0) {
+                TagAliasBean tagAliasBean = new TagAliasBean();
+                tagAliasBean.setAction(ACTION_SET);
+                sequence++;
+                tagAliasBean.setAlias(appConfig.getUser().getUserID().toString());
+                tagAliasBean.setAliasAction(true);
+                TagAliasOperatorHelper.getInstance().handleAction(getApplicationContext(), sequence, tagAliasBean);
+                isSetAlias = true;
+            }
+        }
+
         return appConfig.getUser();
     }
 
@@ -140,6 +198,17 @@ public class BaseApplication extends Application {
      */
     public void setUser(User user) {
         appConfig.setUser(user);
+
+
+        if(!user.UserName.isEmpty()){
+            TagAliasBean tagAliasBean = new TagAliasBean();
+            tagAliasBean.setAction(ACTION_SET);
+            sequence++;
+            tagAliasBean.setAlias(user.getUserID().toString());
+            tagAliasBean.setAliasAction(true);
+            TagAliasOperatorHelper.getInstance().handleAction(getApplicationContext(),sequence,tagAliasBean);
+        }
+
 
     }
 
@@ -172,6 +241,9 @@ public class BaseApplication extends Application {
         builder.cookieJar(new CookieJarImpl(new DBCookieStore(this)));
         //使用内存保持cookie，app退出后，cookie消失
         builder.cookieJar(new CookieJarImpl(new MemoryCookieStore()));
+    }
+    public static Context getContext() {
+        return context;
     }
 
 }

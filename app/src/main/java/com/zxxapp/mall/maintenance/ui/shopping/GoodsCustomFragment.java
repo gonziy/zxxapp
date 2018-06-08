@@ -151,9 +151,6 @@ public class GoodsCustomFragment extends BaseFragment<FragmentGoodsCustomBinding
     }
 
 
-    private void loadGoodsData(){
-    }
-
 
     private void loadCustomData() {
         ServiceModel model = new ServiceModel();

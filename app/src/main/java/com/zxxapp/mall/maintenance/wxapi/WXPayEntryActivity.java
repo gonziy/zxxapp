@@ -2,6 +2,8 @@ package com.zxxapp.mall.maintenance.wxapi;
 
 import com.alibaba.fastjson.JSON;
 import com.example.http.HttpUtils;
+import com.flyco.dialog.listener.OnBtnClickL;
+import com.flyco.dialog.widget.NormalDialog;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -12,12 +14,14 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.zxxapp.mall.maintenance.R;
 import com.zxxapp.mall.maintenance.config.AppConfig;
 import com.zxxapp.mall.maintenance.ui.shopping.OrderActivity;
+import com.zxxapp.mall.maintenance.ui.shopping.OrderConfirmActivity;
 import com.zxxapp.mall.maintenance.utils.ToastUtil;
 import com.zxxapp.mall.maintenance.view.webview.WebViewActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -59,25 +63,87 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 			PayResp payResp = (PayResp) resp;
 			int code = resp.errCode;
 			String outOrderNo = payResp.extData;
+			final NormalDialog dialog=new NormalDialog(WXPayEntryActivity.this);
 			switch (code) {
 				case 0:
-					WebViewActivity.loadUrl(WXPayEntryActivity.this, HttpUtils.API_HOST + "payment.aspx?action=succeed&order_no="+outOrderNo,"支付成功");
-					ToastUtil.showToast("支付成功");
-					WXPayEntryActivity.this.finish();
+					dialog.content("支付成功")
+							.btnNum(1)
+							.titleLineHeight(0)
+							.cornerRadius(10)
+							.titleTextColor(Color.parseColor("#fffd625b"))
+							.btnText("确认")
+							.show();
+					dialog.setOnBtnClickL(
+							new OnBtnClickL() {
+								@Override
+								public void onBtnClick() {
+									dialog.dismiss();
+									WXPayEntryActivity.this.finish();
+								}
+							}
+					);
+//					WebViewActivity.loadUrl(WXPayEntryActivity.this, HttpUtils.API_HOST + "payment.aspx?action=succeed&order_no="+outOrderNo,"支付成功");
+//					ToastUtil.showToast("支付成功");
+//					WXPayEntryActivity.this.finish();
 					break;
 				case -1:
-					WebViewActivity.loadUrl(WXPayEntryActivity.this, HttpUtils.API_HOST + "payment.aspx?action=succeed&order_no="+outOrderNo,"支付失败");
-					ToastUtil.showToast("支付失败");
-					WXPayEntryActivity.this.finish();
+					dialog.content("支付失败")
+							.btnNum(1)
+							.titleLineHeight(0)
+							.cornerRadius(10)
+							.titleTextColor(Color.parseColor("#fffd625b"))
+							.btnText("确认")
+							.show();
+					dialog.setOnBtnClickL(
+							new OnBtnClickL() {
+								@Override
+								public void onBtnClick() {
+									dialog.dismiss();
+									WXPayEntryActivity.this.finish();
+								}
+							}
+					);
+//					WebViewActivity.loadUrl(WXPayEntryActivity.this, HttpUtils.API_HOST + "payment.aspx?action=succeed&order_no="+outOrderNo,"支付失败");
+//					ToastUtil.showToast("支付失败");
+//					WXPayEntryActivity.this.finish();
 					break;
 				case -2:
-					ToastUtil.showToast("支付取消");
-					WXPayEntryActivity.this.finish();
+					dialog.content("取消支付")
+							.btnNum(1)
+							.titleLineHeight(0)
+							.cornerRadius(10)
+							.titleTextColor(Color.parseColor("#fffd625b"))
+							.btnText("确认")
+							.show();
+					dialog.setOnBtnClickL(
+							new OnBtnClickL() {
+								@Override
+								public void onBtnClick() {
+									dialog.dismiss();
+									WXPayEntryActivity.this.finish();
+								}
+							}
+					);
 					break;
 				default:
-					ToastUtil.showToast("支付失败");
+
 					setResult(RESULT_OK);
-					WXPayEntryActivity.this.finish();
+					dialog.content("支付失败")
+							.btnNum(1)
+							.titleLineHeight(0)
+							.cornerRadius(10)
+							.titleTextColor(Color.parseColor("#fffd625b"))
+							.btnText("确认")
+							.show();
+					dialog.setOnBtnClickL(
+							new OnBtnClickL() {
+								@Override
+								public void onBtnClick() {
+									dialog.dismiss();
+									WXPayEntryActivity.this.finish();
+								}
+							}
+					);
 					break;
 			}
 		}

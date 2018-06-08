@@ -14,6 +14,10 @@ import com.zxxapp.mall.maintenance.ui.gank.child.IndexFragment;
 import com.zxxapp.mall.maintenance.ui.shopping.AllCategoryFragment;
 import com.zxxapp.mall.maintenance.ui.shopping.GoodsCustomFragment;
 import com.zxxapp.mall.maintenance.ui.shopping.GoodsCustomFragment2;
+import com.zxxapp.mall.maintenance.ui.shopping.GoodsCustomFragment3;
+import com.zxxapp.mall.maintenance.ui.shopping.GoodsCustomFragment4;
+import com.zxxapp.mall.maintenance.ui.shopping.GoodsCustomFragment5;
+import com.zxxapp.mall.maintenance.ui.shopping.GoodsCustomFragment6;
 import com.zxxapp.mall.maintenance.ui.shopping.NewIndexFragment;
 import com.zxxapp.mall.maintenance.view.MyFragmentPagerAdapter;
 
@@ -64,6 +68,10 @@ public class GankFragment extends BaseFragment<FragmentGankBinding> {
         mTitleList.add("全部");
         mTitleList.add("卫浴");
         mTitleList.add("衣柜");
+        mTitleList.add("管类");
+        mTitleList.add("电类");
+//        mTitleList.add("家电");
+//        mTitleList.add("洁具");
 //        mTitleList.add("福利");
 //        mTitleList.add("干货订制");
 //        mTitleList.add("大安卓");
@@ -71,6 +79,12 @@ public class GankFragment extends BaseFragment<FragmentGankBinding> {
         mFragments.add(new AllCategoryFragment());
         mFragments.add(new GoodsCustomFragment());
         mFragments.add(new GoodsCustomFragment2());
+
+
+        mFragments.add(new GoodsCustomFragment3());
+        mFragments.add(new GoodsCustomFragment4());
+//        mFragments.add(new GoodsCustomFragment5());
+//        mFragments.add(new GoodsCustomFragment6());
 //        mFragments.add(new WelfareFragment());
 //        mFragments.add(new CustomFragment());
 //        mFragments.add(AndroidFragment.newInstance("Android"));

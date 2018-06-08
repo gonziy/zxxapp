@@ -28,3 +28,13 @@
 }
 # Ignore annotation used for build tooling.
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+
+-dontoptimize
+-dontpreverify
+
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+
+-keep class com.baidu.** {*;}
+-keep class mapsdkvi.com.** {*;}
+-dontwarn com.baidu.**

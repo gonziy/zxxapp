@@ -127,17 +127,18 @@
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:retrofit:2.4.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-v4-27.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:recyclerview-v7-27.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:G.\A1802Weixiu\zhixiu\app\libs\jpush-android-3.1.3.jar:unspecified@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.squareup:javawriter:2.1.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-media-compat-27.1.0" level="project" />
     <orderEntry type="library" name="Gradle: io.reactivex:rxandroid-1.2.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:multidex-1.0.3" level="project" />
     <orderEntry type="library" name="Gradle: com.tencent.bugly:nativecrashreport-3.3.1" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-core-ui-27.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: cn.jiguang.sdk:jmessage-2.6.0" level="project" />
     <orderEntry type="library" name="Gradle: io.reactivex:rxjava:1.1.4@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.youth.banner:banner-1.4.2" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.14.0@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test:rules-1.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:G.\A1802Weixiu\zhixiu\app\libs\jcore-android-1.2.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: javax.inject:javax.inject:1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.databinding:adapters-3.1.2" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-fragment-27.1.0" level="project" />
@@ -146,8 +147,6 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support:multidex-instrumentation-1.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.ashokvarma.android:bottom-navigation-bar-2.0.4" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:appcompat-v7-27.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:G.\A1802Weixiu\zhixiu\app\src\main\jniLibs\IndoorscapeAlbumPlugin.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:G.\A1802Weixiu\zhixiu\app\src\main\jniLibs\BaiduLBS_Android.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:converter-gson:2.4.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.cocosw:bottomsheet-1.3.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.databinding:library-3.1.2" level="project" />
@@ -156,6 +155,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: net.sf.kxml:kxml2:2.3.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:runtime-1.1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test:runner-1.0.1" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:G.\A1802Weixiu\zhixiu\app\libs\IndoorscapeAlbumPlugin.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:transition-27.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.lzy.net:okgo-3.0.4" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:cardview-v7-27.1.0" level="project" />
@@ -170,6 +170,7 @@
     <orderEntry type="library" name="Gradle: com.daimajia.slider:library-1.1.5" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-core-utils-27.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.databinding:baseLibrary:3.1.2@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:G.\A1802Weixiu\zhixiu\library\IMLib\libs\Rong_IMLib.jar:unspecified@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.code.findbugs:jsr305:2.0.1@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test.espresso:espresso-core-3.0.1" level="project" />
     <orderEntry type="library" name="Gradle: com.nineoldandroids:library:2.4.0@jar" level="project" />
@@ -177,9 +178,9 @@
     <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-1.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.12@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3@jar" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.gzu-liyujiang.AndroidPicker:WheelPicker-1.5.5" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.gzu-liyujiang.AndroidPicker:WheelPicker-1.5.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test.espresso:espresso-idling-resource-3.0.1" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.gzu-liyujiang.AndroidPicker:Common-1.5.5" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.gzu-liyujiang.AndroidPicker:Common-1.5.6" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.10.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:exifinterface-27.1.0" level="project" />
@@ -189,10 +190,12 @@
     <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-library:1.3@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.picasso:picasso-2.71828" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.core:common:1.1.0@jar" level="project" />
-    <orderEntry type="library" name="Gradle: cn.jiguang.sdk:jcore-1.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:G.\A1802Weixiu\zhixiu\app\libs\BaiduLBS_Android.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: __local_aars__:G.\A1706JunShow\App\CloudReader-master\library\alipaySdk-20170922.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="Gradle: cn.jiguang.sdk:jpush-3.1.1" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:G.\A1802Weixiu\zhixiu\library\IMKit\src\main\libs\Rong_IMKit.jar:unspecified@jar" level="project" />
     <orderEntry type="module" module-name="zoomlibrary" />
+    <orderEntry type="module" module-name="IMLib" />
+    <orderEntry type="module" module-name="IMKit" />
     <orderEntry type="module" module-name="xrecyclerview" />
     <orderEntry type="module" module-name="http" />
     <orderEntry type="library" name="Gradle: android-android-27" level="project" />
