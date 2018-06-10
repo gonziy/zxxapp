@@ -86,10 +86,13 @@ public class BaseApplication extends Application {
              */
             RongIM.init(this);
         }
-
-        //SDKInitializer.initialize(getApplicationContext());
+        BaiduMapInit();
     }
 
+
+    private void BaiduMapInit(){
+        SDKInitializer.initialize(getApplicationContext());
+    }
 
     private void JPushInit() {
         JPushInterface.setDebugMode(true);
@@ -106,7 +109,7 @@ public class BaseApplication extends Application {
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
 
-        Bugly.init(getApplicationContext(), "7b7b49a896", true);
+        Bugly.init(getApplicationContext(), "7b7b49a896", false);
 
     }
     /**
@@ -198,7 +201,6 @@ public class BaseApplication extends Application {
      */
     public void setUser(User user) {
         appConfig.setUser(user);
-
 
         if(!user.UserName.isEmpty()){
             TagAliasBean tagAliasBean = new TagAliasBean();

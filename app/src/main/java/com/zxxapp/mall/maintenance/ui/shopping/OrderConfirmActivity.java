@@ -40,7 +40,6 @@ import com.zxxapp.mall.maintenance.bean.shopping.CouponListBean;
 import com.zxxapp.mall.maintenance.config.AppConfig;
 import com.zxxapp.mall.maintenance.databinding.ActivityConfirmOrderBinding;
 import com.zxxapp.mall.maintenance.databinding.ActivityOrderBinding;
-import com.zxxapp.mall.maintenance.helper.TencentIM.StringUtil;
 import com.zxxapp.mall.maintenance.helper.account.AccountHelper;
 import com.zxxapp.mall.maintenance.helper.alipay.AuthResult;
 import com.zxxapp.mall.maintenance.helper.alipay.OrderInfoUtil2_0;
@@ -87,6 +86,7 @@ public class OrderConfirmActivity extends BaseActivity<ActivityConfirmOrderBindi
     private Double amount = 0.00;
     private Double orderAmount = 0.00;
     private String orderNo = "";
+    private String shopId = "";
     private CouponListBean couponList;
     private List<CouponListBean.DataBean.ListBean> coupons;
     private ArrayAdapter couponAdapter;
@@ -110,6 +110,7 @@ public class OrderConfirmActivity extends BaseActivity<ActivityConfirmOrderBindi
         if (getIntent() != null) {
             orderNo = (String) getIntent().getSerializableExtra("order_no");
             amount = (Double) getIntent().getSerializableExtra("amount");
+            shopId = (String) getIntent().getSerializableExtra("shop_id");
             orderAmount = amount;
             bindingView.tvOrderAmount.setText("需支付：" + StringUtils.doubleToString(amount));
             bindingView.tvTotalPrice.setText(StringUtils.doubleToString(amount));
@@ -143,8 +144,8 @@ public class OrderConfirmActivity extends BaseActivity<ActivityConfirmOrderBindi
         });
 
         CouponModel couponModel = new CouponModel();
-        couponModel.setData(BaseApplication.getInstance().getUser().getToken());
-        couponModel.getData(new RequestImpl() {
+        couponModel.setCouponData(BaseApplication.getInstance().getUser().getToken(),shopId);
+        couponModel.getCoupon(new RequestImpl() {
             @Override
             public void loadSuccess(Object object) {
                 couponList = (CouponListBean) object;
@@ -171,6 +172,10 @@ public class OrderConfirmActivity extends BaseActivity<ActivityConfirmOrderBindi
                                     amount = orderAmount;
                                     bindingView.tvOrderAmount.setText("需支付：" + StringUtils.doubleToString(amount));
                                     bindingView.tvTotalPrice.setText(StringUtils.doubleToString(amount));
+                                }
+                                if(amount<=0){
+                                    ToastUtil.showToast("订单金额不可小于0");
+                                    return;
                                 }
                             }
 
@@ -340,10 +345,11 @@ public class OrderConfirmActivity extends BaseActivity<ActivityConfirmOrderBindi
     }
 
 
-    public static void start(Context mContext,Double amount,String orderNo) {
+    public static void start(Context mContext,Double amount,String orderNo,String shopId) {
         Intent intent = new Intent(mContext, OrderConfirmActivity.class);
         intent.putExtra("amount", amount);
         intent.putExtra("order_no", orderNo);
+        intent.putExtra("shop_id", shopId);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeBasic();
         ActivityCompat.startActivity(mContext, intent, options.toBundle());
     }

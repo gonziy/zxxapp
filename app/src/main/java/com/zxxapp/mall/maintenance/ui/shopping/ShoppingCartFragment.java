@@ -24,7 +24,6 @@ import com.zxxapp.mall.maintenance.bean.ResultBean;
 import com.zxxapp.mall.maintenance.bean.account.CartResult;
 import com.zxxapp.mall.maintenance.bean.account.User;
 import com.zxxapp.mall.maintenance.databinding.ActivityShoppingCartBinding;
-import com.zxxapp.mall.maintenance.helper.TencentIM.SpUtil;
 import com.zxxapp.mall.maintenance.helper.account.AccountHelper;
 import com.zxxapp.mall.maintenance.http.RequestImpl;
 import com.zxxapp.mall.maintenance.http.cache.ACache;

@@ -56,7 +56,7 @@ public class OrderByAccountIdAdapter extends BaseRecyclerViewAdapter<OrderByAcco
                 @Override
                 public void onClick(View v) {
                     if(bean.getStatus().equals("2")) {
-                        OrderConfirmActivity.start(v.getContext(), bean.getUnitPrice() == null ? 0 : Double.valueOf(bean.getUnitPrice().toString()), bean.getOrderNo());
+                        OrderConfirmActivity.start(v.getContext(), bean.getUnitPrice() == null ? 0 : Double.valueOf(bean.getUnitPrice().toString()), bean.getOrderNo(),String.valueOf(bean.getShopId()));
                     }else if(bean.getStatus().equals("0")){
                         RongIM.getInstance().startPrivateChat(v.getContext(), String.valueOf(bean.getShopId()), "与商家对话");
                         //ToastUtil.showToast("商家还未确认订单");

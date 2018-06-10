@@ -15,13 +15,9 @@
         <div class="page-group">
             <div class="page page-current">
                 <div class="content">
-                    <div class="swiper-container">
+                    <div id="banner" class="swiper-container">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide"><img src="framework/img/banner.jpg" /></div>
-                            <div class="swiper-slide"><img src="framework/img/banner.jpg" /></div>
-                            <div class="swiper-slide"><img src="framework/img/banner.jpg" /></div>
-                            <div class="swiper-slide"><img src="framework/img/banner.jpg" /></div>
-                            <div class="swiper-slide"><img src="framework/img/banner.jpg" /></div>
+                            <div class="swiper-slide"></div>
                         </div>
                         <div style="width:100%; border-radius:50% 50% 0 0; height:.5rem; background:#fff; overflow:hidden; position:absolute;left:0; bottom:-.1rem; z-index:99999;"></div>
                     </div>
@@ -99,6 +95,27 @@
         autoplay : 4000
         });
         </script>
+    <script>
+        function getImgNews() {
+            $.get("http://zhixiuwang.com/zxxapp/poster/posterList?posterType=2", function (data) {
+                var jsonObject = eval("(" + data + ")");
+                var articleArr = jsonObject.data.list;
+                $("#banner .swiper-wrapper").html("");
+                var firstItemArticle = "";
+                for (var i = 0; i < articleArr.length; i++) {
+                    var itemArticle = articleArr[i];
+                    $("#banner .swiper-wrapper").append("<div style='width: 100%; height: 7rem' class=\"swiper-slide\"><img src=\""+itemArticle.posterImg+"\" /><h2 style='text-indent: 2em;'>"+decodeURI(itemArticle.posterTitle)+"</h2></div>")
+                    if(i==0){
+                        firstItemArticle = "<div style='width: 100%; height: 7rem' class=\"swiper-slide\"><img src=\""+itemArticle.posterImg+"\" /><h2 style='text-indent: 2em;'>"+decodeURI(itemArticle.posterTitle)+"</h2></div>";
+                    }
+                }
+                $("#banner .swiper-wrapper").append(firstItemArticle);
+            })
+        }
+        $(function(){
+            getImgNews();
+        })
+    </script>
 
 
     </body>

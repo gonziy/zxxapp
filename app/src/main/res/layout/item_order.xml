@@ -44,12 +44,11 @@
 
             <ImageView
                 android:id="@+id/imageView7"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -93,9 +92,8 @@
 
             <ImageView
                 android:id="@+id/servicePictureImage"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:scaleType="fitCenter" />
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
 
             <TextView
                 android:id="@+id/serviceNameText"
@@ -160,11 +158,10 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_header" />
@@ -182,23 +179,21 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:scaleType="fitCenter"
                 app:layout_constraintStart_toEndOf="@+id/textViewCenter"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_phone" />
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:scaleType="fitCenter"
                 app:layout_constraintBottom_toBottomOf="@+id/addressText"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/addressText"

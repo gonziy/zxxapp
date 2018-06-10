@@ -10,18 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.http.HttpUtils;
 import com.zxxapp.mall.maintenance.R;
-import com.zxxapp.mall.maintenance.bean.RequestBaseBean;
-import com.zxxapp.mall.maintenance.bean.RequestDataBean;
-import com.zxxapp.mall.maintenance.bean.shop.UserBean;
 import com.zxxapp.mall.maintenance.databinding.FragmentMine2Binding;
 import com.zxxapp.mall.maintenance.helper.account.AccountHelper;
-import com.zxxapp.mall.maintenance.http.HttpClient;
-
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class MineFragment extends Fragment implements View.OnClickListener {
     private OnFragmentInteractionListener mListener;
@@ -46,31 +37,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         binding.llCoupon.setOnClickListener(this);
         binding.llCapital.setOnClickListener(this);
         binding.llRobbing.setOnClickListener(this);
-
-        HttpClient.Builder.getZhiXiuServer().getUserInfoByToken(AccountHelper.getUser().token)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<RequestDataBean<UserBean>>() {
-                               @Override
-                               public void onCompleted() {
-
-                               }
-
-                               @Override
-                               public void onError(Throwable e) {
-
-                               }
-
-                               @Override
-                               public void onNext(RequestDataBean<UserBean> userBeanRequestDataBean) {
-                                   if("true".equals(userBeanRequestDataBean.getSuccess())) {
-                                       UserBean userBean = userBeanRequestDataBean.getData();
-
-                                       binding.usernameText.setText(userBean.getUsername());
-                                       binding.phoneText.setText(userBean.getPhone());
-                                   }
-                               }
-                           });
 
         return binding.getRoot();
     }

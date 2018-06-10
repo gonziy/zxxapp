@@ -150,6 +150,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                 User user = new User();
                 user.setToken("");
                 user.setUserName("");
+                user.setUserID(0);
                 BaseApplication.getInstance().setUser(user);
                 try {
                     Thread.sleep(100);
@@ -249,6 +250,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
             if(mNeedLogin.getVisibility() != View.GONE){
                 //loadUrl(mUrl,true);
             }
+            getUserInfo();
             showContentView();
         }
         DebugUtil.error("--OneFragment   ----onResume");
@@ -293,12 +295,13 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                     if(!result.isEmpty()){
 
                         if(result.startsWith(HttpUtils.API_HOST)){
-                            String shopId = result.replace(HttpUtils.API_HOST + "zxxapp/order/getCoupon?shopId=","");
+                            String shopId = result.replace(HttpUtils.API_HOST + "zxxapp/order/createCoupon?shopId=","");
                             CouponModel model = new CouponModel();
                             model.setCouponData(BaseApplication.getInstance().getUser().getToken(),shopId);
                             model.getCoupon(new RequestImpl() {
                                 @Override
                                 public void loadSuccess(Object object) {
+
                                     final NormalDialog dialog=new NormalDialog((Context)activity);
                                     dialog.content("领取优惠券成功")//
                                             .btnNum(1)

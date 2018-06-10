@@ -63,7 +63,7 @@ public class CouponModel {
     public void getCoupon(final RequestImpl listener) {
 
         // 添加新的参数
-        Subscription subscription = HttpClient.Builder.getZhiXiuServer().getCoupon(this.token,this.shopId)
+        Subscription subscription = HttpClient.Builder.getZhiXiuServer().createCoupon(this.token,this.shopId)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CouponBean>() {
                     @Override

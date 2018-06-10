@@ -53,6 +53,35 @@
                         android:textColor="@color/colorTabTextNormal"
                         android:background="@drawable/text_view_border_gray"
                         />
+                    <LinearLayout
+                        android:id="@+id/llLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:orientation="horizontal"
+                        android:background="@drawable/text_view_border_gray">
+                        <TextView
+                            android:id="@+id/tv_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textSize="14sp"
+                            android:maxLength="30"
+                            android:gravity="center_vertical"
+                            android:hint="选择地址"
+                            android:layout_weight="1"
+                            android:textColor="@color/colorTabTextNormal"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_weight="3"
+                            android:text="重新定位"
+                            android:gravity="right|center_vertical"
+                            android:textColor="@color/colorRateRed"
+                            />
+                    </LinearLayout>
+
                     <EditText
                         android:id="@+id/et_address"
                         android:layout_width="match_parent"
@@ -81,6 +110,16 @@
                         android:background="@drawable/text_view_border_gray"
                         />
 
+                    <TextView
+
+                        android:layout_below="@+id/sp_coupon"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="30dp"
+                        android:textSize="14dp"
+                        android:textColor="@color/colorRateRed"
+                        android:text="请用平台支付，为您保证质量"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
 

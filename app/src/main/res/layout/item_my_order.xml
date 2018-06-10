@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_date"
             android:layout_alignTop="@id/tv_date"
-            android:text="@{resultsBean.orderDate}"/>
+            android:text="@{StringUtils.formatTime(resultsBean.orderDate)}"/>
         <TextView
             android:id="@+id/tv_sum"
             android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="5dp"
             android:layout_below="@id/tv_date"
-            android:text="结算："/>
+            android:text="总价："/>
         <TextView
             android:id="@+id/tv_sum1"
             android:layout_width="wrap_content"

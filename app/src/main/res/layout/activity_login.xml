@@ -57,7 +57,7 @@
                         android:layout_marginRight="10dp"
                         android:background="@drawable/text_view_border"
                         android:gravity="center_vertical"
-                        android:hint="请输入您的手机号/账号" />
+                        android:hint="请输入您的手机号" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -79,7 +79,6 @@
                         android:inputType="textPassword" />
 
                 </android.support.design.widget.TextInputLayout>
-
                 <Button
                     android:id="@+id/btn_login"
                     android:layout_width="match_parent"
@@ -90,22 +89,17 @@
                     android:background="@color/colorTheme"
                     android:text="登录"
                     android:textColor="@color/colorWhite" />
-            </LinearLayout>
+                <Button
+                    android:id="@+id/btn_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colorWhite"
+                    android:text="注册"
+                    android:textColor="@color/colorTheme" />
 
-            <LinearLayout
-                android:layout_below="@id/ll_loginbox"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:gravity="center">
-                <ImageView
-                    android:id="@+id/iv_wxlogin"
-                    android:padding="20dp"
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
-                    android:src="@mipmap/wx_logo"/>
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

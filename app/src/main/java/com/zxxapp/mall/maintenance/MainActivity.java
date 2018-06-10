@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -69,6 +70,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
+import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.CSCustomServiceInfo;
 import io.rong.imlib.model.Conversation;
@@ -86,8 +88,9 @@ import rx.schedulers.Schedulers;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
-    public static String user1 = "vmVRMp4DIaffvoMmV+2xlbshwQQyWY5jwHV9X5bUWd851kDNHowr/0jPvrF/oswE+7jb/leoZPRgLb+fx9bfiw==";
-    String user2 = "9+Pra2KUor5FactPwci/BsEGX3M0bXI0TC2+QY9D/BJk1rdC32LkhNI49v5v6x75FMCoF6ecHHr9ustRksffRg==";
+//    public static String user1 = "vmVRMp4DIaffvoMmV+2xlbshwQQyWY5jwHV9X5bUWd851kDNHowr/0jPvrF/oswE+7jb/leoZPRgLb+fx9bfiw==";
+//    String user2 = "9+Pra2KUor5FactPwci/BsEGX3M0bXI0TC2+QY9D/BJk1rdC32LkhNI49v5v6x75FMCoF6ecHHr9ustRksffRg==";
+    public static String loginUserToken = "vmVRMp4DIaffvoMmV+2xlbshwQQyWY5jwHV9X5bUWd851kDNHowr/0jPvrF/oswE+7jb/leoZPRgLb+fx9bfiw==";
     private static final int SCAN_QR_REQUEST = 103;
 
     //private FrameLayout llTitleMenu;
@@ -109,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        connect();
+
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mainActivity = this;
@@ -123,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //initDrawerLayout();
         initListener();
         //initAccount();
+        initRongIM();
 
     }
 
@@ -132,11 +136,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  void  initAccount(){
         User user = BaseApplication.getInstance().getUser();
         if(AccountHelper.isLogin()) {
+            ((TextView) findViewById(R.id.tv_username)).setText(user.getNickName());
+            ((TextView) findViewById(R.id.tv_level)).setText(user.getGroupName());
 
-                ((TextView) findViewById(R.id.tv_username)).setText(user.getNickName());
-                ((TextView) findViewById(R.id.tv_level)).setText(user.getGroupName());
-
-
+        }
+    }
+    private  void  initRongIM(){
+        User user = BaseApplication.getInstance().getUser();
+        if(AccountHelper.isLogin()) {
+            //loginUserToken = com.zxxapp.mall.maintenance.helper.RongIM.UserUtils.GetRongCloudToken(user.getUserID().toString(),user.getNickName());
+            connect(loginUserToken);
         }
     }
 
@@ -144,6 +153,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ViewGroup.LayoutParams layoutParams = mBinding.include.viewStatus.getLayoutParams();
         layoutParams.height = StatusBarUtil.getStatusBarHeight(this);
         mBinding.include.viewStatus.setLayoutParams(layoutParams);
+    }
+    private void  setTitle(String title){
+        mBinding.include.titlebarTitle.setText(title);
     }
 
     private void initId() {
@@ -204,7 +216,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ArrayList<Fragment> mFragmentList = new ArrayList<>();
         mFragmentList.add(new GankFragment());
-        mFragmentList.add(new FragmentMessage());
+
+
+
+        ConversationListFragment conversationListFragment = new ConversationListFragment();
+        Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
+                .appendPath("conversationlist")
+                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话，该会话聚合显示
+                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//设置系统会话，该会话非聚合显示
+                .build();
+        conversationListFragment.setUri(uri);
+
+//        FragmentManager fragmentManager = getChildFragmentManager();
+//        FragmentTransaction transaction = fragmentManager.beginTransaction();
+//        transaction.add(R.id.rong_container,conversationListFragment);
+//        transaction.commit();
+        mFragmentList.add(conversationListFragment);
         mFragmentList.add(new MineFragment());
 
 
@@ -271,6 +298,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     llTitleMine.setSelected(false);
                     llTitleShoppingCart.setSelected(false);
                     vpContent.setCurrentItem(0);
+                    setTitle("智修网");
                 }
                 break;
 //            case R.id.iv_title_article:// 文章栏
@@ -288,6 +316,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     llTitleMine.setSelected(false);
                     llTitleGank.setSelected(false);
                     vpContent.setCurrentItem(1);
+                    setTitle("消息");
                 }
                 break;
             case R.id.iv_title_mine:// 个人中心
@@ -296,6 +325,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     llTitleGank.setSelected(false);
                     llTitleShoppingCart.setSelected(false);
                     vpContent.setCurrentItem(2);
+                    setTitle("我的");
                 }
                 break;
             case R.id.iv_avatar: // 头像进入GitHub
@@ -565,8 +595,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-    public void connect() {
-        RongIM.connect(user1, new RongIMClient.ConnectCallback() {
+    public void connect(String token) {
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
             @Override
             public void onTokenIncorrect() {
 
@@ -586,23 +616,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    public void connectyidong() {
-        RongIM.connect(user2, new RongIMClient.ConnectCallback() {
-            @Override
-            public void onTokenIncorrect() {
-
-            }
-            @Override
-            public void onSuccess(String s) {
-                Log.e("","连接成功—————>"+s);
-                Toast.makeText(MainActivity.this,"连接成功"+s,Toast.LENGTH_SHORT).show();
-            }
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-
-            }
-        });
-    }
 
     public void list(View view) {
 //        startActivity(new Intent(this, ConversationListActivity.class));

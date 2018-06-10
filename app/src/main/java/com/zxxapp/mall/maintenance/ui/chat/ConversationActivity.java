@@ -108,7 +108,7 @@ public class ConversationActivity extends FragmentActivity {
      * 判断消息是否是 push 消息
      */
     private void isReconnect(Intent intent) {
-        String token = MainActivity.user1;
+        String token = MainActivity.loginUserToken;
 
         if (intent == null || intent.getData() == null)
             return;

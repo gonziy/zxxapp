@@ -53,7 +53,7 @@ public class EditUserInfoActivity extends BaseActivity<ActivityEditUserInfoBindi
                         @Override
                         public void onNext(UserLoginBean userLoginBean) {
                             if (userLoginBean.getSuccess().equals("true")) {
-                                bindingView.etNickname.setText(userLoginBean.getData().getUsername());
+                                bindingView.etNickname.setText(userLoginBean.getData().getNickName());
                                 bindingView.etPhone.setText(userLoginBean.getData().getPhone());
                                 showContentView();
                             } else {

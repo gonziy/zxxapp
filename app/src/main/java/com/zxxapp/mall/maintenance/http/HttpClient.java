@@ -14,11 +14,13 @@ import com.zxxapp.mall.maintenance.bean.RequestListArrayBean;
 import com.zxxapp.mall.maintenance.bean.RequestPaginationBean;
 import com.zxxapp.mall.maintenance.bean.RequestUploadBean;
 import com.zxxapp.mall.maintenance.bean.ResultBean;
+import com.zxxapp.mall.maintenance.bean.SendCodeBean;
 import com.zxxapp.mall.maintenance.bean.ShopDataBean;
 import com.zxxapp.mall.maintenance.bean.UserLoginBean;
 import com.zxxapp.mall.maintenance.bean.account.AreaBean;
 import com.zxxapp.mall.maintenance.bean.account.CartResult;
 import com.zxxapp.mall.maintenance.bean.account.LoginResult;
+import com.zxxapp.mall.maintenance.bean.account.RegisterBean;
 import com.zxxapp.mall.maintenance.bean.account.UserAddressBean;
 import com.zxxapp.mall.maintenance.bean.account.UserCenterBean;
 import com.zxxapp.mall.maintenance.bean.article.ArticleBean;
@@ -102,7 +104,10 @@ public interface HttpClient {
     Observable<CouponListBean> getCouponListByAccountIdAPI(@Query("token") String token);
 
     @GET("order/getCoupon")
-    Observable<CouponBean> getCoupon(@Query("token") String token, @Query("shopId") String shopId);
+    Observable<CouponListBean> getCoupon(@Query("token") String token,@Query("shopId") String shopId);
+
+    @GET("order/createCoupon")
+    Observable<CouponBean> createCoupon(@Query("token") String token, @Query("shopId") String shopId);
 
     @GET("order/getTempOrderByToken")
     Observable<TempOrderListBean> getTempOrderByToken(@Query("token") String token);
@@ -145,7 +150,14 @@ public interface HttpClient {
             @Query("content") String content,
             @Query("token") String token
     );
-
+    @GET("account/registByTelphone")
+    Observable<RegisterBean> registByTelphone(
+            @Query("phone") String phone,
+            @Query("password") String password,
+            @Query("valCode") String valCode
+    );
+    @GET("account/sendSms")
+    Observable<SendCodeBean> sendSms(@Query("phone") String phone);
     /*
     客户 end
      */

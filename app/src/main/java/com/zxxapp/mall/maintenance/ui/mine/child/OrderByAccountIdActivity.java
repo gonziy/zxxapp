@@ -87,6 +87,19 @@ public class OrderByAccountIdActivity extends BaseActivity<ActivityOrderByAccoun
             }
         });
     }
+
+    @Override
+    protected void onRefresh() {
+        super.onRefresh();
+        if(AccountHelper.isLogin())
+        {
+            User user = AccountHelper.getUser();
+
+            LoadData(user.token,"1","20");
+            showContentView();
+        }
+    }
+
     public static void start(Context mContext) {
         Intent intent = new Intent(mContext, OrderByAccountIdActivity.class);
 //        intent.putExtra("ServiceId", serviceId);

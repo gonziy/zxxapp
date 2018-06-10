@@ -9,6 +9,25 @@
         android:orientation="vertical"
         tools:context="com.zxxapp.mall.maintenance.MainActivity">
 
+        <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/title_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTheme"
+            app:contentInsetStart="0.0dp"
+            app:layout_collapseMode="pin"
+            app:layout_scrollFlags="enterAlways|scroll"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ToolbarStyle">
+            <TextView
+                android:id="@+id/titlebar_title"
+                android:text="智修网"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v7.widget.Toolbar>
 
          <!--状态栏-->
         <View

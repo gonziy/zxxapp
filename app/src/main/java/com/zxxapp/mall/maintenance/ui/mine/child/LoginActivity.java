@@ -6,13 +6,16 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.http.HttpUtils;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.zxxapp.mall.maintenance.MainActivity;
 import com.zxxapp.mall.maintenance.R;
 import com.zxxapp.mall.maintenance.app.BaseApplication;
 import com.zxxapp.mall.maintenance.bean.UserLoginBean;
@@ -20,6 +23,7 @@ import com.zxxapp.mall.maintenance.bean.account.LoginResult;
 import com.zxxapp.mall.maintenance.bean.account.User;
 import com.zxxapp.mall.maintenance.bean.goods.GoodsDetailBean;
 import com.zxxapp.mall.maintenance.databinding.ActivityLoginBinding;
+import com.zxxapp.mall.maintenance.helper.account.AccountHelper;
 import com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper;
 import static com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper.sequence;
 
@@ -38,6 +42,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -55,6 +61,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        binding.btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegisterActivity.start(v.getContext());
+            }
+        });
+
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,12 +86,6 @@ public class LoginActivity extends AppCompatActivity {
                     binding.btnLogin.setText("登录中...");
                     binding.btnLogin.setClickable(false);
                 }
-            }
-        });
-        binding.ivWxlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                wxLogin();
             }
         });
     }
@@ -149,6 +156,11 @@ public class LoginActivity extends AppCompatActivity {
 
                             sequence++;
                             TagAliasOperatorHelper.getInstance().handleAction(getApplicationContext(),sequence,user.getUserName());
+
+                            String loginUserToken = com.zxxapp.mall.maintenance.helper.RongIM.UserUtils.GetRongCloudToken(user.getUserID().toString(),user.getNickName());
+                            connect(loginUserToken);
+
+
                             LoginActivity.this.finish();
                         }else {
                             ToastUtil.showToast("账号或密码错误");
@@ -163,6 +175,27 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+    public void connect(String token) {
+        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                Log.e("rongcloud", "连接通讯服务器成功—————>" + s);
+                ToastUtil.showToast("连接通讯服务器成功—————>" + s);
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.e("rongcloud", "连接通讯服务器失败—————>" + errorCode.getMessage());
+
+                ToastUtil.showToast("连接通讯服务器失败—————>" + errorCode.getMessage());
+            }
+        });
     }
     private void GetUserInfo(String accessToken){
 

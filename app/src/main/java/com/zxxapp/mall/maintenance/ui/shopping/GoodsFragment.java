@@ -49,6 +49,6 @@ public class GoodsFragment extends BaseFragment<FragmentShopBinding> {
 
     private void initFragmentList() {
 //        mTitleList.add("甄美至秀");
-        mFragments.add(GoodsCustomFragment.newInstance());
+//        mFragments.add(GoodsCustomFragment.newInstance());
     }
 }

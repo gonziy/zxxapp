@@ -20,6 +20,7 @@ import com.zxxapp.mall.maintenance.databinding.FragmentMessageBinding;
 import com.zxxapp.mall.maintenance.helper.account.AccountHelper;
 import com.zxxapp.mall.maintenance.http.RequestImpl;
 import com.zxxapp.mall.maintenance.model.OrderByAccountModel;
+import com.zxxapp.mall.maintenance.ui.mine.child.LoginActivity;
 import com.zxxapp.mall.maintenance.ui.mine.child.OrderByAccountIdActivity;
 import com.zxxapp.mall.maintenance.utils.ToastUtil;
 
@@ -103,6 +104,8 @@ public class FragmentMessage extends BaseFragment<FragmentMessageBinding>  {
             }
         });
     }
+
+
     @Override
     public int setContent() {
         return R.layout.fragment_message;

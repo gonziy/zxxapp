@@ -99,6 +99,28 @@ public class BookingActivity extends BaseActivity<ActivityBookingBinding> {
                 submitOrder();
             }
         });
+        bindingView.llLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //LocationActivity.start(v.getContext());
+                // 创建需要对应于目标Activity的Intent
+                Intent intent = new Intent(BookingActivity.this,
+                        LocationActivity.class);
+                // 启动指定Activity并等待返回的结果，其中0是请求码，用于标识该请求
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0 && resultCode == 0) {
+            // 取出Intent里的数据
+            Double lat = data.getDoubleExtra("lat",0);
+            Double lng = data.getDoubleExtra("lng",0);
+            String addr = data.getStringExtra("addr");
+            bindingView.tvLocation.setText("已定位");
+            bindingView.etAddress.setText(addr);
+        }
 
     }
 

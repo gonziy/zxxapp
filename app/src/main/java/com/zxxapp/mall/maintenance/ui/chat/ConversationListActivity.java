@@ -36,7 +36,7 @@ public class ConversationListActivity extends FragmentActivity {
     private void isReconnect() {
 
         Intent intent = getIntent();
-        String token = MainActivity.user1;
+        String token = MainActivity.loginUserToken;
 
         //push，通知或新消息过来
         if (intent != null && intent.getData() != null && intent.getData().getScheme().equals("rong")) {

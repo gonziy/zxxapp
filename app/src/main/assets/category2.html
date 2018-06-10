@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <meta name="format-detection" content="telephone=no" />
+        <link rel="stylesheet" href="framework/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="framework/css/sm.min.css" />
+        <link rel="stylesheet" href="framework/css/app.css" />
+        <script type="text/javascript" src="framework/js/jquery-3.3.1.min.js"></script>
+        <style>
+            .category-list{width:100%; height:100%;position:absolute;left:auto;top:0;right:0;bottom:0; background:#fff}
+            .category-list .category-content{ width:96%; margin:2%;height:96%;display:none; overflow-x:hidden;overflow-y:auto; background:#fff}
+            .category-list .category-content h3{ font-weight:bold; color:#333; font-size:.7rem; margin:0;padding:0; padding-bottom: .5rem; padding-left:.5rem;padding-top:.5rem;display:block; clear:both;float:none;}
+            .category-list .category-content a{ width:25%; height:auto; padding-bottom:.2rem; display:block; float:left; font-size:.5rem;text-align:center;}
+            .category-list .category-content a span{ font-size:.5rem; color:#333; display:block; font-weight:bold;}
+            .category-list .category-content a img{ width:60%;}
+        </style>
+    </head>
+    <body>
+        <div class="page-group">
+            <div class="page page-current">
+                <div class="content">
+                    <div class="category-list">
+
+                        <div class="category-content content-2" style="background:none;">
+                            <h3>维修</h3>
+                            <div class="childlist w"></div>
+                            <h3>安装</h3>
+                            <div class="childlist t"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(function(){
+                $(".category-list .category-content:first").show();
+                $(".category-nav ul li:first").addClass("selected");
+                $(".category-nav ul li").click(function(){
+                    var cid= $(this).attr("category-id");
+                    $(".category-nav ul li").removeClass("selected");
+                    $(this).addClass("selected");
+                    $(".category-content").hide();
+                    $(".content-"+cid).show();
+                })
+            })
+			//t=w:维修:t安装
+			function getCategory(id,t,f) {
+				$.get("http://zhixiuwang.com/zxxapp/category/getService?categoryId="+id+"&categoryType="+t, function (data) {
+					var jsonObject = eval("(" + data + ")");
+					var categoryArr = jsonObject.data.list;
+					$(".content-"+f + " ."+t).html();
+
+					for (var i = 0; i < categoryArr.length; i++) {
+						var itemCategory = categoryArr[i];
+						$(".content-"+f + " ."+t).append("<a href=\"javascript:;\" onclick=\"JavascriptBridge.ShopList('"+itemCategory.serviceId+"')\"><img src=\""+itemCategory.picture+"\" /><span>"+itemCategory.serviceName+"</span></a>");
+					}
+				})
+			}
+			$(function(){
+				getCategory('2','w','2')
+				getCategory('2','t','2')
+
+			})
+        </script>
+    </body>
+</html>
+

@@ -12,7 +12,7 @@
             android:ems="6"
             android:layout_marginTop="1dp"
             android:inputType="textPersonName"
-            android:text="请输入昵称" />
+            android:hint="请输入昵称" />
 
         <EditText
             android:id="@+id/et_phone"
@@ -21,7 +21,7 @@
             android:ems="11"
             android:layout_marginTop="1dp"
             android:inputType="phone"
-            android:text="请输入手机号" />
+            android:hint="请输入手机号" />
 
         <Button
             android:id="@+id/btn_login"
