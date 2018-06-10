@@ -11,15 +11,29 @@
             android:id="@+id/titleText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:padding="16dp"
             android:text="TextView"
-            android:textColor="@color/colorContent"
+            android:textAlignment="center"
+            android:textColor="#ff5000"
+            app:layout_constraintEnd_toStartOf="@+id/textView61"
+            app:layout_constraintStart_toEndOf="@+id/textView59" />
+
+        <TextView
+            android:id="@+id/textView59"
+            android:layout_width="4dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="#ff5000"/>
+
+        <TextView
+            android:id="@+id/textView61"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="#efefef"/>
     </android.support.constraint.ConstraintLayout>
 </layout>
