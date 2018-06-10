@@ -3,6 +3,7 @@ package com.zxxapp.mall.maintenance.ui.shop;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -12,6 +13,7 @@ import android.view.View;
 
 import com.example.http.HttpUtils;
 import com.zxxapp.mall.maintenance.R;
+import com.zxxapp.mall.maintenance.bean.RequestBaseBean;
 import com.zxxapp.mall.maintenance.bean.RequestListArrayBean;
 import com.zxxapp.mall.maintenance.bean.shop.ShopBean;
 import com.zxxapp.mall.maintenance.databinding.ActivityShopValidateBinding;
@@ -77,46 +79,51 @@ public class ValidateActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void checkAuth() {
-        //直接进入
-        Intent intent = new Intent(this, ShopMainActivity.class);
-        startActivity(intent);
-        finish();
+//        //直接进入
+//        Intent intent = new Intent(this, ShopMainActivity.class);
+//        startActivity(intent);
+//        finish();
 
-//        binding.validateState.setText("获取认证状态...");
-//        HttpClient.Builder.getZhiXiuServer().checkAuth(AccountHelper.getUser().token)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<ShopBean>(){
-//
-//                    @Override
-//                    public void onCompleted() {
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        ToastUtil.showToast("系统错误，请您稍后再试");
-//                    }
-//
-//                    @Override
-//                    public void onNext(ShopBean shopBean) {
-//                        if("100".equalsIgnoreCase(shopBean.getCode())){
-//                            binding.validateState.setText("通过认证");
-//                            binding.validateTenantButton.setEnabled(false);
-//                            ToastUtil.showToast("进入商家的首页");
-//                        }else if("101".equalsIgnoreCase(shopBean.getCode())){
-//                            binding.validateState.setText("未通过认证");
-//                            binding.validateTenantButton.setEnabled(true);
-//                        }else if("102".equalsIgnoreCase(shopBean.getCode())){
-//                            binding.validateTenantButton.setEnabled(false);
-//                            binding.validateState.setText("认证进行中");
-//                        }else if("103".equalsIgnoreCase(shopBean.getCode())){
-//                            binding.validateState.setText("未提交认证资料");
-//                            binding.validateTenantButton.setEnabled(true);
-//                        }else{
-//                            ToastUtil.showToast("未知状态。");
-//                        }
-//                    }
-//                });
+        binding.validateState.setText("获取认证状态...");
+        HttpClient.Builder.getZhiXiuServer().checkAuth(AccountHelper.getUser().token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<RequestBaseBean>(){
+
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtil.showToast("系统错误，请您稍后再试");
+                    }
+
+                    @Override
+                    public void onNext(RequestBaseBean requestBaseBean) {
+                        if("100".equalsIgnoreCase(requestBaseBean.getCode())){
+                            binding.validateState.setText("通过认证");
+                            binding.validateTenantButton.setEnabled(false);
+                            ToastUtil.showToast("进入商家的首页");
+
+                            Intent intent = new Intent(ValidateActivity.this, ShopMainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else if("101".equalsIgnoreCase(requestBaseBean.getCode())){
+                            binding.validateState.setText("未通过认证");
+                            binding.validateTenantButton.setEnabled(true);
+                        }else if("102".equalsIgnoreCase(requestBaseBean.getCode())){
+                            binding.validateTenantButton.setEnabled(false);
+                            binding.validateState.setText("正在等待平台认证...");
+                            binding.validateState.setTextColor(Color.RED);
+                        }else if("103".equalsIgnoreCase(requestBaseBean.getCode())){
+                            binding.validateState.setText("未提交认证资料");
+                            binding.validateTenantButton.setEnabled(true);
+                        }else{
+                            ToastUtil.showToast("未知状态。");
+                        }
+                    }
+                });
     }
 
     public static void start(Context mContext) {
