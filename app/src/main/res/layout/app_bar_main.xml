@@ -116,7 +116,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
-                            android:text="商城"
+                            android:text="首页"
                             android:textColor="@color/grgray"
                             android:textSize="10sp" />
                     </LinearLayout>

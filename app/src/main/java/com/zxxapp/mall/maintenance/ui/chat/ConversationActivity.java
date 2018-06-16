@@ -108,23 +108,25 @@ public class ConversationActivity extends FragmentActivity {
      * 判断消息是否是 push 消息
      */
     private void isReconnect(Intent intent) {
-        String token = MainActivity.loginUserToken;
+        if (!MainActivity.loginUserToken.isEmpty()) {
+            String token = MainActivity.loginUserToken;
 
-        if (intent == null || intent.getData() == null)
-            return;
-        //push
-        if (intent.getData().getScheme().equals("rong") && intent.getData().getQueryParameter("isFromPush") != null) {
-            isFromPush = true;
-            Log.e("","isFromPush");
-            //通过intent.getData().getQueryParameter("push") 为true，判断是否是push消息
-            if (intent.getData().getQueryParameter("isFromPush").equals("true")) {
-                reconnect(token);
-            } else {
-                //程序切到后台，收到消息后点击进入,会执行这里
-                if (RongIM.getInstance() == null || RongIM.getInstance().getRongIMClient() == null) {
+            if (intent == null || intent.getData() == null)
+                return;
+            //push
+            if (intent.getData().getScheme().equals("rong") && intent.getData().getQueryParameter("isFromPush") != null) {
+                isFromPush = true;
+                Log.e("", "isFromPush");
+                //通过intent.getData().getQueryParameter("push") 为true，判断是否是push消息
+                if (intent.getData().getQueryParameter("isFromPush").equals("true")) {
                     reconnect(token);
                 } else {
-                    enterFragment(mConversationType, mTargetId);
+                    //程序切到后台，收到消息后点击进入,会执行这里
+                    if (RongIM.getInstance() == null || RongIM.getInstance().getRongIMClient() == null) {
+                        reconnect(token);
+                    } else {
+                        enterFragment(mConversationType, mTargetId);
+                    }
                 }
             }
         }

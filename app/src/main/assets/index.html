@@ -92,21 +92,21 @@
         <script>
         var swiper = new Swiper('.swiper-container',{
         loop : true,
-        autoplay : 4000
+        autoplay : 6000
         });
         </script>
     <script>
         function getImgNews() {
             $.get("http://zhixiuwang.com/zxxapp/poster/posterList?posterType=2", function (data) {
                 var jsonObject = eval("(" + data + ")");
-                var articleArr = jsonObject.data.list;
+                var articleArr = jsonObject.data;
                 $("#banner .swiper-wrapper").html("");
                 var firstItemArticle = "";
                 for (var i = 0; i < articleArr.length; i++) {
                     var itemArticle = articleArr[i];
-                    $("#banner .swiper-wrapper").append("<div style='width: 100%; height: 7rem' class=\"swiper-slide\"><img src=\""+itemArticle.posterImg+"\" /><h2 style='text-indent: 2em;'>"+decodeURI(itemArticle.posterTitle)+"</h2></div>")
+                    $("#banner .swiper-wrapper").append("<div style='width: 100%; height: 7rem' class=\"swiper-slide\"><img  onclick=\"location='"+itemArticle.url+"'\" src=\""+itemArticle.posterImg+"\" /><h2 style='text-indent: 2em;'>"+decodeURI(itemArticle.posterTitle)+"</h2></div>")
                     if(i==0){
-                        firstItemArticle = "<div style='width: 100%; height: 7rem' class=\"swiper-slide\"><img src=\""+itemArticle.posterImg+"\" /><h2 style='text-indent: 2em;'>"+decodeURI(itemArticle.posterTitle)+"</h2></div>";
+                        firstItemArticle = "<div style='width: 100%; height: 7rem' class=\"swiper-slide\"><img onclick=\"location='"+itemArticle.url+"'\" src=\""+itemArticle.posterImg+"\" /><h2 style='text-indent: 2em;'>"+decodeURI(itemArticle.posterTitle)+"</h2></div>";
                     }
                 }
                 $("#banner .swiper-wrapper").append(firstItemArticle);

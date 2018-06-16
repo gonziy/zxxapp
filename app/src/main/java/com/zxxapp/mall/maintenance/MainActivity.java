@@ -27,21 +27,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.example.http.HttpUtils;
 import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.widget.NormalDialog;
 import com.zxxapp.mall.maintenance.app.BaseApplication;
 import com.zxxapp.mall.maintenance.app.ConstantsImageUrl;
 import com.zxxapp.mall.maintenance.base.NoScrollHorizontalViewPager;
+import com.zxxapp.mall.maintenance.bean.RongCloudResultBean;
 import com.zxxapp.mall.maintenance.bean.account.LoginResult;
 import com.zxxapp.mall.maintenance.bean.account.User;
 import com.zxxapp.mall.maintenance.databinding.ActivityMainBinding;
 import com.zxxapp.mall.maintenance.databinding.NavHeaderMainBinding;
 import com.zxxapp.mall.maintenance.helper.account.AccountHelper;
 import com.zxxapp.mall.maintenance.http.HttpClient;
+import com.zxxapp.mall.maintenance.http.RequestImpl;
 import com.zxxapp.mall.maintenance.http.rx.RxBus;
 import com.zxxapp.mall.maintenance.http.rx.RxBusBaseMessage;
 import com.zxxapp.mall.maintenance.http.rx.RxCodeConstants;
+import com.zxxapp.mall.maintenance.model.RongCloudModel;
 import com.zxxapp.mall.maintenance.ui.book.BookFragment;
 import com.zxxapp.mall.maintenance.ui.chat.FragmentMessage;
 import com.zxxapp.mall.maintenance.ui.gank.GankFragment;
@@ -90,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //    public static String user1 = "vmVRMp4DIaffvoMmV+2xlbshwQQyWY5jwHV9X5bUWd851kDNHowr/0jPvrF/oswE+7jb/leoZPRgLb+fx9bfiw==";
 //    String user2 = "9+Pra2KUor5FactPwci/BsEGX3M0bXI0TC2+QY9D/BJk1rdC32LkhNI49v5v6x75FMCoF6ecHHr9ustRksffRg==";
-    public static String loginUserToken = "vmVRMp4DIaffvoMmV+2xlbshwQQyWY5jwHV9X5bUWd851kDNHowr/0jPvrF/oswE+7jb/leoZPRgLb+fx9bfiw==";
+    public static String loginUserToken = "";
     private static final int SCAN_QR_REQUEST = 103;
 
     //private FrameLayout llTitleMenu;
@@ -142,11 +146,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
     private  void  initRongIM(){
-        User user = BaseApplication.getInstance().getUser();
         if(AccountHelper.isLogin()) {
+
+            User user = BaseApplication.getInstance().getUser();
             //loginUserToken = com.zxxapp.mall.maintenance.helper.RongIM.UserUtils.GetRongCloudToken(user.getUserID().toString(),user.getNickName());
-            connect(loginUserToken);
+            connect(user.getUserID().toString(),user.getNickName()==null?"未命名":user.getNickName());
         }
+    }
+    public void connect(String userId,String nickName) {
+        RongCloudModel model = new RongCloudModel();
+        model.setData(userId,nickName);
+        model.get(new RequestImpl() {
+            @Override
+            public void loadSuccess(Object object) {
+                RongCloudResultBean resultBean = (RongCloudResultBean)object;
+                com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(resultBean.getData());
+                String token = jsonObject.getString("token");
+                loginUserToken = token;
+                if(!token.isEmpty()){
+                    RongIM.connect(token, new RongIMClient.ConnectCallback() {
+                        @Override
+                        public void onTokenIncorrect() {
+
+                        }
+
+                        @Override
+                        public void onSuccess(String s) {
+                            Log.e("rongcloud", "连接通讯服务器成功—————>" + s);
+                            ToastUtil.showToast("连接通讯服务器成功—————>" + s);
+                        }
+
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+                            Log.e("rongcloud", "连接通讯服务器失败—————>" + errorCode.getMessage());
+
+                            ToastUtil.showToast("连接通讯服务器失败—————>" + errorCode.getMessage());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void loadFailed() {
+
+            }
+
+            @Override
+            public void addSubscription(Subscription subscription) {
+
+            }
+        });
+
+
+
     }
 
     private void initStatusView() {

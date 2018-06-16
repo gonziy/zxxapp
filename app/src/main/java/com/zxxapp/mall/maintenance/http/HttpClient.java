@@ -14,6 +14,7 @@ import com.zxxapp.mall.maintenance.bean.RequestListArrayBean;
 import com.zxxapp.mall.maintenance.bean.RequestPaginationBean;
 import com.zxxapp.mall.maintenance.bean.RequestUploadBean;
 import com.zxxapp.mall.maintenance.bean.ResultBean;
+import com.zxxapp.mall.maintenance.bean.RongCloudResultBean;
 import com.zxxapp.mall.maintenance.bean.SendCodeBean;
 import com.zxxapp.mall.maintenance.bean.ShopDataBean;
 import com.zxxapp.mall.maintenance.bean.UserLoginBean;
@@ -158,6 +159,14 @@ public interface HttpClient {
     );
     @GET("account/sendSms")
     Observable<SendCodeBean> sendSms(@Query("phone") String phone);
+
+
+    @GET("order/GetRongCloudToken")
+    Observable<RongCloudResultBean> getRongCloudResult(@Query("username") String username, @Query("nickname") String nickname);
+
+    @GET("order/orderComment")
+    Observable<ResultBean> orderComment(@Query("token") String token, @Query("orderId") String orderId, @Query("score") String score, @Query("content") String content);
+
     /*
     客户 end
      */

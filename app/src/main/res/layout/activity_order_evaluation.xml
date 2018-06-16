@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="服务等级"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content" />
+            <com.hedgehog.ratingbar.RatingBar
+                android:id="@+id/rat_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:clickable="false"
+                app:halfstart="true"
+                app:starCount="5"
+                app:starEmpty="@mipmap/ratingbar_star_empty"
+                app:starFill="@mipmap/ratingbar_star_fill"
+                app:starHalf="@mipmap/ratingbar_star_half"
+                app:starImageHeight="40dp"
+                app:starImagePadding="5dp"
+                app:starImageWidth="40dp" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_side"
+            android:gravity="left|top"
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
+        <LinearLayout
+            android:id="@+id/rl_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/colorWhite">
+            <TextView
+                android:id="@+id/tv_settlement"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorTheme"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="发表评价"
+                android:textColor="@color/colorWhite" />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

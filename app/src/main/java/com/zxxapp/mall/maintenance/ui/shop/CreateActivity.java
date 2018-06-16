@@ -10,12 +10,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.zxxapp.mall.maintenance.R;
 import com.zxxapp.mall.maintenance.bean.RequestBaseBean;
@@ -41,8 +43,8 @@ import rx.schedulers.Schedulers;
 public class CreateActivity extends AppCompatActivity {
 
     private ActivityShopCreateBinding binding;
-    private String logoFilePath = null;
     private File logoFile = null;
+    private String logoFileUrl = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,68 +91,7 @@ public class CreateActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (logoFile != null) {
-                    ToastUtil.showToast("开始上传商铺图片...");
-
-                    RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), logoFile);
-                    MultipartBody.Part part = MultipartBody.Part.createFormData("file", logoFile.getName(), requestFile);
-                    HttpClient.Builder.getZhiXiuServer().uploadImage(part)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Observer<RequestUploadBean>() {
-
-                                @Override
-                                public void onCompleted() {
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-                                    ToastUtil.showToast("系统错误，请您稍后再试");
-                                }
-
-                                @Override
-                                public void onNext(RequestUploadBean resultBean) {
-                                    if (resultBean.getSuccess().equals("true")) {
-                                        ToastUtil.showToast("上传商铺图片成功，开始保存商铺信息...");
-
-                                        HttpClient.Builder.getZhiXiuServer().createShop(
-                                                AccountHelper.getUser().token,
-                                                binding.titleEdit.getText().toString(),
-                                                resultBean.getUrl(),
-                                                binding.addressEdit.getText().toString(),
-                                                binding.introEdit.getText().toString(),
-                                                binding.noticeEdit.getText().toString(),
-                                                binding.locationText.getText().toString())
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(new Observer<RequestBaseBean>() {
-
-                                                    @Override
-                                                    public void onCompleted() {
-                                                    }
-
-                                                    @Override
-                                                    public void onError(Throwable e) {
-                                                        ToastUtil.showToast("系统错误，请您稍后再试");
-                                                    }
-
-                                                    @Override
-                                                    public void onNext(RequestBaseBean requestBaseBean) {
-                                                        if (requestBaseBean.getSuccess().equals("true")) {
-                                                            ToastUtil.showToast("商铺创建成功。");
-
-                                                            finish();//关闭窗口
-                                                        } else {
-                                                            ToastUtil.showToast("商铺创建失败。");
-
-                                                            ToastUtil.showToast(requestBaseBean.getMsg() + " - " + requestBaseBean.getCode());
-                                                        }
-                                                    }
-                                                });
-                                    } else {
-                                        ToastUtil.showToast("上传商铺图片失败，请稍候重试。");
-                                    }
-                                }
-                            });
+                    uploadFile(logoFile);
                 }
             }
         });
@@ -202,5 +143,80 @@ public class CreateActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void uploadFile(File file){
+        Toast.makeText(CreateActivity.this, "开始上传商铺图片...", Toast.LENGTH_LONG).show();
+
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), logoFile);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("file", logoFile.getName(), requestFile);
+        HttpClient.Builder.getZhiXiuServer().uploadImage(part)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<RequestUploadBean>() {
+                    private boolean shouldNext = false;
+
+                    @Override
+                    public void onCompleted() {
+                        if(shouldNext){
+                            saveInfo();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(CreateActivity.this, "系统错误，请您稍后再试。", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onNext(final RequestUploadBean resultBean) {
+                        if (resultBean.getSuccess().equals("true")) {
+                            logoFileUrl = resultBean.getUrl();
+
+                            shouldNext = true;
+
+                            Toast.makeText(CreateActivity.this, "上传商铺图片成功，开始保存商铺信息...", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(CreateActivity.this, "上传商铺图片失败，请稍候重试。", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    private void saveInfo(){
+        HttpClient.Builder.getZhiXiuServer().createShop(
+                AccountHelper.getUser().token,
+                binding.titleEdit.getText().toString(),
+                logoFileUrl,
+                binding.addressEdit.getText().toString(),
+                binding.introEdit.getText().toString(),
+                binding.noticeEdit.getText().toString(),
+                binding.locationText.getText().toString())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<RequestBaseBean>() {
+
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(CreateActivity.this, "系统错误，请您稍后再试。", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onNext(RequestBaseBean requestBaseBean) {
+                        new AlertDialog.Builder(CreateActivity.this)
+                                .setMessage("提示")
+                                .setMessage(requestBaseBean.getSuccess().equals("true") ? "商铺创建成功。" : "商铺创建失败。")
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();//关闭窗口
+                                    }
+                                }).show();
+                    }
+                });
     }
 }

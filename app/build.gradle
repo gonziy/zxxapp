@@ -105,4 +105,5 @@ dependencies {
     compile project(':IMKit')
     implementation files('libs/jcore-android-1.2.1.jar')
     implementation files('libs/jpush-android-3.1.3.jar')
+    implementation 'com.hedgehog.ratingbar:app:1.1.2'
 }

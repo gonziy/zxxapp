@@ -59,10 +59,17 @@ public class JPushReceiver extends BroadcastReceiver {
 				JSONObject jsonObject = new JSONObject(message);
 				String orderNo = jsonObject.optString("orderNo");
 
-				Intent intent1 = new Intent(context, RobbingActivity.class);
-				intent1.putExtra("orderNo", orderNo);
-				intent1.putExtra("notificationId", notificationId);
-				context.startActivity(intent1);
+				try {
+					Intent intent1 = new Intent(context, RobbingActivity.class);
+					intent1.putExtra("orderNo", orderNo);
+					intent1.putExtra("notificationId", notificationId);
+					intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					context.startActivity(intent1);
+
+					//Log.d("TEST", "startActivity");
+				}catch (Exception e){
+					e.printStackTrace();
+				}
 			} else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
 				Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
 				//在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..

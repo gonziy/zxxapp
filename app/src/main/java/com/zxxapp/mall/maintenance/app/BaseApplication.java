@@ -7,9 +7,13 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baidu.mapapi.SDKInitializer;
 import com.example.http.HttpUtils;
+import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.DBCookieStore;
@@ -21,13 +25,18 @@ import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.zxxapp.mall.maintenance.R;
+import com.zxxapp.mall.maintenance.bean.RongCloudResultBean;
+import com.zxxapp.mall.maintenance.bean.RongCloudTokenBean;
 import com.zxxapp.mall.maintenance.bean.account.User;
 import com.zxxapp.mall.maintenance.config.AppConfig;
 import com.zxxapp.mall.maintenance.helper.account.AccountHelper;
 import com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper;
+import com.zxxapp.mall.maintenance.http.RequestImpl;
+import com.zxxapp.mall.maintenance.model.RongCloudModel;
 import com.zxxapp.mall.maintenance.utils.DebugUtil;
 import com.zxxapp.mall.maintenance.utils.SharedPreferencesHelper;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
+import com.zxxapp.mall.maintenance.utils.ToastUtil;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -36,8 +45,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import okhttp3.OkHttpClient;
-
+import rx.Subscription;
 
 
 import static com.zxxapp.mall.maintenance.helper.jpush.TagAliasOperatorHelper.ACTION_ADD;
@@ -87,8 +97,58 @@ public class BaseApplication extends Application {
             RongIM.init(this);
         }
         BaiduMapInit();
+//        if(AccountHelper.isLogin()) {
+//            User user = AccountHelper.getUser();
+//            RongCloudConnect(user.getUserID().toString(), user.getNickName());
+//        }
     }
+    public void RongCloudConnect(String userId,String nickName) {
+        RongCloudModel model = new RongCloudModel();
+        model.setData(userId,nickName);
+        model.get(new RequestImpl() {
+            @Override
+            public void loadSuccess(Object object) {
+                RongCloudResultBean resultBean = (RongCloudResultBean)object;
+                JSONObject jsonObject = JSON.parseObject(resultBean.getData());
+                String token = jsonObject.getString("token");
 
+                if(!token.isEmpty()){
+                    RongIM.connect(token, new RongIMClient.ConnectCallback() {
+                        @Override
+                        public void onTokenIncorrect() {
+
+                        }
+
+                        @Override
+                        public void onSuccess(String s) {
+                            Log.e("rongcloud", "连接通讯服务器成功—————>" + s);
+                            ToastUtil.showToast("连接通讯服务器成功—————>" + s);
+                        }
+
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+                            Log.e("rongcloud", "连接通讯服务器失败—————>" + errorCode.getMessage());
+
+                            ToastUtil.showToast("连接通讯服务器失败—————>" + errorCode.getMessage());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void loadFailed() {
+
+            }
+
+            @Override
+            public void addSubscription(Subscription subscription) {
+
+            }
+        });
+
+
+
+    }
 
     private void BaiduMapInit(){
         SDKInitializer.initialize(getApplicationContext());

@@ -18,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.zxxapp.mall.maintenance.R;
@@ -211,13 +212,26 @@ public class AuthActivity extends AppCompatActivity {
                         @Override
                         public void onNext(RequestBaseBean requestBaseBean) {
                             if("100".equalsIgnoreCase(requestBaseBean.getCode())){
-                                ToastUtil.showToast("成功提交商铺身份验证信息。");
-
-                                setResult(RESULT_OK);
-                                finish();
+                                new AlertDialog.Builder(AuthActivity.this)
+                                        .setTitle("提示")
+                                        .setMessage("成功提交商铺身份验证信息。")
+                                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                setResult(RESULT_OK);
+                                                finish();
+                                            }
+                                        }).show();
                             }else if("101".equalsIgnoreCase(requestBaseBean.getCode())){
-                                ToastUtil.showToast("提交商铺身份验证信息失败，请稍候重试。");
-                                return;
+                                new AlertDialog.Builder(AuthActivity.this)
+                                        .setTitle("提示")
+                                        .setMessage("提交商铺身份验证信息失败，请稍候重试。")
+                                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                finish();
+                                            }
+                                        }).show();
                             }
                         }
                     });
@@ -225,7 +239,7 @@ public class AuthActivity extends AppCompatActivity {
         } else {
             final PictureDataModel pictureDataModel = pictures.pop();
 
-            ToastUtil.showToast("开始文件上传...");
+            Toast.makeText(AuthActivity.this, "开始文件上传...", Toast.LENGTH_LONG).show();
 
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), pictureDataModel.getLocalFile());
             MultipartBody.Part part = MultipartBody.Part.createFormData("file", pictureDataModel.getLocalFile().getName(), requestFile);
@@ -240,19 +254,19 @@ public class AuthActivity extends AppCompatActivity {
 
                         @Override
                         public void onError(Throwable e) {
-                            ToastUtil.showToast("系统错误，请您稍后再试");
+                            Toast.makeText(AuthActivity.this, "系统错误，请您稍后再试。", Toast.LENGTH_LONG).show();
                         }
 
                         @Override
                         public void onNext(RequestUploadBean resultBean) {
                             if (resultBean.getSuccess().equals("true")) {
                                 pictureDataModel.setRemoteFile(resultBean.getUrl());
-                                ToastUtil.showToast("上传图片成功。");
+                                Toast.makeText(AuthActivity.this, "上传图片成功。", Toast.LENGTH_SHORT).show();
 
                                 //继续下一个文件的上传
                                 uploadPicturesAndSave(pictures);
                             } else {
-                                ToastUtil.showToast("上传图片失败，请稍候重试。");
+                                Toast.makeText(AuthActivity.this, "上传图片失败，请稍候重试。", Toast.LENGTH_LONG).show();
                             }
                         }
                     });

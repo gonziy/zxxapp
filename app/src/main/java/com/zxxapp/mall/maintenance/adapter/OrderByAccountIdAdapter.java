@@ -10,6 +10,7 @@ import com.zxxapp.mall.maintenance.base.baseadapter.BaseRecyclerViewHolder;
 import com.zxxapp.mall.maintenance.bean.shopping.OrderByAccountIdBean;
 import com.zxxapp.mall.maintenance.databinding.ItemMyOrderBinding;
 import com.zxxapp.mall.maintenance.ui.shopping.OrderConfirmActivity;
+import com.zxxapp.mall.maintenance.ui.shopping.OrderEvaluationActivity;
 import com.zxxapp.mall.maintenance.utils.StringUtils;
 import com.zxxapp.mall.maintenance.utils.ToastUtil;
 
@@ -58,10 +59,12 @@ public class OrderByAccountIdAdapter extends BaseRecyclerViewAdapter<OrderByAcco
                     if(bean.getStatus().equals("2")) {
                         OrderConfirmActivity.start(v.getContext(), bean.getUnitPrice() == null ? 0 : Double.valueOf(bean.getUnitPrice().toString()), bean.getOrderNo(),String.valueOf(bean.getShopId()));
                     }else if(bean.getStatus().equals("0")){
-                        RongIM.getInstance().startPrivateChat(v.getContext(), String.valueOf(bean.getShopId()), "与商家对话");
+                        //OrderEvaluationActivity.start(v.getContext(),bean.getOrderNo(),String.valueOf(bean.getShopId()));
+                        //
+                         RongIM.getInstance().startPrivateChat(v.getContext(), String.valueOf(bean.getShopId()), "与商家对话");
                         //ToastUtil.showToast("商家还未确认订单");
                     }else if(bean.getStatus().equals("1")){
-                        ToastUtil.showToast("订单已完成,无需重复付款");
+                        OrderEvaluationActivity.start(v.getContext(),bean.getOrderNo(),String.valueOf(bean.getShopId()));
                     }else if(bean.getStatus().equals("5")){
                         ToastUtil.showToast("已退单，订单无效");
                     }else {

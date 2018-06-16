@@ -2,6 +2,7 @@ package com.zxxapp.mall.maintenance.ui.shop;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -204,7 +205,14 @@ public class KindChooseActivity extends AppCompatActivity {
                             for(CategoryBean categoryBean : categoryBeanRequestDataListArrayBean.getData().getList()){
                                 categoryList.add(categoryBean);
                             }
+
+                            if(categoryList.size()>0){
+                                categoryList.get(0).setSelected(true);
+                            }
+
                             binding.categoryList.getAdapter().notifyDataSetChanged();
+
+                            loadService(categoryList.get(0).getCategoryId(), categoryType);
                         }
                     }
                 });
@@ -268,9 +276,11 @@ public class KindChooseActivity extends AppCompatActivity {
             holder.binding.titleText.setText(categoryBean.getCategoryName());
             holder.binding.titleText.setTag(categoryBean);
             if(categoryBean.isSelected()){
-                holder.binding.titleText.setTextColor(getResources().getColor(R.color.colorAccent));
+                holder.binding.titleText.setTextColor(Color.WHITE);
+                holder.binding.titleText.setBackgroundColor(Color.rgb(0xff, 0x50, 0x00));
             }else{
-                holder.binding.titleText.setTextColor(getResources().getColor(R.color.colorContent));
+                holder.binding.titleText.setTextColor(Color.rgb(0xff, 0x50, 0x00));
+                holder.binding.titleText.setBackgroundColor(Color.WHITE);
             }
         }
 
@@ -320,7 +330,7 @@ public class KindChooseActivity extends AppCompatActivity {
             holder.binding.titleText.setText(serviceBean.getServiceName());
             Picasso.get().load(serviceBean.getPicture()).placeholder(R.drawable.ic_placeholder).into(holder.binding.iconImage);
             if(serviceBean.isSelected()){
-                holder.binding.titleText.setTextColor(getResources().getColor(R.color.colorAccent));
+                holder.binding.titleText.setTextColor(Color.rgb(0xff, 0x50, 0x00));
             }else{
                 holder.binding.titleText.setTextColor(getResources().getColor(R.color.colorContent));
             }

@@ -458,6 +458,7 @@
 
         <!-- JPush end -->
         <activity android:name=".ui.shopping.LocationActivity"></activity>
+        <activity android:name=".ui.shopping.OrderEvaluationActivity"></activity>
     </application>
 
 </manifest>
