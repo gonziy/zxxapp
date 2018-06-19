@@ -123,7 +123,7 @@ public interface HttpClient {
 
     @FormUrlEncoded
     @POST("account/editAccountAPI")
-    Observable<ResultBean> editAccountAPI(@Field("token") String token,@Field("nickname") String nickname, @Field("phone") String phone);
+    Observable<ResultBean> editAccountAPI(@Field("token") String token,@Field("nickname") String nickname, @Field("phone") String phone, @Field("aratar_img") String aratar_img);
 
     @FormUrlEncoded
     @POST("account/myMessageAPI")

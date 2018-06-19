@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import com.example.http.HttpUtils;
 import com.flyco.dialog.listener.OnBtnClickL;
 import com.flyco.dialog.widget.NormalDialog;
+import com.squareup.picasso.Picasso;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.zxxapp.mall.maintenance.MainActivity;
@@ -99,6 +100,12 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
         {
             LoginActivity.start(activity);
         }
+        bindingView.ivMineFace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditUserInfoActivity.start(v.getContext());
+            }
+        });
 
         bindingView.llOrders.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +179,11 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                 UserLoginBean bean = (UserLoginBean)object;
                 bindingView.tvMineNickName.setText(bean.getData().getNickName());
                 bindingView.tvMineAgentAddr.setText(bean.getData().getPhone());
+                if(bean.getData().getAvatarImg()==null){
+                    Picasso.get().load(R.mipmap.user_face).into(bindingView.ivMineFace);
+                }else {
+                    Picasso.get().load(bean.getData().getAvatarImg().toString()).into(bindingView.ivMineFace);
+                }
             }
 
             @Override

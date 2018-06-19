@@ -15,6 +15,7 @@ public class UserInfoModel {
     private String token = "";
     private String nickname = "";
     private String phone = "";
+    private String aratar_img = "";
 
 
 
@@ -26,12 +27,13 @@ public class UserInfoModel {
         this.token = token;
         this.nickname = nickname;
         this.phone = phone;
+        this.aratar_img = "";
     }
 
     public void editUserInfo(final RequestImpl listener) {
 
         // 添加新的参数
-        Subscription subscription = HttpClient.Builder.getZMServer().editAccountAPI(this.token, this.nickname, this.phone)
+        Subscription subscription = HttpClient.Builder.getZhiXiuServer().editAccountAPI(this.token, this.nickname, this.phone,this.aratar_img)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResultBean>() {
