@@ -17,6 +17,7 @@ public final class AccountHelper {
     private Application application;
     private static AccountHelper instances;
     private User user;
+    private String[] userHistory;
     private static ShopBean shop;
 
     private AccountHelper(Application application) {
@@ -45,6 +46,20 @@ public final class AccountHelper {
             }
         }
     }
+    public static String[] getUserHistory(){
+        if (instances == null) {
+            return null;
+        }else {
+            instances.userHistory = BaseApplication.getInstance().getUserHistory();
+
+            if (instances.userHistory == null || instances.userHistory.length==0) {
+                return null;
+            } else {
+                return instances.userHistory;
+            }
+        }
+    }
+
 
     public static boolean isLogin() {
         User user = getUser();

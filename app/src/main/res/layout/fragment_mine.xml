@@ -373,7 +373,7 @@
                     android:textSize="14dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@color/colorRedExit"/>
+                    android:background="@drawable/button_border_radius"/>
 
                 <View
                     style="@style/horizontalblock"/>

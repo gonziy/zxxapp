@@ -7,9 +7,14 @@ import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListPopupWindow;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -57,6 +62,8 @@ import rx.schedulers.Schedulers;
 public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
+    private ListPopupWindow listPopupWindow;
+    String[] list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        list = BaseApplication.getInstance().getUserHistory();
         binding.btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,12 +84,11 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(binding.etUsername.getText().length()==0){
+                if (binding.etUsername.getText().length() == 0) {
                     ToastUtil.showToast("请填写手机号/账号");
-                }
-                else if(binding.etPassword.getText().length()==0){
+                } else if (binding.etPassword.getText().length() == 0) {
                     ToastUtil.showToast("请填写密码");
-                }else {
+                } else {
                     String username = binding.etUsername.getText().toString();
                     String password = binding.etPassword.getText().toString();
                     Login(username, password);
@@ -93,6 +100,32 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        if(list!=null && list.length>0) {
+            listPopupWindow = new ListPopupWindow(LoginActivity.this);
+            binding.etUsername.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    listPopupWindow.setAdapter(new ArrayAdapter<String>(LoginActivity.this,
+                            android.R.layout.simple_list_item_1, list));
+                    listPopupWindow.setAnchorView(binding.etUsername);
+                    listPopupWindow.setModal(true);
+                    listPopupWindow.show();
+                    return false;
+                }
+            });
+            listPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String selectUsername = list[position];
+                    if (!selectUsername.isEmpty()) {
+                        binding.etUsername.setText(selectUsername);
+                        if (listPopupWindow.isShowing()) {
+                            listPopupWindow.dismiss();
+                        }
+                    }
+                }
+            });
+        }
     }
 
     public void wxLogin() {
@@ -136,8 +169,6 @@ public class LoginActivity extends AppCompatActivity {
                         binding.etPassword.setFocusableInTouchMode(true);
                         binding.btnLogin.setClickable(true);
                         binding.btnLogin.setText("登录");
-
-
                     }
 
                     @Override
@@ -158,15 +189,7 @@ public class LoginActivity extends AppCompatActivity {
                             user.setToken(accessToken);
 
                             BaseApplication.getInstance().setUser(user);
-
-                            new Thread(){
-                                @Override
-                                public void run() {
-                                    super.run();
-
-                                }
-                            }.start();
-
+                            BaseApplication.getInstance().addUserHistory(loginResult.getData().getUserName());
 
                             sequence++;
                             TagAliasOperatorHelper.getInstance().handleAction(getApplicationContext(),sequence,user.getUserName());
@@ -175,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             LoginActivity.this.finish();
                         }else {
-                            ToastUtil.showToast("账号或密码错误");
+                            ToastUtil.showToast(loginResult.getData().getMsg());
 
                             binding.etUsername.setFocusable(true);
                             binding.etUsername.setFocusableInTouchMode(true);
@@ -208,14 +231,11 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String s) {
                             Log.e("rongcloud", "连接通讯服务器成功—————>" + s);
-                            ToastUtil.showToast("连接通讯服务器成功—————>" + s);
                         }
 
                         @Override
                         public void onError(RongIMClient.ErrorCode errorCode) {
                             Log.e("rongcloud", "连接通讯服务器失败—————>" + errorCode.getMessage());
-
-                            ToastUtil.showToast("连接通讯服务器失败—————>" + errorCode.getMessage());
                         }
                     });
                 }

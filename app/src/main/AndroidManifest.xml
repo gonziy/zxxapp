@@ -136,11 +136,6 @@
             android:name=".ui.TransitionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ViewBigPicTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
@@ -238,6 +233,13 @@
         <activity android:name=".ui.mine.child.TempOrderByAccountIdActivity" />
         <activity android:name=".ui.mine.child.CouponListByAccountIdActivity" />
         <activity android:name=".ui.mine.child.RegisterActivity" />
+        <activity android:name=".ui.PermissionActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!-- 会话列表 -->
         <activity
             android:name=".ui.chat.ConversationListActivity"

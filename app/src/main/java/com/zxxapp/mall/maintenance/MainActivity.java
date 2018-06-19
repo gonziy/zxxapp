@@ -173,14 +173,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void onSuccess(String s) {
                             Log.e("rongcloud", "连接通讯服务器成功—————>" + s);
-                            ToastUtil.showToast("连接通讯服务器成功—————>" + s);
                         }
 
                         @Override
                         public void onError(RongIMClient.ErrorCode errorCode) {
                             Log.e("rongcloud", "连接通讯服务器失败—————>" + errorCode.getMessage());
-
-                            ToastUtil.showToast("连接通讯服务器失败—————>" + errorCode.getMessage());
                         }
                     });
                 }
@@ -420,146 +417,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_search:
-////                Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
-//
-//                Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
-//                startActivityForResult(intent, SCAN_QR_REQUEST);
-//
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
         return false;
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == SCAN_QR_REQUEST) {
-//            //处理扫描结果（在界面上显示）
-//            if (null != data) {
-//                Bundle bundle = data.getExtras();
-//                if (bundle == null) {
-//                    return;
-//                }
-//                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
-//                    String result = bundle.getString(CodeUtils.RESULT_STRING);
-//
-//                    if(!result.isEmpty()){
-//                        //验证邀请人
-//                        if(result.startsWith(HttpUtils.API_HOST + "inviter.aspx")){
-//
-//                            if(AccountHelper.isLogin())
-//                            {
-//                                final String inviter_id = result.replace(HttpUtils.API_HOST + "inviter.aspx?from=","");
-//                                //ToastUtil.showToast("邀请人:" + inviter_id);
-//
-//                                User user = BaseApplication.getInstance().getUser();
-//                                Subscription get = HttpClient.Builder.getUserServer().inviteUser("invite",user.getUserName(),user.getPassword(),inviter_id)
-//                                        .subscribeOn(Schedulers.io())
-//                                        .observeOn(AndroidSchedulers.mainThread())
-//                                        .subscribe(new Observer<LoginResult>(){
-//
-//                                            @Override
-//                                            public void onCompleted() {
-//                                            }
-//
-//                                            @Override
-//                                            public void onError(Throwable e) {
-//                                                ToastUtil.showToast("系统无法读取您的个人信息,请您稍后再试");
-//                                            }
-//
-//                                            @Override
-//                                            public void onNext(LoginResult loginResult) {
-//                                                if(loginResult.getMsg().equals("邀请成功")){
-//                                                    if(loginResult.getData().getInviter()==0) {
-//                                                        final NormalDialog dialog = new NormalDialog(MainActivity.this);
-//                                                        dialog.content("您的邀请人ID为：" + inviter_id).style(NormalDialog.STYLE_ONE)//
-//                                                                .titleTextSize(23)
-//                                                                .titleTextColor(Color.parseColor("#fffd625b"))
-//                                                                .cornerRadius(10)
-//                                                                .titleLineHeight(0)
-//                                                                .show();
-//                                                        dialog.setOnBtnClickL(
-//                                                                new OnBtnClickL() {
-//                                                                    @Override
-//                                                                    public void onBtnClick() {
-//                                                                        SharedPreferencesHelper.getInstance().saveData("inviter_id", inviter_id);
-//                                                                        SharedPreferencesHelper.getInstance().saveData("inviter_time", TimeUtil.getDateTime().getTime());
-//                                                                        ToastUtil.showToast("您接受了"+SharedPreferencesHelper.getInstance().getData("inviter_id", "").toString()+"邀请,有效期1小时");
-//                                                                        dialog.dismiss();
-//                                                                    }
-//                                                                }
-//
-//                                                        );
-//                                                    }else {
-//                                                        final NormalDialog dialog2 = new NormalDialog(MainActivity.this);
-//                                                        dialog2.content("您已经被" + String.valueOf(loginResult.getData().getInviter()) +"邀请过了，无法再次被邀请")
-//                                                                .btnNum(1)
-//                                                                .btnText("我知道了")
-//                                                                .titleLineHeight(0)
-//                                                                .cornerRadius(10)
-//                                                                .titleTextColor(Color.parseColor("#fffd625b"))
-//                                                                .show();
-//                                                        dialog2.setOnBtnClickL(
-//                                                                new OnBtnClickL() {
-//                                                                    @Override
-//                                                                    public void onBtnClick() {
-//                                                                        dialog2.dismiss();
-//                                                                    }
-//                                                                });
-//                                                    }
-//
-//                                                }else {
-//                                                    ToastUtil.showToast("登录信息错误,请您重新登录");
-//                                                }
-//
-//                                            }
-//                                        });
-//
-//
-//                            }else {
-//                                LoginActivity.start(MainActivity.this);
-//                            }
-//                        }
-//                        else if(result.startsWith(HttpUtils.API_HOST + "goods/show-")){
-//                            final String goods_id = result.replace(HttpUtils.API_HOST + "goods/show-","").replace(".aspx","");
-//                            if(!goods_id.isEmpty()) {
-//                                try {
-//                                    int id = Integer.valueOf(goods_id);
-//                                    if (id > 0) {
-//                                        GoodsDetailActivity.start(MainActivity.this, String.valueOf(id));
-//                                    }
-//                                } catch (Exception e) {
-//
-//                                }
-//                            }
-//
-//                        }
-//                        else if(result.equals("孙冰")||result.equals("Gonziy")){
-//                            WebViewActivity.loadUrl(MainActivity.this,"http://shop.zhenmeizhixiu.com/gonziy.aspx","");
-//
-//                        }
-//                        else{
-//                            final NormalDialog dialog=new NormalDialog(this);
-//                            dialog.content("解析结果:" + result)//
-//                                    .btnNum(1)
-//                                    .titleLineHeight(0)
-//                                    .cornerRadius(10)
-//                                    .titleTextColor(Color.parseColor("#fffd625b"))
-//                                    .btnText("确认")//
-//                                    .show();
-//                        }
-//                    }
-//
-//                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-//                    ToastUtil.showToast("解析二维码失败");
-//                }
-//            }
-//        }
-//    }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -657,13 +517,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onSuccess(String s) {
                 Log.e("rongcloud", "连接通讯服务器成功—————>" + s);
-                Toast.makeText(MainActivity.this, "连接成功" + s, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
                 Log.e("rongcloud", "连接通讯服务器失败—————>" + errorCode.getMessage());
-                Toast.makeText(MainActivity.this, "连接通讯服务器失败—————>" + errorCode.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

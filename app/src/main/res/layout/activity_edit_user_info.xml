@@ -5,23 +5,54 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/et_nickname"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="6"
-            android:layout_marginTop="1dp"
-            android:inputType="textPersonName"
-            android:hint="请输入昵称" />
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="48dp"
+                android:gravity="right|center_vertical"
+                android:textSize="14dp"
+                android:text="昵称"
+                />
+            <EditText
+                android:id="@+id/et_nickname"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="6"
+                android:inputType="textPersonName"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/textview_border_radius"
+                android:hint="请输入昵称" />
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp">
 
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:gravity="right|center_vertical"
+            android:textSize="14dp"
+            android:text="手机号"
+            />
         <EditText
             android:id="@+id/et_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="11"
-            android:layout_marginTop="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/textview_border_radius"
             android:inputType="phone"
             android:hint="请输入手机号" />
+    </LinearLayout>
+
+
 
         <Button
             android:id="@+id/btn_login"
@@ -29,8 +60,8 @@
             android:layout_height="48dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="1dp"
-            android:background="@color/colorTheme"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_border_radius"
             android:text="保存"
             android:textColor="@color/colorWhite" />
     </LinearLayout>

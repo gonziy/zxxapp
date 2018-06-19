@@ -37,9 +37,8 @@ public class ValidateActivity extends AppCompatActivity implements View.OnClickL
         binding = DataBindingUtil.setContentView(this, R.layout.activity_shop_validate);
         binding.createTenantButton.setOnClickListener(this);
         binding.validateTenantButton.setOnClickListener(this);
+        binding.agreeCheck.setOnClickListener(this);
         binding.agreement.setOnClickListener(this);
-
-        validateExist();
     }
 
     /**
@@ -65,7 +64,7 @@ public class ValidateActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onNext(RequestListArrayBean<ShopBean> shopBean) {
                         if("true".equalsIgnoreCase(shopBean.getSuccess())){
-                            binding.createTenantButton.setEnabled(false);
+                            //TODO:binding.createTenantButton.setEnabled(false);
                             binding.validateTenantButton.setEnabled(true);
 
                             AccountHelper.setShop(shopBean.getList()[0]);
@@ -92,6 +91,7 @@ public class ValidateActivity extends AppCompatActivity implements View.OnClickL
 
                     @Override
                     public void onCompleted() {
+
                     }
 
                     @Override
@@ -134,8 +134,9 @@ public class ValidateActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        if(v==binding.createTenantButton){
-            CreateActivity.start(v.getContext());
+        if(v==binding.createTenantButton) {
+            Intent intent = new Intent(this, CreateActivity.class);
+            startActivityForResult(intent, 0x02);
         }else if(v==binding.validateTenantButton){
             Intent intent = new Intent(this, AuthActivity.class);
             startActivityForResult(intent, 0x01);
@@ -145,12 +146,18 @@ public class ValidateActivity extends AppCompatActivity implements View.OnClickL
             Uri content_url = Uri.parse(HttpUtils.ZhiXiuWang_HOST+"account/shopAgreement");
             intent.setData(content_url);
             startActivity(intent);
+        }else if(v==binding.agreeCheck){
+            if(binding.agreeCheck.isChecked()) {
+                binding.agreeCheck.setEnabled(false);
+
+                validateExist();
+            }
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==0x01){
+        if(requestCode==0x01 || requestCode==0x02){
             //查看当前的验证状态
             checkAuth();
         }

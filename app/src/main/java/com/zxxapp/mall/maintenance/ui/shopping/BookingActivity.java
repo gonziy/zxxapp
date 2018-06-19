@@ -83,7 +83,7 @@ public class BookingActivity extends BaseActivity<ActivityBookingBinding> {
             this.shopId = (String) getIntent().getSerializableExtra("shopId");
         }
         if(this.shopId==null|| this.shopId.equals("")){
-            setTitle("抢单模式");
+            setTitle("发布需求");
         }else {
             setTitle("预约商家");
         }

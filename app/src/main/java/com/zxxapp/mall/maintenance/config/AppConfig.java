@@ -121,6 +121,37 @@ public class AppConfig {
         user.setUserID((Integer) SharedPreferencesHelper.getInstance().getData(KEY_USER +"_user_id", 0));
         return user;
     }
+    public void addUserHistory(String username) {
+        String user1 = (String) SharedPreferencesHelper.getInstance().getData(KEY_USER + "_user1", "");
+        String user2 = (String) SharedPreferencesHelper.getInstance().getData(KEY_USER + "_user2", "");
+        if(!username.equals(user1) && !username.equals(user2)) {
+            if (user1.isEmpty()) {
+                SharedPreferencesHelper.getInstance().saveData(KEY_USER + "_user1", username);
+            } else if (user2.isEmpty()) {
+                SharedPreferencesHelper.getInstance().saveData(KEY_USER + "_user2", username);
+            } else {
+                SharedPreferencesHelper.getInstance().saveData(KEY_USER + "_user2", username);
+                SharedPreferencesHelper.getInstance().saveData(KEY_USER + "_user1", user2);
+            }
+        }
+    }
+    public String[] getUserHistory() {
+        String user1 = (String) SharedPreferencesHelper.getInstance().getData(KEY_USER + "_user1", "");
+        String user2 = (String) SharedPreferencesHelper.getInstance().getData(KEY_USER + "_user2", "");
+        String[] users = {user1,user2};
+        if (user1.isEmpty() && user2.isEmpty()) {
+            return null;
+        }else if(!user1.isEmpty() && user2.isEmpty()){
+            String[] users1 ={user1};
+            return users1;
+        }else if(user1.isEmpty() && !user2.isEmpty()){
+            String[] users2 ={user2};
+            return users2;
+        }else
+        {
+            return users;
+        }
+    }
 
 
 }

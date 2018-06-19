@@ -166,6 +166,9 @@ public class AuthActivity extends AppCompatActivity {
                 if (cardBackModel.isLocalFile()) {
                     pictures.add(cardBackModel);
                 }
+                if(licenseModel.isLocalFile()){
+                    pictures.add(licenseModel);
+                }
                 for (PictureDataModel p : pictureDataList) {
                     if (p.isLocalFile()) {
                         pictures.add(p);

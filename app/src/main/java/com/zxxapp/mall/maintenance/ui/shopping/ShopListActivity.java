@@ -62,9 +62,8 @@ public class ShopListActivity extends BaseActivity<ActivityShopListBinding> {
 
     private void showMothed() {
         final NormalDialog dialog = new NormalDialog(ShopListActivity.this);
-        dialog.content("是否进入抢单模式，提交需求?").style(NormalDialog.STYLE_TWO)
+        dialog.content("是否发布您的需求?").style(NormalDialog.STYLE_TWO)
                 .titleTextSize(23)
-                .titleTextColor(Color.parseColor("#ff07c6a4"))
                 .cornerRadius(10)
                 .titleLineHeight(0)
                 .show();

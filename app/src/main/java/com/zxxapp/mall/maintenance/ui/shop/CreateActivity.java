@@ -92,6 +92,8 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (logoFile != null) {
                     uploadFile(logoFile);
+                }else{
+                    Toast.makeText(CreateActivity.this, "请先选择商铺Logo。", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -102,12 +104,6 @@ public class CreateActivity extends AppCompatActivity {
         super.onResume();
 
         //商铺顶部图片为：500*130
-    }
-
-    public static void start(Context mContext) {
-        Intent intent = new Intent(mContext, CreateActivity.class);
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeBasic();
-        ActivityCompat.startActivity(mContext, intent, options.toBundle());
     }
 
     @Override
@@ -213,6 +209,7 @@ public class CreateActivity extends AppCompatActivity {
                                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        setResult(RESULT_OK);
                                         finish();//关闭窗口
                                     }
                                 }).show();

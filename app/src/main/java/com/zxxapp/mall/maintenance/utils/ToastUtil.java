@@ -14,8 +14,8 @@ public class ToastUtil {
     private static Toast mToast;
 
     public static void showToast(String text) {
-        if (BaseApplication.getInstance() != null) {
-            mToast = Toast.makeText(BaseApplication.getInstance(), text, Toast.LENGTH_SHORT);
+        if (mToast== null) {
+            mToast = Toast.makeText(BaseApplication.getInstance().getApplicationContext(), text, Toast.LENGTH_SHORT);
         }else {
             mToast.setText(text);
             mToast.show();

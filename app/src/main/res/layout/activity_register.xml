@@ -45,24 +45,23 @@
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:orientation="horizontal">
-                    <android.support.design.widget.TextInputLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:layout_marginTop="0dp">
-
+                        android:layout_height="48dp">
                         <EditText
                             android:id="@+id/et_username"
+
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:background="@drawable/text_view_border"
+                            android:background="@drawable/textview_border_radius"
                             android:gravity="center_vertical"
                             android:hint="请输入您的手机号" />
-                    </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
                     <Button
                         android:id="@+id/btn_send"
                         android:layout_weight="3"
@@ -70,36 +69,36 @@
                         android:layout_height="48dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/colorWhite"
+                        android:gravity="center"
+                        android:background="@null"
                         android:text="发送验证码"
                         android:textColor="@color/colorTheme" />
                 </LinearLayout>
-                <android.support.design.widget.TextInputLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:focusableInTouchMode="false"
-                    app:passwordToggleEnabled="true">
-
+                    android:layout_marginTop="10dp"
+                    android:layout_height="48dp">
                     <EditText
                         android:id="@+id/et_password"
                         android:layout_width="match_parent"
+                        android:layout_weight="1"
                         android:layout_height="48dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="@drawable/text_view_border"
+                        android:background="@drawable/textview_border_radius"
                         android:gravity="center_vertical"
                         android:hint="请输入您的密码"
                         android:inputType="textPassword" />
+                    <View
+                        android:id="@+id/viewTip"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="30dp"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_height="30dp">
 
-                </android.support.design.widget.TextInputLayout>
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:focusableInTouchMode="false"
-                    app:passwordToggleEnabled="true">
+                    </View>
+                </RelativeLayout>
 
                     <EditText
                         android:id="@+id/et_val_code"
@@ -107,12 +106,32 @@
                         android:layout_height="48dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:background="@drawable/text_view_border"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/textview_border_radius"
                         android:gravity="center_vertical"
                         android:hint="请输入您的验证码"
                         android:inputType="textPassword" />
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left|center_vertical"
+                    android:orientation="horizontal">
 
-                </android.support.design.widget.TextInputLayout>
+                    <CheckBox
+                        android:id="@+id/agreeCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/agreement"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="查看并同意注册协议"
+                        android:textColor="@color/c9"/>
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/btn_register"
@@ -120,8 +139,8 @@
                     android:layout_height="48dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="50dp"
-                    android:background="@color/colorTheme"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_border_radius"
                     android:text="注册"
                     android:textColor="@color/colorWhite" />
             </LinearLayout>

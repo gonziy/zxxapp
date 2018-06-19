@@ -122,14 +122,11 @@ public class BaseApplication extends Application {
                         @Override
                         public void onSuccess(String s) {
                             Log.e("rongcloud", "连接通讯服务器成功—————>" + s);
-                            ToastUtil.showToast("连接通讯服务器成功—————>" + s);
                         }
 
                         @Override
                         public void onError(RongIMClient.ErrorCode errorCode) {
                             Log.e("rongcloud", "连接通讯服务器失败—————>" + errorCode.getMessage());
-
-                            ToastUtil.showToast("连接通讯服务器失败—————>" + errorCode.getMessage());
                         }
                     });
                 }
@@ -155,7 +152,7 @@ public class BaseApplication extends Application {
     }
 
     private void JPushInit() {
-        JPushInterface.setDebugMode(true);
+        JPushInterface.setDebugMode(false);
         JPushInterface.init(this);
     }
 
@@ -254,6 +251,9 @@ public class BaseApplication extends Application {
 
         return appConfig.getUser();
     }
+    public String[] getUserHistory() {
+        return appConfig.getUserHistory();
+    }
 
     /**
      * 设置用户信息
@@ -272,6 +272,9 @@ public class BaseApplication extends Application {
         }
 
 
+    }
+    public void addUserHistory(String username){
+        appConfig.addUserHistory(username);
     }
 
     private void WXInit()
