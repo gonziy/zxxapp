@@ -32,6 +32,7 @@ public class RobbingActivity extends AppCompatActivity implements View.OnClickLi
     private ActivityRobbingBinding binding;
     private String orderNo;
     private int notificationId;
+    private OrderBean orderBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,8 @@ public class RobbingActivity extends AppCompatActivity implements View.OnClickLi
                             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                             notificationManager.cancel(notificationId);
 
-                            OrderBean orderBean = orderBeanRequestDataBean.getData();
+                            orderBean = orderBeanRequestDataBean.getData();
+
                             if (orderBean.getOrderDate() != null) {
                                 binding.timeText.setText(sdf.format(new Date(Long.parseLong(orderBean.getOrderDate()))));
                             }
@@ -86,9 +88,9 @@ public class RobbingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         if (v.getId() == R.id.okButton) {
-            HttpClient.Builder.getZhiXiuServer().grabOrder(orderNo,1)
+            HttpClient.Builder.getZhiXiuServer().grabOrder(orderNo,orderBean.getShopId())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<RequestBaseBean>() {
@@ -110,7 +112,14 @@ public class RobbingActivity extends AppCompatActivity implements View.OnClickLi
                                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                RobbingActivity.this.finish();
+                                                //RobbingActivity.this.finish();
+                                                //跳转订单详情界面
+
+
+                                                Intent intent = new Intent(v.getContext(), OrderDetailActivity.class);
+                                                intent.putExtra("orderId", orderBean.getOrderId());
+                                                intent.putExtra("orderNo", orderBean.getOrderNo());
+                                                startActivity(intent);
                                             }
                                         }).show();
                             } else {

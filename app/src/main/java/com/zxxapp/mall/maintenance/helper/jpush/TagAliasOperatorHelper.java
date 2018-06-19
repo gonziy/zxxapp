@@ -175,7 +175,6 @@ public class TagAliasOperatorHelper {
                 message.obj = tagAliasBean;
                 delaySendHandler.sendMessageDelayed(message,1000*60);
                 String logs =getRetryStr(tagAliasBean.isAliasAction, tagAliasBean.action,errorCode);
-                JPushUtil.showToast(logs, context);
                 return true;
             }
         }
@@ -195,7 +194,6 @@ public class TagAliasOperatorHelper {
             delaySendHandler.sendMessageDelayed(message,1000*60);
             String str = "Failed to set mobile number due to %s. Try again after 60s.";
             str = String.format(Locale.ENGLISH,str,(errorCode == 6002 ? "timeout" : "server internal error”"));
-            JPushUtil.showToast(str, context);
             return true;
         }
         return false;

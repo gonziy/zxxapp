@@ -11,9 +11,18 @@ import android.view.View;
 
 import com.flyco.dialog.widget.NormalDialog;
 import com.zxxapp.mall.maintenance.R;
+import com.zxxapp.mall.maintenance.app.BaseApplication;
 import com.zxxapp.mall.maintenance.base.BaseActivity;
+import com.zxxapp.mall.maintenance.bean.Result2Bean;
 import com.zxxapp.mall.maintenance.databinding.ActivityFeedbackBinding;
+import com.zxxapp.mall.maintenance.http.HttpClient;
 import com.zxxapp.mall.maintenance.ui.shop.ValidateActivity;
+import com.zxxapp.mall.maintenance.utils.ToastUtil;
+
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class Feedback extends BaseActivity<ActivityFeedbackBinding> {
 
@@ -31,13 +40,59 @@ public class Feedback extends BaseActivity<ActivityFeedbackBinding> {
         bindingView.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final NormalDialog dialog=new NormalDialog(Feedback.this);
-                dialog.content("已提交反馈，我们将尽快处理您的意见")//
-                        .btnNum(1)
-                        .titleLineHeight(0)
-                        .cornerRadius(10)
-                        .btnText("确认")//
-                        .show();
+                if(!bindingView.etFeedback.getText().toString().isEmpty()){
+                    Subscription get = HttpClient.Builder.getZhiXiuServer().addFeedback(BaseApplication.getInstance().getUser().token,bindingView.etFeedback.getText().toString())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<Result2Bean>(){
+
+                                @Override
+                                public void onCompleted() {
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                    ToastUtil.showToast("系统错误，请您稍后再试");
+                                }
+
+                                @Override
+                                public void onNext(Result2Bean resultBean) {
+                                    if(resultBean.isSccuss()){
+                                        final NormalDialog dialog=new NormalDialog(Feedback.this);
+                                        dialog.content("提交成功，等待平台处理")//
+                                                .btnNum(1)
+                                                .titleLineHeight(0)
+                                                .cornerRadius(10)
+                                                .btnText("确认")//
+                                                .show();
+                                    }else {
+                                        final NormalDialog dialog=new NormalDialog(Feedback.this);
+                                        dialog.content(resultBean.getMsg())//
+                                                .btnNum(1)
+                                                .titleLineHeight(0)
+                                                .cornerRadius(10)
+                                                .btnText("确认")//
+                                                .show();
+                                    }
+
+                                }
+                            });
+
+                }else{
+                    final NormalDialog dialog=new NormalDialog(Feedback.this);
+                    dialog.content("请填写反馈意见后再提交")//
+                            .btnNum(1)
+                            .titleLineHeight(0)
+                            .cornerRadius(10)
+                            .btnText("确认")//
+                            .show();
+                }
+
+
+
+
+
             }
         });
     }

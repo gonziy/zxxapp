@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -306,6 +307,16 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
+
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            ToastUtil.showToast("请您先登录账号");
+            return true;//不执行父类点击事件
+        }
+        return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
 
     }
 

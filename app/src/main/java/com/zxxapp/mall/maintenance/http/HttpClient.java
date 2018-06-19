@@ -13,6 +13,7 @@ import com.zxxapp.mall.maintenance.bean.RequestDataListArrayBean;
 import com.zxxapp.mall.maintenance.bean.RequestListArrayBean;
 import com.zxxapp.mall.maintenance.bean.RequestPaginationBean;
 import com.zxxapp.mall.maintenance.bean.RequestUploadBean;
+import com.zxxapp.mall.maintenance.bean.Result2Bean;
 import com.zxxapp.mall.maintenance.bean.ResultBean;
 import com.zxxapp.mall.maintenance.bean.RongCloudResultBean;
 import com.zxxapp.mall.maintenance.bean.SendCodeBean;
@@ -167,6 +168,9 @@ public interface HttpClient {
     @GET("order/orderComment")
     Observable<ResultBean> orderComment(@Query("token") String token, @Query("orderId") String orderId, @Query("score") String score, @Query("content") String content);
 
+
+    @GET("userComment/addUserComment")
+    Observable<Result2Bean> addFeedback(@Query("token") String token,@Query("userCommentContent") String userCommentContent);
     /*
     客户 end
      */

@@ -173,6 +173,7 @@ public class BookingActivity extends BaseActivity<ActivityBookingBinding> {
                         if(resultBean.getSuccess().equals("true")){
                             ToastUtil.showToast("发布成功");
                             BookingActivity.this.finish();
+                            ShopListActivity.instance.finish();
                         }else {
                             ToastUtil.showToast(String.valueOf(resultBean.getMsg()));
                             bindingView.btnSubmit.setClickable(true);

@@ -58,7 +58,6 @@
                     android:layout_marginStart="8dp"
                     app:layout_constraintStart_toEndOf="@+id/textView22"
                     app:layout_constraintTop_toTopOf="@+id/textView22" />
-
                 <TextView
                     android:id="@+id/textView22"
                     android:layout_width="wrap_content"
@@ -98,6 +97,7 @@
                     app:layout_constraintStart_toStartOf="@+id/textView22"
                     app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
+
                 <TextView
                     android:id="@+id/customAddressText"
                     android:layout_width="0dp"
@@ -108,6 +108,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView25"
                     app:layout_constraintTop_toTopOf="@+id/textView25" />
+
+
 
                 <ImageView
                     android:id="@+id/imageView6"

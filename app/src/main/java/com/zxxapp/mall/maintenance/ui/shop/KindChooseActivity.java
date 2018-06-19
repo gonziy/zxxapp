@@ -52,9 +52,9 @@ public class KindChooseActivity extends AppCompatActivity {
         Intent intent = getIntent();
         categoryType = intent.getStringExtra("type");
         if("w".equalsIgnoreCase(categoryType)){
-            setTitle("选择维修类型");
+            setTitle("你会维修的项目");
         }else if("t".equalsIgnoreCase(categoryType)){
-            setTitle("选择安装类型");
+            setTitle("你会安装的项目");
         }
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_kind_choose);

@@ -11,7 +11,11 @@
             android:id="@+id/etFeedback"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:scrollbars="vertical"
+            android:background="@drawable/textview_border_radius"
             android:minLines="10"
             android:gravity="top"
             android:hint="请输入反馈意见..."
@@ -20,7 +24,24 @@
         <Button
             android:id="@+id/btnSubmit"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_border_radius"
+            android:textColor="@color/white"
             android:text="提交反馈" />
+
+
+        <TextView
+            android:id="@+id/tv_tel_remark"
+            android:layout_below="@+id/tv_pay_remark"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:textSize="14dp"
+            android:textColor="@color/colorRateRed"
+            android:text="或拨打投诉电话：18353454294"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </layout>

@@ -159,7 +159,7 @@ public class ValidateActivity extends AppCompatActivity implements View.OnClickL
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==0x01 || requestCode==0x02){
             //查看当前的验证状态
-            checkAuth();
+            validateExist();
         }
     }
 }

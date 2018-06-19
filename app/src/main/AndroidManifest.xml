@@ -273,6 +273,17 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <!-- 此部分代码需要移植到您的 app 下的 manifest，并且 authorities 指定您的包名。例如：com.android.FileProvider -->
+        <!-- 否则使用拍照功能时，会崩溃 -->
+        <provider
+        android:name="android.support.v4.content.FileProvider"
+        android:authorities="com.zxxapp.mall.maintenance.FileProvider"
+        android:grantUriPermissions="true"
+        android:exported="false">
+        <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/rc_file_path"/>
+        </provider>
 
         <receiver
             android:name=".Receiver.SealNotificationReceiver"
@@ -284,16 +295,6 @@
                 <action android:name="io.rong.push.intent.MI_MESSAGE_CLICKED" />
             </intent-filter>
         </receiver>
-
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
 
 
 

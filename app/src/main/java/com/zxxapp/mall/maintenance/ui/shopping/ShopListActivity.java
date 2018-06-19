@@ -41,6 +41,7 @@ public class ShopListActivity extends BaseActivity<ActivityShopListBinding> {
     private List<ShopListBean.LsitBean> list;
 
     public String ServiceId;
+    public static ShopListActivity instance = null;
 
 
     @Override
@@ -49,6 +50,7 @@ public class ShopListActivity extends BaseActivity<ActivityShopListBinding> {
         setContentView(R.layout.activity_shop_list);
         mModel = new ShopListModel();
         bean = new ShopListBean();
+        instance = this;
         adapter = new ShopListAdapter(ShopListActivity.this);
         initView();
         if (getIntent() != null) {

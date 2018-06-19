@@ -20,6 +20,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.rong.imkit.RongIM;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -64,12 +65,19 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onNext(RequestDataBean<OrderBean> orderBeanRequestDataBean) {
                         if("true".equalsIgnoreCase(orderBeanRequestDataBean.getSuccess())){
-                            OrderBean orderBean = orderBeanRequestDataBean.getData();
+                            final OrderBean orderBean = orderBeanRequestDataBean.getData();
 
                             binding.customName.setText(orderBean.getName());
                             binding.customPhone.setText(orderBean.getPhone());
                             binding.customAddressText.setText(orderBean.getAddress());
                             binding.servceText.setText(orderBean.getContent());
+                            binding.imageView9.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    RongIM.getInstance().startPrivateChat(v.getContext(), String.valueOf(orderBean.getAccountId()), "与客户沟通、");
+                                }
+                            });
 
                             //0.提交订单未付款、2.确定金额、1.已付款，已完成、5.退单
                             if("0".equalsIgnoreCase(orderBean.getStatus())){

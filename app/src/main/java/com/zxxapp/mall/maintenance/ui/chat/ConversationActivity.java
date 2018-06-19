@@ -48,7 +48,6 @@ public class ConversationActivity extends FragmentActivity {
     private void getIntentDate(Intent intent) {
         mTargetId = intent.getData().getQueryParameter("targetId");
         title = intent.getData().getQueryParameter("title");
-        Toast.makeText(this, title+"<<<会话ID>>>>>>>>>" + mTargetId, Toast.LENGTH_SHORT).show();
 
         //intent.getData().getLastPathSegment();//获得当前会话类型
         mConversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
