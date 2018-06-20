@@ -67,6 +67,7 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
                         if("true".equalsIgnoreCase(orderBeanRequestDataBean.getSuccess())){
                             final OrderBean orderBean = orderBeanRequestDataBean.getData();
 
+                            binding.orderNoText.setText(orderBean.getOrderNo());
                             binding.customName.setText(orderBean.getName());
                             binding.customPhone.setText(orderBean.getPhone());
                             binding.customAddressText.setText(orderBean.getAddress());

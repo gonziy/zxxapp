@@ -16,31 +16,66 @@
             android:background="@color/colorWhite">
 
             <TextView
-                android:id="@+id/orderTimeText"
+                android:id="@+id/orderNoText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                android:textColor="@color/colorContent"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textView69"
+                app:layout_constraintStart_toEndOf="@+id/textView69" />
+
+            <ImageView
+                android:id="@+id/imageView71"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textColor="@color/colorContent"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView7"
-                app:layout_constraintStart_toEndOf="@+id/imageView7"
-                app:layout_constraintTop_toTopOf="@+id/imageView7" />
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_order_code" />
 
-            <TextView
-                android:id="@+id/serviceTimeText"
+            <ImageView
+                android:id="@+id/statusImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textColor="@color/colorContent"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_placeholder" />
+
+            <TextView
+                android:id="@+id/textView69"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="订单编号："
+                app:layout_constraintBottom_toBottomOf="@+id/imageView71"
+                app:layout_constraintStart_toEndOf="@+id/imageView71"
+                app:layout_constraintTop_toTopOf="@+id/imageView71" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:layout_marginTop="1dp">
+
+            <TextView
+                android:id="@+id/orderTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                android:textColor="@color/colorContent"
+                app:layout_constraintBaseline_toBaselineOf="@+id/textView70"
+                app:layout_constraintStart_toEndOf="@+id/textView70" />
 
             <ImageView
                 android:id="@+id/imageView7"
@@ -55,30 +90,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_order_time" />
 
-            <ImageView
-                android:id="@+id/imageView8"
+            <TextView
+                android:id="@+id/textView70"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@+id/serviceTimeText"
-                app:layout_constraintStart_toStartOf="@+id/serviceTimeText"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_service_time" />
-
-            <ImageView
-                android:id="@+id/statusImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_placeholder" />
+                android:text="下单时间："
+                app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+                app:layout_constraintStart_toEndOf="@+id/imageView7"
+                app:layout_constraintTop_toTopOf="@+id/imageView7" />
         </android.support.constraint.ConstraintLayout>
 
         <LinearLayout

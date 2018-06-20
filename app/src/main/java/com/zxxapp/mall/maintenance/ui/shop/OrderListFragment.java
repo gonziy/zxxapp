@@ -243,6 +243,7 @@ public class OrderListFragment extends Fragment {
                 OrderBean bean = orderBeanList.get(position);
                 binding.getRoot().setTag(bean);
 
+                binding.orderNoText.setText(bean.getOrderNo());
                 binding.customNameText.setText(bean.getName());
                 binding.phoneText.setText(bean.getPhone());
                 binding.addressText.setText(bean.getLocation());
@@ -252,7 +253,6 @@ public class OrderListFragment extends Fragment {
                     binding.orderTimeText.setText(sdf1.format(new Date(Long.parseLong(bean.getOrderDate()))));
                 }
 
-                binding.serviceTimeText.setText(bean.getServiceName());
                 Picasso.get().load(bean.getServicePicture()).placeholder(R.drawable.ic_placeholder).into(binding.servicePictureImage);
                 binding.serviceNameText.setText(bean.getServiceName());
 
