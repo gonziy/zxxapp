@@ -39,6 +39,8 @@ public class ValidateActivity extends AppCompatActivity implements View.OnClickL
         binding.validateTenantButton.setOnClickListener(this);
         binding.agreeCheck.setOnClickListener(this);
         binding.agreement.setOnClickListener(this);
+
+        validateExist();
     }
 
     /**
@@ -65,12 +67,20 @@ public class ValidateActivity extends AppCompatActivity implements View.OnClickL
                     public void onNext(RequestListArrayBean<ShopBean> shopBean) {
                         if("true".equalsIgnoreCase(shopBean.getSuccess())){
                             //TODO:binding.createTenantButton.setEnabled(false);
-                            binding.validateTenantButton.setEnabled(true);
+                            if(binding.agreeCheck.isChecked()) {
+                                binding.createTenantButton.setEnabled(false);
+                                binding.validateTenantButton.setEnabled(true);
+                            }
 
                             AccountHelper.setShop(shopBean.getList()[0]);
 
                             checkAuth();
                         }else{
+                            if(binding.agreeCheck.isChecked()){
+                                binding.createTenantButton.setEnabled(true);
+                                binding.validateTenantButton.setEnabled(false);
+                            }
+
                             ToastUtil.showToast("无用户信息，来创建商铺吧！");
                         }
                     }
@@ -103,6 +113,7 @@ public class ValidateActivity extends AppCompatActivity implements View.OnClickL
                     public void onNext(RequestBaseBean requestBaseBean) {
                         if("100".equalsIgnoreCase(requestBaseBean.getCode())){
                             binding.validateState.setText("通过认证");
+                            binding.createTenantButton.setEnabled(false);
                             binding.validateTenantButton.setEnabled(false);
                             ToastUtil.showToast("进入商家的首页");
 
@@ -111,14 +122,24 @@ public class ValidateActivity extends AppCompatActivity implements View.OnClickL
                             finish();
                         }else if("101".equalsIgnoreCase(requestBaseBean.getCode())){
                             binding.validateState.setText("未通过认证");
-                            binding.validateTenantButton.setEnabled(true);
+
+                            if(binding.agreeCheck.isChecked()) {
+                                binding.createTenantButton.setEnabled(false);
+                                binding.validateTenantButton.setEnabled(true);
+                            }
                         }else if("102".equalsIgnoreCase(requestBaseBean.getCode())){
-                            binding.validateTenantButton.setEnabled(false);
+                            if(binding.agreeCheck.isChecked()) {
+                                binding.createTenantButton.setEnabled(false);
+                                binding.validateTenantButton.setEnabled(false);
+                            }
                             binding.validateState.setText("正在等待平台认证...");
                             binding.validateState.setTextColor(Color.RED);
                         }else if("103".equalsIgnoreCase(requestBaseBean.getCode())){
                             binding.validateState.setText("未提交认证资料");
-                            binding.validateTenantButton.setEnabled(true);
+                            if(binding.agreeCheck.isChecked()) {
+                                binding.createTenantButton.setEnabled(false);
+                                binding.validateTenantButton.setEnabled(true);
+                            }
                         }else{
                             ToastUtil.showToast("未知状态。");
                         }

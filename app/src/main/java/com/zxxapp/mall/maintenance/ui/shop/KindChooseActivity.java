@@ -330,9 +330,11 @@ public class KindChooseActivity extends AppCompatActivity {
             holder.binding.titleText.setText(serviceBean.getServiceName());
             Picasso.get().load(serviceBean.getPicture()).placeholder(R.drawable.ic_placeholder).into(holder.binding.iconImage);
             if(serviceBean.isSelected()){
-                holder.binding.titleText.setTextColor(Color.rgb(0xff, 0x50, 0x00));
+                holder.binding.constraintLayout.setBackgroundResource(R.drawable.ic_service_selected_bg);
+                //holder.binding.titleText.setTextColor(Color.rgb(0xff, 0x50, 0x00));
             }else{
-                holder.binding.titleText.setTextColor(getResources().getColor(R.color.colorContent));
+                holder.binding.constraintLayout.setBackgroundResource(R.drawable.ic_service_bg);
+                //holder.binding.titleText.setTextColor(getResources().getColor(R.color.colorContent));
             }
         }
 
