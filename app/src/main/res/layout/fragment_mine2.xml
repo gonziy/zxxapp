@@ -140,10 +140,10 @@
                 </LinearLayout>
 
                 <View
-                    style="@style/horizontalblock" android:visibility="gone"/>
+                    style="@style/horizontalblock"/>
 
                 <LinearLayout
-                    android:id="@+id/ll_robbing"
+                    android:id="@+id/ll_edit"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/ripple_one_item_bg"
@@ -151,19 +151,18 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:visibility="gone">
+                    android:paddingRight="16dp">
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_coupon" />
+                        android:src="@drawable/ic_shop_edit" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
-                        android:text="测试抢单"
+                        android:text="修改商铺信息"
                         android:textColor="@color/colorContent"
                         android:textSize="15sp" />
                     <View

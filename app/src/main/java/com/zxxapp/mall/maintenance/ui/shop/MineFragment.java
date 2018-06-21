@@ -1,5 +1,6 @@
 package com.zxxapp.mall.maintenance.ui.shop;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -45,7 +46,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         binding.llCoupon.setOnClickListener(this);
         binding.llCapital.setOnClickListener(this);
-        binding.llRobbing.setOnClickListener(this);
+        //binding.llRobbing.setOnClickListener(this);
+        binding.llEdit.setOnClickListener(this);
 
         HttpClient.Builder.getZhiXiuServer().getUserInfoByToken(AccountHelper.getUser().token)
                 .subscribeOn(Schedulers.io())
@@ -106,11 +108,15 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         }else if(v.getId()== R.id.ll_capital){
             Intent intent = new Intent(getContext(), CapitalActivity.class);
             startActivity(intent);
-        }else if(v.getId()==R.id.ll_robbing){
+        }/*else if(v.getId()==R.id.ll_robbing){
             Intent intent = new Intent(getContext(), RobbingActivity.class);
             intent.putExtra("notificationId", 10);
             intent.putExtra("orderNo", "123345569");
             startActivity(intent);
+        }*/else if(v.getId()==R.id.ll_edit){
+            Intent intent = new Intent(getContext(), CreateActivity.class);
+            intent.putExtra("edit", true);
+            startActivityForResult(intent, 0x01);
         }
     }
 
@@ -122,5 +128,15 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==0x01 && resultCode== Activity.RESULT_OK){
+            Intent intent = new Intent(getActivity(), ValidateActivity.class);
+            startActivity(intent);
+
+            getActivity().finish();
+        }
     }
 }

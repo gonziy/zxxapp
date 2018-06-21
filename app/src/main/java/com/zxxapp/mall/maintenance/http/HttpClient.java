@@ -195,6 +195,16 @@ public interface HttpClient {
                                            @Field("notice") String notice,
                                            @Field("location") String location);
 
+    @FormUrlEncoded
+    @POST("shop/editShop")
+    Observable<RequestBaseBean> editShop(@Field("token") String token,
+                                           @Field("shopName") String title,
+                                           @Field("logoImg") String logo,
+                                           @Field("address") String address,
+                                           @Field("intro") String intro,
+                                           @Field("notice") String notice,
+                                           @Field("location") String location);
+
 
     @Multipart
     @POST("shop/uploadImg")

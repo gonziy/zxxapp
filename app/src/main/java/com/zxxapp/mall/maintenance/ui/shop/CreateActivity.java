@@ -19,9 +19,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.zxxapp.mall.maintenance.R;
 import com.zxxapp.mall.maintenance.bean.RequestBaseBean;
+import com.zxxapp.mall.maintenance.bean.RequestListArrayBean;
 import com.zxxapp.mall.maintenance.bean.RequestUploadBean;
+import com.zxxapp.mall.maintenance.bean.shop.ShopBean;
 import com.zxxapp.mall.maintenance.databinding.ActivityShopCreateBinding;
 import com.zxxapp.mall.maintenance.helper.account.AccountHelper;
 import com.zxxapp.mall.maintenance.http.HttpClient;
@@ -36,6 +39,7 @@ import java.io.FileNotFoundException;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -46,9 +50,15 @@ public class CreateActivity extends AppCompatActivity {
     private File logoFile = null;
     private String logoFileUrl = null;
 
+    private boolean editMode = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        editMode = intent.getBooleanExtra("edit", false);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_shop_create);
         binding.locationImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,13 +100,49 @@ public class CreateActivity extends AppCompatActivity {
         binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (logoFile != null) {
-                    uploadFile(logoFile);
-                }else{
-                    Toast.makeText(CreateActivity.this, "请先选择商铺Logo。", Toast.LENGTH_LONG).show();
-                }
+                saveInfo();
+//                if (logoFile != null) {
+//                    uploadFile(logoFile);
+//                }else{
+//                    Toast.makeText(CreateActivity.this, "请先选择商铺Logo。", Toast.LENGTH_LONG).show();
+//                }
             }
         });
+
+        //如果是编辑模式，加载商铺的信息
+        if (editMode) {
+            HttpClient.Builder.getZhiXiuServer().getShopByToken(AccountHelper.getUser().token)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<RequestListArrayBean<ShopBean>>() {
+
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Toast.makeText(CreateActivity.this, "系统错误，请您稍后再试。", Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onNext(final RequestListArrayBean<ShopBean> bean) {
+                            if ("true".equals(bean.getSuccess())) {
+                                ShopBean shopBean = bean.getList()[0];
+
+                                Picasso.get().load(shopBean.getLogoImg()).placeholder(R.drawable.ic_placeholder).into(binding.logoImage);
+                                binding.titleEdit.setText(shopBean.getShopName());
+                                binding.addressEdit.setText(shopBean.getAddress());
+                                binding.introEdit.setText(shopBean.getIntro());
+                                binding.noticeEdit.setText(shopBean.getNotice());
+                                binding.locationText.setText(shopBean.getLocation());
+
+                                Toast.makeText(CreateActivity.this, "已经加载店铺信息。", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+        }
     }
 
     @Override
@@ -126,22 +172,23 @@ public class CreateActivity extends AppCompatActivity {
             }
 
             if (logoFile != null && logoFile.exists()) {
-                try {
-                    Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(logoFile));
-                    binding.logoImage.setImageBitmap(bitmap);
-                    int height = 130 * binding.logoImage.getWidth() / 500;
-                    binding.logoImage.setAdjustViewBounds(true);
-                    binding.logoImage.setMaxHeight(height);
-
-                    Log.d("TEST", binding.logoImage.getWidth() + "px - " + binding.logoImage.getHeight() + "px");
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                uploadFile(logoFile);
+//                try {
+//                    Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(logoFile));
+//                    binding.logoImage.setImageBitmap(bitmap);
+//                    int height = 130 * binding.logoImage.getWidth() / 500;
+//                    binding.logoImage.setAdjustViewBounds(true);
+//                    binding.logoImage.setMaxHeight(height);
+//
+//                    Log.d("TEST", binding.logoImage.getWidth() + "px - " + binding.logoImage.getHeight() + "px");
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
             }
         }
     }
 
-    private void uploadFile(File file){
+    private void uploadFile(File file) {
         Toast.makeText(CreateActivity.this, "开始上传商铺图片...", Toast.LENGTH_LONG).show();
 
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), logoFile);
@@ -154,9 +201,9 @@ public class CreateActivity extends AppCompatActivity {
 
                     @Override
                     public void onCompleted() {
-                        if(shouldNext){
-                            saveInfo();
-                        }
+//                        if(shouldNext){
+//                            saveInfo();
+//                        }
                     }
 
                     @Override
@@ -168,10 +215,8 @@ public class CreateActivity extends AppCompatActivity {
                     public void onNext(final RequestUploadBean resultBean) {
                         if (resultBean.getSuccess().equals("true")) {
                             logoFileUrl = resultBean.getUrl();
-
-                            shouldNext = true;
-
-                            Toast.makeText(CreateActivity.this, "上传商铺图片成功，开始保存商铺信息...", Toast.LENGTH_LONG).show();
+                            Toast.makeText(CreateActivity.this, "上传商铺图片成功。", Toast.LENGTH_LONG).show();
+                            Picasso.get().load(logoFileUrl).placeholder(R.drawable.ic_placeholder).into(binding.logoImage);
                         } else {
                             Toast.makeText(CreateActivity.this, "上传商铺图片失败，请稍候重试。", Toast.LENGTH_LONG).show();
                         }
@@ -179,16 +224,30 @@ public class CreateActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveInfo(){
-        HttpClient.Builder.getZhiXiuServer().createShop(
-                AccountHelper.getUser().token,
-                binding.titleEdit.getText().toString(),
-                logoFileUrl,
-                binding.addressEdit.getText().toString(),
-                binding.introEdit.getText().toString(),
-                binding.noticeEdit.getText().toString(),
-                binding.locationText.getText().toString())
-                .subscribeOn(Schedulers.io())
+    private void saveInfo() {
+        Observable<RequestBaseBean> observable = null;
+
+        if (editMode == true) {
+            observable = HttpClient.Builder.getZhiXiuServer().editShop(
+                    AccountHelper.getUser().token,
+                    binding.titleEdit.getText().toString(),
+                    logoFileUrl,
+                    binding.addressEdit.getText().toString(),
+                    binding.introEdit.getText().toString(),
+                    binding.noticeEdit.getText().toString(),
+                    binding.locationText.getText().toString());
+        } else {
+            observable = HttpClient.Builder.getZhiXiuServer().createShop(
+                    AccountHelper.getUser().token,
+                    binding.titleEdit.getText().toString(),
+                    logoFileUrl,
+                    binding.addressEdit.getText().toString(),
+                    binding.introEdit.getText().toString(),
+                    binding.noticeEdit.getText().toString(),
+                    binding.locationText.getText().toString());
+        }
+
+        observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<RequestBaseBean>() {
 
@@ -203,16 +262,28 @@ public class CreateActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(RequestBaseBean requestBaseBean) {
-                        new AlertDialog.Builder(CreateActivity.this)
-                                .setMessage("提示")
-                                .setMessage(requestBaseBean.getSuccess().equals("true") ? "商铺创建成功。" : "商铺创建失败。")
-                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        setResult(RESULT_OK);
-                                        finish();//关闭窗口
-                                    }
-                                }).show();
+                        if ("true".equals(requestBaseBean.getSuccess())) {
+                            new AlertDialog.Builder(CreateActivity.this)
+                                    .setMessage("提示")
+                                    .setMessage("商铺信息保存成功。")
+                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            setResult(RESULT_OK);
+                                            finish();//关闭窗口
+                                        }
+                                    }).show();
+                        } else {
+                            new AlertDialog.Builder(CreateActivity.this)
+                                    .setMessage("提示")
+                                    .setMessage("商铺信息保存失败。")
+                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            finish();//关闭窗口
+                                        }
+                                    }).show();
+                        }
                     }
                 });
     }
