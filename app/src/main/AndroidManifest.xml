@@ -206,6 +206,8 @@
         <activity
             android:name=".ui.shopping.OrderActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.mine.child.OrderByTokenAndStatusActivity" />
         <activity android:name=".ui.mine.child.AutoLoginActivity" />
         <activity android:name=".ui.shopping.AddressListActivity" />
         <activity android:name=".ui.shopping.ShopListActivity" />

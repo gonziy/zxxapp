@@ -206,6 +206,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void  setTitle(String title){
         mBinding.include.titlebarTitle.setText(title);
     }
+    private void  setTitleBarDisplay(Boolean display) {
+        if (display) {
+            mBinding.include.titleToolBar.setVisibility(View.VISIBLE);
+        }else {
+            mBinding.include.titleToolBar.setVisibility(View.GONE);
+        }
+    }
 
     private void initId() {
         drawerLayout = mBinding.drawerLayout;
@@ -348,6 +355,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     llTitleShoppingCart.setSelected(false);
                     vpContent.setCurrentItem(0);
                     setTitle("智修网");
+                    setTitleBarDisplay(true);
                 }
                 break;
 //            case R.id.iv_title_article:// 文章栏
@@ -366,6 +374,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     llTitleGank.setSelected(false);
                     vpContent.setCurrentItem(1);
                     setTitle("消息");
+                    setTitleBarDisplay(true);
                 }
                 break;
             case R.id.iv_title_mine:// 个人中心
@@ -375,6 +384,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     llTitleShoppingCart.setSelected(false);
                     vpContent.setCurrentItem(2);
                     setTitle("我的");
+                    setTitleBarDisplay(false);
                 }
                 break;
             case R.id.iv_avatar: // 头像进入GitHub

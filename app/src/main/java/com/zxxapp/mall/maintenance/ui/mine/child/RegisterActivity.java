@@ -80,9 +80,10 @@ public class RegisterActivity extends AppCompatActivity {
                                     if(sendCodeBean.getCode().equals("100")){
                                         ToastUtil.showToast("发送成功");
                                         binding.btnSend.setClickable(false);
+                                        binding.btnSend.setText("已发送");
                                         binding.btnSend.setTextColor(Color.parseColor("#888888"));
                                     }else {
-                                        ToastUtil.showToast("注发失败");
+                                        ToastUtil.showToast("发送失败");
 
                                     }
 
@@ -264,7 +265,7 @@ public class RegisterActivity extends AppCompatActivity {
                             RegisterActivity.this.finish();
                             LoginActivity.start(RegisterActivity.this);
                         }else {
-                            ToastUtil.showToast("注册失败");
+                            ToastUtil.showToast("注册失败,"+registerBean.getMsg());
 
                             binding.etUsername.setFocusable(true);
                             binding.etUsername.setFocusableInTouchMode(true);

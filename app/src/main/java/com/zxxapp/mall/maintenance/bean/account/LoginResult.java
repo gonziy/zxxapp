@@ -10,20 +10,11 @@ public class LoginResult {
 
 
     /**
-     * code : 100
-     * data : {"msg":"验证通过!","userName":"admin","userId":1,"token":"0e4ef13d-c079-49dd-bb01-3213c709626f"}
+     * data : {"msg":"验证通过!","userName":"18654643210","userId":10,"token":"9b25d676-0ae4-4f65-82f4-419ba34e8fe0"}
      */
 
-    private String code;
     private DataBean data;
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
+    private String code;
 
     public DataBean getData() {
         return data;
@@ -32,13 +23,20 @@ public class LoginResult {
     public void setData(DataBean data) {
         this.data = data;
     }
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public static class DataBean {
         /**
          * msg : 验证通过!
-         * userName : admin
-         * userId : 1
-         * token : 0e4ef13d-c079-49dd-bb01-3213c709626f
+         * userName : 18654643210
+         * userId : 10
+         * token : 9b25d676-0ae4-4f65-82f4-419ba34e8fe0
          */
 
         private String msg;

@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private ListPopupWindow listPopupWindow;
     String[] list;
+    private long exitTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(LoginResult loginResult) {
-                        if(loginResult.getCode().equals("100")){
+                        if(loginResult.getCode()==null){
                             String accessToken = loginResult.getData().getToken();
 
                             final User user = new User();
@@ -313,11 +314,20 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if(keyCode==KeyEvent.KEYCODE_BACK){
-            ToastUtil.showToast("请您先登录账号");
+            exit();
             return true;//不执行父类点击事件
         }
         return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
 
     }
 
+
+    public void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 1000) {
+            ToastUtil.showToast("再按一次退出程序");
+            exitTime = System.currentTimeMillis();
+        } else {
+            moveTaskToBack(true);
+        }
+    }
 }

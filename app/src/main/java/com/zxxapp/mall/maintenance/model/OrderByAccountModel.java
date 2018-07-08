@@ -1,5 +1,6 @@
 package com.zxxapp.mall.maintenance.model;
 
+import com.zxxapp.mall.maintenance.bean.OrderByStatusBean;
 import com.zxxapp.mall.maintenance.bean.shopping.OrderByAccountIdBean;
 import com.zxxapp.mall.maintenance.bean.shopping.ShopListBean;
 import com.zxxapp.mall.maintenance.bean.shopping.TempOrderListBean;
@@ -23,12 +24,18 @@ public class OrderByAccountModel {
     private String token = "";
     private String pageNo = "";
     private String pageLimit = "";
+    private String status = "";
 
     public void setData(String token,String pageNo,String pageLimit) {
 
         this.token = token;
         this.pageNo = pageNo;
         this.pageLimit = pageLimit;
+    }
+    public void setData(String token,String status) {
+
+        this.token = token;
+        this.status = status;
     }
 
     public void getData(final RequestImpl listener) {
@@ -77,6 +84,31 @@ public class OrderByAccountModel {
                     @Override
                     public void onNext(TempOrderListBean tempOrderListBean) {
                         listener.loadSuccess(tempOrderListBean);
+
+                    }
+                });
+        listener.addSubscription(subscription);
+    }
+    public void getOrderByTokenAndStatus(final RequestImpl listener) {
+
+        // 添加新的参数
+        Subscription subscription = HttpClient.Builder.getZhiXiuServer().getOrderByTokenAndStatus(this.token,this.status)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<OrderByStatusBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        listener.loadFailed();
+
+                    }
+
+                    @Override
+                    public void onNext(OrderByStatusBean orderByStatusBean) {
+                        listener.loadSuccess(orderByStatusBean);
 
                     }
                 });

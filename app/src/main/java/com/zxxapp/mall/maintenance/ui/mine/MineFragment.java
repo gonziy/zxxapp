@@ -35,11 +35,13 @@ import com.zxxapp.mall.maintenance.ui.mine.child.EditUserInfoActivity;
 import com.zxxapp.mall.maintenance.ui.mine.child.Feedback;
 import com.zxxapp.mall.maintenance.ui.mine.child.LoginActivity;
 import com.zxxapp.mall.maintenance.ui.mine.child.OrderByAccountIdActivity;
+import com.zxxapp.mall.maintenance.ui.mine.child.OrderByTokenAndStatusActivity;
 import com.zxxapp.mall.maintenance.ui.mine.child.TempOrderByAccountIdActivity;
 import com.zxxapp.mall.maintenance.ui.shop.ValidateActivity;
 import com.zxxapp.mall.maintenance.ui.shopping.OrderConfirmActivity;
 import com.zxxapp.mall.maintenance.utils.DebugUtil;
 import com.zxxapp.mall.maintenance.utils.ToastUtil;
+import com.zxxapp.mall.maintenance.view.webview.WebViewActivity;
 
 import rx.Observer;
 import rx.Subscription;
@@ -106,6 +108,12 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                 EditUserInfoActivity.start(v.getContext());
             }
         });
+        bindingView.llUnpay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OrderByTokenAndStatusActivity.start(v.getContext());
+            }
+        });
 
         bindingView.llOrders.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +157,12 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
             @Override
             public void onClick(View v) {
                 Feedback.start(v.getContext());
+            }
+        });
+        bindingView.llHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebViewActivity.loadUrl(v.getContext(),"http://zhixiuwang.com/zxxapp/account/help","帮助");
             }
         });
         bindingView.btnExit.setOnClickListener(new View.OnClickListener() {

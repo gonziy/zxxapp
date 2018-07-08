@@ -73,6 +73,7 @@ public class OrderEvaluationActivity extends BaseActivity<ActivityOrderEvaluatio
     private String orderNo = "";
     private String shopId = "";
     private float score = 5;
+    private float score2 = 5;
 
 
     @Override
@@ -119,6 +120,38 @@ public class OrderEvaluationActivity extends BaseActivity<ActivityOrderEvaluatio
                         score = RatingCount;
                     }
                 });
+
+
+
+        //设置是否可点击，在需要评分的地方要设置为可点击
+        bindingView.ratTest2.setmClickable(true);
+        bindingView.ratTest2.halfStar(false);
+        //设置星星总数
+        bindingView.ratTest2.setStarCount(5);
+        //设置星星的宽度
+        bindingView.ratTest2.setStarImageWidth(40f);
+        //设置星星的高度
+        bindingView.ratTest2.setStarImageHeight(40f);
+        //设置星星之间的距离
+        bindingView.ratTest2.setImagePadding(5f);
+        //设置空星星
+        bindingView.ratTest2.setStarEmptyDrawable(getResources()
+                .getDrawable(R.mipmap.ratingbar_star_empty));
+        //设置填充的星星
+        bindingView.ratTest2.setStarFillDrawable(getResources()
+                .getDrawable(R.mipmap.ratingbar_star_fill));
+        //设置显示的星星个数
+        bindingView.ratTest2.setStar(5f);
+        //设置评分的监听
+        bindingView.ratTest2.setOnRatingChangeListener(
+                new RatingBar.OnRatingChangeListener() {
+                    @Override
+                    public void onRatingChange(float RatingCount) {
+                        ToastUtil.showToast(String.valueOf(RatingCount));
+                        score2 = RatingCount;
+                    }
+                });
+
         bindingView.tvSettlement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,9 +162,13 @@ public class OrderEvaluationActivity extends BaseActivity<ActivityOrderEvaluatio
                     ToastUtil.showToast("必须选择一个分数");
                     return;
                 }
+                if(score2<=0){
+                    ToastUtil.showToast("必须选择一个分数");
+                    return;
+                }
                 User user = BaseApplication.getInstance().getUser();
 
-                Subscription get = HttpClient.Builder.getZhiXiuServer().orderComment(user.token,orderNo,String.valueOf(score),bindingView.etSide.getText().toString())
+                Subscription get = HttpClient.Builder.getZhiXiuServer().orderComment(user.token,orderNo,String.valueOf(score),String.valueOf(score2),bindingView.etSide.getText().toString())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<ResultBean>(){

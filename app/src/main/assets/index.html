@@ -68,19 +68,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="content-block-title" style="margin-top:1.5rem;margin-bottom:1rem">商家评级</div>
-                    <div class="content-padded grid-demo">
-                        <div class="row" style=" margin-bottom:1rem;" onclick="JavascriptBridge.ToastShow('根据店铺获取服务...')">
-                                <div class="col-33" style="text-align:center;">
-                                    <img src="framework/img/shop.jpg" style="width:100%" />
-                                </div>
-                                <div class="col-66" style="text-align:left;">
-                                    <span style="font-size:.75rem;display:block;">维修商店</span>
-                                    <span style="font-size:.65rem;display:block;">禹城市禹王街566号</span>
-                                    <span style="font-size:.65rem;display:block; color:#f9bb03">★★★★☆</span>
-                                </div>
-
-                        </div>
+                    <div class="content-block-title" style="margin-top:1.5rem;margin-bottom:1rem">热门商家</div>
+                    <div id="shops" class="content-padded grid-demo">
+                        <div class="row" style="margin-bottom:1rem;"><div class="col-33" style="text-align:center;"><img src="framework/img/shop.jpg" style="width:100%" /></div><div class="col-66" style="text-align:left;"><span style="font-size:.75rem;display:block;">维修商店</span><span style="font-size:.65rem;display:block;">禹城市禹王街566号</span><span style="font-size:.65rem;display:block; color:#f9bb03">★★★★☆</span></div></div>
                     </div>
                 </div>
             </div>
@@ -111,8 +101,28 @@
                 });
             })
         }
+		function getShops(){
+			$.get("http://zhixiuwang.com/zxxapp/order/getShopByTop",function(data){
+				var jsonObject = eval("(" + data + ")");
+				var shops = jsonObject.data;
+				$("#shops").html("");
+				for(var i = 0 ; i < shops.length; i++){
+					var itemShop = shops[i];
+					var stars = "";
+					for(var si = 0; si < itemShop.evaluate; si++){
+						stars += "★";
+					}
+					var stars2 = "";
+					for(var si = 0; si < itemShop.evaluate2; si++){
+						stars2 += "★";
+					}
+					$("#shops").append("<div class=\"row\" style=\"margin-bottom:1rem;\"><div class=\"col-33\" style=\"text-align:center;\"><img src=\""+ itemShop.logoImg +"\" style=\"width:100%\" /></div><div class=\"col-66\" style=\"text-align:left;\"><span style=\"font-size:.75rem;display:block;\">"+ itemShop.shopName +"</span><span style=\"font-size:.65rem;display:block;\">"+ itemShop.address +"</span><span style=\"font-size:.65rem;display:block; color:#f9bb03\">服务："+ stars +"</span><span style=\"font-size:.65rem;display:block; color:#f9bb03\">技能："+ stars2 +"</span></div></div>");
+				}
+			})
+		}
         $(function(){
             getImgNews();
+			getShops();
         })
     </script>
 

@@ -1,11 +1,13 @@
 package com.zxxapp.mall.maintenance.http;
 
 import com.example.http.HttpUtils;
+import com.zxxapp.mall.maintenance.bean.CouponListByShopBean;
 import com.zxxapp.mall.maintenance.bean.FrontpageBean;
 import com.zxxapp.mall.maintenance.bean.GankIoDataBean;
 import com.zxxapp.mall.maintenance.bean.GankIoDayBean;
 import com.zxxapp.mall.maintenance.bean.HotMovieBean;
 import com.zxxapp.mall.maintenance.bean.MovieDetailBean;
+import com.zxxapp.mall.maintenance.bean.OrderByStatusBean;
 import com.zxxapp.mall.maintenance.bean.RequestBaseBean;
 import com.zxxapp.mall.maintenance.bean.RequestDataArrayBean;
 import com.zxxapp.mall.maintenance.bean.RequestDataBean;
@@ -106,7 +108,7 @@ public interface HttpClient {
     Observable<CouponListBean> getCouponListByAccountIdAPI(@Query("token") String token);
 
     @GET("order/getCoupon")
-    Observable<CouponListBean> getCoupon(@Query("token") String token,@Query("shopId") String shopId);
+    Observable<CouponListByShopBean> getCoupon(@Query("token") String token, @Query("shopId") String shopId);
 
     @GET("order/createCoupon")
     Observable<CouponBean> createCoupon(@Query("token") String token, @Query("shopId") String shopId);
@@ -166,11 +168,26 @@ public interface HttpClient {
     Observable<RongCloudResultBean> getRongCloudResult(@Query("username") String username, @Query("nickname") String nickname);
 
     @GET("order/orderComment")
-    Observable<ResultBean> orderComment(@Query("token") String token, @Query("orderId") String orderId, @Query("score") String score, @Query("content") String content);
+    Observable<ResultBean> orderComment(@Query("token") String token,
+                                        @Query("orderId") String orderId,
+                                        @Query("score") String score,
+                                        @Query("score2") String score2,
+                                        @Query("content") String content);
 
 
     @GET("userComment/addUserComment")
     Observable<Result2Bean> addFeedback(@Query("token") String token,@Query("userCommentContent") String userCommentContent);
+
+    @GET("order/getOrderByTokenAndStatus")
+    Observable<OrderByStatusBean> getOrderByTokenAndStatus(@Query("token") String token, @Query("status") String status);
+
+    @GET("order/cancelOrder")
+    Observable<ResultBean> cancelOrder(@Query("orderNo") String orderNo,
+                                        @Query("type") String type,
+                                        @Query("token") String token,
+                                        @Query("content") String content
+                                        );
+
     /*
     客户 end
      */

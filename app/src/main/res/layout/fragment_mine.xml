@@ -26,8 +26,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:background="@color/colorTheme">
+                android:layout_height="140dp"
+                android:background="@mipmap/uinfo_bg">
                 <com.zxxapp.mall.maintenance.view.roundimage.CircleImageView
                     android:id="@+id/iv_mine_face"
                     android:layout_width="60dp"
@@ -47,7 +47,7 @@
                         android:id="@+id/tv_mine_nick_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorWhite"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/quickbar_norm_text_size"
                         android:text="姓名"/>
                     <TextView
@@ -55,14 +55,14 @@
                         android:id="@+id/tv_mine_user_group"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorWhite"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/quickbar_lit_text_size"
                         android:text="普通用户"/>
                     <TextView
                         android:id="@+id/tv_mine_agent_addr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorWhite"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/quickbar_lit_text_size"
                         android:text=""/>
                 </LinearLayout>
@@ -82,84 +82,101 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
                 android:orientation="vertical">
+
                 <LinearLayout
-                    android:id="@+id/ll_orders"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@drawable/ripple_one_item_bg"
-                    android:clickable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@mipmap/orders" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:text="@string/mine_all_orders"
-                        android:textColor="@color/colorContent"
-                        android:textSize="15sp" />
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"></View>
+                    android:layout_height="wrap_content">
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
+                        android:id="@+id/ll_unpay"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/ripple_one_item_bg"
+                        android:clickable="true"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
                         <ImageView
-                            android:layout_gravity="right|center_vertical"
-                            android:layout_width="15dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@mipmap/unpay" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/more" />
+                            android:layout_marginTop="10dp"
+                            android:text="@string/mine_unpay_orders"
+                            android:textColor="@color/colorContent"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_orders"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/ripple_one_item_bg"
+                        android:clickable="true"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@mipmap/orders" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/mine_all_orders"
+                            android:textColor="@color/colorContent"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/ll_temp_orders"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/ripple_one_item_bg"
+                        android:clickable="true"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@mipmap/temp_order" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/mine_all_temp_orders"
+                            android:textColor="@color/colorContent"
+                            android:textSize="15sp" />
+
                     </LinearLayout>
 
                 </LinearLayout>
-                <View
-                    style="@style/horizontalblock"/>
-                <LinearLayout
-                    android:id="@+id/ll_temp_orders"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@drawable/ripple_one_item_bg"
-                    android:clickable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@mipmap/orders" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:text="@string/mine_all_temp_orders"
-                        android:textColor="@color/colorContent"
-                        android:textSize="15sp" />
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"></View>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:layout_gravity="right|center_vertical"
-                            android:layout_width="15dp"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/more" />
-                    </LinearLayout>
 
-                </LinearLayout>
+
+
                 <View
                     style="@style/horizontalblock"/>
                 <LinearLayout
@@ -343,6 +360,45 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:text="联系客服和建议"
+                        android:textColor="@color/colorContent"
+                        android:textSize="15sp" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"></View>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/more" />
+                    </LinearLayout>
+                </LinearLayout>
+                <View
+                    style="@style/horizontalblock"/>
+                <LinearLayout
+                    android:id="@+id/ll_help"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/ripple_one_item_bg"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/help" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:text="帮助"
                         android:textColor="@color/colorContent"
                         android:textSize="15sp" />
                     <View

@@ -31,6 +31,7 @@ import com.zxxapp.mall.maintenance.R;
 import com.zxxapp.mall.maintenance.adapter.ShoppingOrderAdapter;
 import com.zxxapp.mall.maintenance.app.BaseApplication;
 import com.zxxapp.mall.maintenance.base.BaseActivity;
+import com.zxxapp.mall.maintenance.bean.CouponListByShopBean;
 import com.zxxapp.mall.maintenance.bean.PaymentBean;
 import com.zxxapp.mall.maintenance.bean.account.AreaBean;
 import com.zxxapp.mall.maintenance.bean.account.CartResult;
@@ -87,8 +88,8 @@ public class OrderConfirmActivity extends BaseActivity<ActivityConfirmOrderBindi
     private Double orderAmount = 0.00;
     private String orderNo = "";
     private String shopId = "";
-    private CouponListBean couponList;
-    private List<CouponListBean.DataBean.ListBean> coupons;
+    private CouponListByShopBean couponList;
+    private CouponListByShopBean.ListBean coupon;
     private ArrayAdapter couponAdapter;
     private String selectedCouponId = "";
 
@@ -106,7 +107,6 @@ public class OrderConfirmActivity extends BaseActivity<ActivityConfirmOrderBindi
         setContentView(R.layout.activity_confirm_order);
         mModel = new PaymentModel();
         setTitle("付款");
-        initView();
         if (getIntent() != null) {
             orderNo = (String) getIntent().getSerializableExtra("order_no");
             amount = (Double) getIntent().getSerializableExtra("amount");
@@ -115,6 +115,7 @@ public class OrderConfirmActivity extends BaseActivity<ActivityConfirmOrderBindi
             bindingView.tvOrderAmount.setText("需支付：" + StringUtils.doubleToString(amount));
             bindingView.tvTotalPrice.setText(StringUtils.doubleToString(amount));
         }
+        initView();
     }
 
 
@@ -143,29 +144,28 @@ public class OrderConfirmActivity extends BaseActivity<ActivityConfirmOrderBindi
             }
         });
 
-        CouponModel couponModel = new CouponModel();
+        final CouponModel couponModel = new CouponModel();
         couponModel.setCouponData(BaseApplication.getInstance().getUser().getToken(),shopId);
         couponModel.getCoupon(new RequestImpl() {
             @Override
             public void loadSuccess(Object object) {
-                couponList = (CouponListBean) object;
-                if(couponList.getSuccess().equals("true") && !couponList.getData().getList().isEmpty()){
-                    coupons = couponList.getData().getList();
-                    if(!coupons.isEmpty()){
+                couponList = (CouponListByShopBean) object;
+                if(couponList.isSuccess() && couponList.getList() != null){
+                    coupon = couponList.getList();
+                    if(coupon!=null){
                         final List<String> cs = new ArrayList<String>();
                         cs.add("===请选择优惠券===");
-                        for (CouponListBean.DataBean.ListBean bean:couponList.getData().getList()
-                                ) {
-                            cs.add(bean.getShopName() +" 优惠"+   StringUtils.doubleToString(bean.getCouponAmount()));
-                        }
+
+                        cs.add("优惠"+   StringUtils.doubleToString(coupon.getCouponAmount()));
+
                         couponAdapter = new ArrayAdapter(OrderConfirmActivity.this, R.layout.item_spinner_layout,cs);
                         bindingView.spCoupon.setAdapter(couponAdapter);
                         bindingView.spCoupon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 if (position > 0) {
-                                    selectedCouponId = String.valueOf(coupons.get(position - 1).getCouponId());
-                                    amount = amount - coupons.get(position - 1).getCouponAmount();
+                                    selectedCouponId = String.valueOf(coupon.getCouponId());
+                                    amount = amount - coupon.getCouponAmount();
                                     bindingView.tvOrderAmount.setText("需支付：" + StringUtils.doubleToString(amount));
                                     bindingView.tvTotalPrice.setText(StringUtils.doubleToString(amount));
                                 }else {

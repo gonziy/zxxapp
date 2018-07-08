@@ -9,6 +9,7 @@ import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.zxxapp.mall.maintenance.R;
 import com.zxxapp.mall.maintenance.bean.RequestBaseBean;
@@ -90,6 +91,15 @@ public class RobbingActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(final View v) {
         if (v.getId() == R.id.okButton) {
+            if(orderNo.isEmpty()){
+                Toast.makeText(RobbingActivity.this,"订单号不可为空",Toast.LENGTH_LONG).show();
+                return;
+            }
+            if(orderBean.getShopId()<1){
+                Toast.makeText(RobbingActivity.this,"店铺错误",Toast.LENGTH_LONG).show();
+                return;
+            }
+
             HttpClient.Builder.getZhiXiuServer().grabOrder(orderNo,orderBean.getShopId())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

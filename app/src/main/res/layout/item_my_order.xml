@@ -78,13 +78,13 @@
             android:layout_below="@id/tv_date1"
             android:text="@{StringUtils.objectToString(resultsBean.unitPrice)}"/>
         <TextView
-            android:id="@+id/tv_content"
+            android:id="@+id/tv_retreat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="60dp"
             android:layout_marginRight="15dp"
-            android:text=""/>
+            android:text="申请退单"/>
 
     </RelativeLayout>
 </layout>

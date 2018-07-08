@@ -14,6 +14,7 @@ import com.zxxapp.mall.maintenance.bean.account.User;
 import com.zxxapp.mall.maintenance.helper.account.AccountHelper;
 import com.zxxapp.mall.maintenance.ui.gank.child.GoodsDetailActivity;
 import com.zxxapp.mall.maintenance.ui.mine.child.LoginActivity;
+import com.zxxapp.mall.maintenance.ui.shopping.BookingActivity;
 import com.zxxapp.mall.maintenance.ui.shopping.ShopListActivity;
 import com.zxxapp.mall.maintenance.utils.ToastUtil;
 
@@ -34,6 +35,10 @@ public class JavascriptBridgeInterface {
         if (!TextUtils.isEmpty(text)) {
             ToastUtil.showToast(text);
         }
+    }
+    @JavascriptInterface
+    public void BookingShop(String serviceId,String shopId) {
+        BookingActivity.start((Activity)context,serviceId,shopId);
     }
 
     @JavascriptInterface

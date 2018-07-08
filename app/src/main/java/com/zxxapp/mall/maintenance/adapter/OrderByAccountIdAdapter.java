@@ -3,18 +3,24 @@ package com.zxxapp.mall.maintenance.adapter;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.zxxapp.mall.maintenance.R;
+import com.zxxapp.mall.maintenance.app.BaseApplication;
 import com.zxxapp.mall.maintenance.base.baseadapter.BaseRecyclerViewAdapter;
 import com.zxxapp.mall.maintenance.base.baseadapter.BaseRecyclerViewHolder;
+import com.zxxapp.mall.maintenance.bean.ResultBean;
 import com.zxxapp.mall.maintenance.bean.shopping.OrderByAccountIdBean;
 import com.zxxapp.mall.maintenance.databinding.ItemMyOrderBinding;
+import com.zxxapp.mall.maintenance.http.RequestImpl;
+import com.zxxapp.mall.maintenance.model.CancelOrderModel;
 import com.zxxapp.mall.maintenance.ui.shopping.OrderConfirmActivity;
 import com.zxxapp.mall.maintenance.ui.shopping.OrderEvaluationActivity;
 import com.zxxapp.mall.maintenance.utils.StringUtils;
 import com.zxxapp.mall.maintenance.utils.ToastUtil;
 
 import io.rong.imkit.RongIM;
+import rx.Subscription;
 
 
 public class OrderByAccountIdAdapter extends BaseRecyclerViewAdapter<OrderByAccountIdBean.DataRowsBean> {
@@ -70,6 +76,31 @@ public class OrderByAccountIdAdapter extends BaseRecyclerViewAdapter<OrderByAcco
                     }else {
                         ToastUtil.showToast("系统未知");
                     }
+                }
+            });
+            binding.tvRetreat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    CancelOrderModel model = new CancelOrderModel();
+                    model.setData(BaseApplication.getInstance().getUser().token,bean.getOrderNo(),"1","");
+                    model.getData(new RequestImpl() {
+                        @Override
+                        public void loadSuccess(Object object) {
+                            ResultBean bean = (ResultBean)object;
+                            Toast.makeText(v.getContext(),bean.getMsg(),Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void loadFailed() {
+
+                            Toast.makeText(v.getContext(),"取消订单失败",Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void addSubscription(Subscription subscription) {
+
+                        }
+                    });
                 }
             });
         }

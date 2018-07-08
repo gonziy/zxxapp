@@ -9,11 +9,15 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.zxxapp.mall.maintenance.R;
+import com.zxxapp.mall.maintenance.app.BaseApplication;
 import com.zxxapp.mall.maintenance.bean.RequestBaseBean;
 import com.zxxapp.mall.maintenance.bean.RequestDataBean;
+import com.zxxapp.mall.maintenance.bean.ResultBean;
 import com.zxxapp.mall.maintenance.bean.shop.OrderBean;
 import com.zxxapp.mall.maintenance.databinding.ActivityOrderDetailBinding;
 import com.zxxapp.mall.maintenance.http.HttpClient;
+import com.zxxapp.mall.maintenance.http.RequestImpl;
+import com.zxxapp.mall.maintenance.model.CancelOrderModel;
 import com.zxxapp.mall.maintenance.utils.ToastUtil;
 
 import java.text.DecimalFormat;
@@ -22,6 +26,7 @@ import java.util.Date;
 
 import io.rong.imkit.RongIM;
 import rx.Observer;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -140,9 +145,27 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         if (v.getId() == R.id.backButton) {
-            finish();
+            CancelOrderModel model = new CancelOrderModel();
+            model.setData(BaseApplication.getInstance().getUser().token,orderNo,"2","");
+            model.getData(new RequestImpl() {
+                @Override
+                public void loadSuccess(Object object) {
+                    ResultBean bean = (ResultBean)object;
+                    Toast.makeText(v.getContext(),bean.getMsg(),Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void loadFailed() {
+                    Toast.makeText(v.getContext(),"取消订单失败",Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void addSubscription(Subscription subscription) {
+
+                }
+            });
         } else if (v.getId() == R.id.finishButton) {
             finish();
         } else if(v.getId()== R.id.offerButton){

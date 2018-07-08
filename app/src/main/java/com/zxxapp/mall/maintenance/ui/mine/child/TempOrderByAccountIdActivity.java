@@ -3,6 +3,7 @@ package com.zxxapp.mall.maintenance.ui.mine.child;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.zxxapp.mall.maintenance.R;
@@ -48,7 +49,6 @@ public class TempOrderByAccountIdActivity extends BaseActivity<ActivityOrderByAc
         if(AccountHelper.isLogin())
         {
             User user = AccountHelper.getUser();
-
             LoadData(user.token,"1","20");
         }
         setTitle("抢单订单");
@@ -56,7 +56,19 @@ public class TempOrderByAccountIdActivity extends BaseActivity<ActivityOrderByAc
 
 
     private void initView() {
-        bindingView.xrvList.setPullRefreshEnabled(true);
+        //bindingView.xrvList.setPullRefreshEnabled(true);
+        bindingView.srlIndex.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                if(AccountHelper.isLogin())
+                {
+                    User user = AccountHelper.getUser();
+
+                    LoadData(user.token,"1","20");
+                }
+            }
+        });
     }
 
     public void LoadData(String token,String pageIndex,String pageCount){
@@ -75,12 +87,15 @@ public class TempOrderByAccountIdActivity extends BaseActivity<ActivityOrderByAc
                 }else{
                     ToastUtil.showToast(bean.getMsg());
                 }
+                bindingView.srlIndex.setRefreshing(false);
                 showContentView();
             }
 
             @Override
             public void loadFailed() {
                 ToastUtil.showToast("获取数据失败");
+                bindingView.srlIndex.setRefreshing(false);
+                showError();
             }
 
             @Override

@@ -17,6 +17,13 @@
                 android:layout_height="70dp" />
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="12dp"
+            android:text="上传头像"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"

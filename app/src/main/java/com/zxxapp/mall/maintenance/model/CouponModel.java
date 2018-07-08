@@ -1,5 +1,6 @@
 package com.zxxapp.mall.maintenance.model;
 
+import com.zxxapp.mall.maintenance.bean.CouponListByShopBean;
 import com.zxxapp.mall.maintenance.bean.shopping.CouponBean;
 import com.zxxapp.mall.maintenance.bean.shopping.CouponListBean;
 import com.zxxapp.mall.maintenance.bean.shopping.OrderByAccountIdBean;
@@ -63,9 +64,9 @@ public class CouponModel {
     public void getCoupon(final RequestImpl listener) {
 
         // 添加新的参数
-        Subscription subscription = HttpClient.Builder.getZhiXiuServer().createCoupon(this.token,this.shopId)
+        Subscription subscription = HttpClient.Builder.getZhiXiuServer().getCoupon(this.token,this.shopId)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<CouponBean>() {
+                .subscribe(new Observer<CouponListByShopBean>() {
                     @Override
                     public void onCompleted() {
 
@@ -78,8 +79,8 @@ public class CouponModel {
                     }
 
                     @Override
-                    public void onNext(CouponBean couponBean) {
-                        listener.loadSuccess(couponBean);
+                    public void onNext(CouponListByShopBean couponListByShopBean) {
+                        listener.loadSuccess(couponListByShopBean);
 
                     }
                 });

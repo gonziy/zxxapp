@@ -91,7 +91,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="mine_coupon">扫码享优惠</string>
+    <string name="mine_coupon">扫一扫</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -402,4 +402,5 @@
     <string name="message_notify_group_music">自定义群消息推送声音</string>
     <string name="chat_cancel">取消</string>
     <string name="mine_all_temp_orders">抢单订单</string>
+    <string name="mine_unpay_orders">待付款</string>
 </resources>
